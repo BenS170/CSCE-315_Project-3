@@ -1,0 +1,26 @@
+
+Project 3 - Sprint 1
+
+SCRUM Meeting #1
+
+Start Time - 5:15
+
+Notes:
+
+5:15 - Octavio and Hannah were not present for this meeting.
+
+5:15 -  Each member present listed what he/she did over the last week.
+        Priyanka designed a Customer GUI prototype in html and Anoop did the same
+        for the Server GUI. Ben designed a way for the database to connect to javascript using
+	Node.js and Express. He is still have a bit of trouble getting the database to update.
+
+5:22 -  Each member discusses what he/she will do in the coming weeks. Ben will be working on the Server GUI
+	to get orders added and submitted to the database. Priyanka and Anoop will work together on the Customer GUI
+	to get the same orders from customers submitted to the database. Hannah has been assigned the workings of the 
+	Manager GUI to get menu_items and inventory listed in the GUI as well as be able to edit the menu item's names
+	and prices.
+
+5:29 -  The rest of the time was spent discussing what we will be doing for future sprints and other documents/deliverables
+	due in the coming weeks to help everyone plan accordingly.
+
+End Time - 5:33
