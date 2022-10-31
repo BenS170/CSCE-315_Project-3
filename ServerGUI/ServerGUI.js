@@ -7,7 +7,8 @@ const client = new Client({
   "host": "csce-315-db.engr.tamu.edu",
   "database": "csce315_910_3",
   "password": "Tippah2002!",
-  "port": 5432
+  "port": 5432,
+  ssl: {rejectUnauthorized: false}
 });
 
 start();

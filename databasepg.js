@@ -5,7 +5,8 @@ const client = new Client({
     user: "csce315_910_spence",
     port: 5432,
     password: "Tippah2002!",
-    database: "csce315_910_3"
+    database: "csce315_910_3",
+    ssl: {rejectUnauthorized: false}
 })
 
 client.connect();
