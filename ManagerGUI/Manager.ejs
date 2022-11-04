@@ -1,8 +1,38 @@
 <!DOCTYPE html>
-<link rel="stylesheet" type="text/css" href="ManagerGUI.css"></link>
-<head>
-    <title>Manager Homepage</title>
-</head>
-<body>
-    <p>Manager</p>
-</body>
+
+<html lang="en">
+        <head>
+            <!-- <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+            <link rel="stylesheet" type="text/css" href="ManagerGUI.css"></link>
+            <title>Document</title>
+            <script src="ManagerGUI.js"></script>
+        </head>
+
+        <body>
+            <h1>
+                Menu:
+            </h1>
+            <button onclick="viewMenu()">View Menu</button>
+            <button onclick="addMenuItem()">Add Menu Item</button>
+            <button onclick="updateMenu()">Update Menu</button>
+            <button onclick="deleteMenuItem()">Delete Menu Item</button>
+
+            <h1>
+                Inventory:
+            </h1>
+            <button onclick="viewInventory()">View Inventory</button>
+            <button onclick="orderInventory()">Order Inventory</button>
+            <button onclick="addInventoryItem()">Add Inventory Item</button>
+
+            <h1>
+                Reports:
+            </h1>
+            <button onclick="salesReport()">Sales Report</button>
+            <button onclick="popularMenuReport()">Popular Menu Item Report</button>
+            <button onclick="excessReport()">Excess Report</button>
+            <button onclick="restockReport()">Restock Report</button>
+
+        </body>
+    </html>
