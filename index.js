@@ -24,3 +24,12 @@ process.on('SIGINT', function() {
 });
 
 app.set("view engine", "ejs");
+
+app.get('/', (req, res) => {
+    const data = {name: 'Mario'};
+    res.render('index', data);
+});
+
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+});
