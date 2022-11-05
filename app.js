@@ -4,13 +4,22 @@ const port = 3000;
 
 app.set("view engine", "ejs");
 
-app.get('/', (req, res) => {
-    const data = {name: 'Mario'};
-    res.render('index', data);
+app.get('/', function(req, res) {
+    res.render('index');
 });
-app.get('/user', (req, res) => {
-    res.send('Hello User!');
+
+app.get('/customergui', function(req, res) {
+    res.render('CustomerGUI/Customer');
 });
+
+app.get('/servergui', function(req, res) {
+    res.render('ServerGUI/Server');
+});
+
+app.get('/managergui', function(req, res) {
+    res.render('ManagerGUI/Manager');
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });
