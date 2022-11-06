@@ -5,10 +5,68 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/ServerGUI.css"></link>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
     <script src="javascript/ServerGUI.js"></script>
     <title>ServerGUI</title>
 </head>
 <body>
-    <h1> This is Server GUI </h1>
+    <div class="summary">
+        <img class="logo" src="https://media-cdn.grubhub.com/image/upload/d_search:browse-images:default.jpg/w_100,q_80,fl_lossy,dpr_2.0,c_fit,f_auto,h_100/fw6zczftwhbxmpx7g7u3"/>
+        <div class="order">
+            <table>
+                <tr>
+                    <th> ITEM </th>
+                    <th> QTY. </th>
+                    <th> PRICE </th>
+                </tr>
+                <tr>
+                    <td> Bacon Burger </td>
+                    <td> 2 </td>
+                    <td> 7.49 </td>
+                </tr>
+            </table>
+        </div>
+        <div class="total">
+            <div class="taxtitle">
+                <h4> Tax </h4>
+            </div>
+            <div class="taxnum">
+                <h4> + 2.31 </h4>
+            </div>
+            <hr>
+            <div class="taxtitle">
+                <h4> Total </h4>
+            </div>
+            <div class="taxnum">
+                <h4> $16.20 </h4>
+            </div>
+        </div>
+        <div class="checkout">
+            <button class="cancel"> CANCEL <br> ORDER </button>
+            <button class="submit"> SUBMIT <br> ORDER </button>
+        </div>
+    </div>
+    <div class="items">
+        <div class="burgers">
+            <h1> BURGERS </h1>
+            <button> Bacon <br> Burger </button>
+            <button> Black Bean Burger </button>
+            <button> Cheese <br> Burger </button>
+            <button> Double Steak Burger </button>
+            <button> Classic Hamburger </button>
+        </div>
+        <div class="sides">
+            <button> Chicken <br> Tenders </button>
+            <button> Caesar <br> Salad </button>
+            <button> French <br> Fries </button>
+            <button> Fountain <br> Drink </button>
+        </div>
+        <div class="desserts">
+            <h1> DESSERTS </h1>
+            <button> Double Scoop Ice Cream </button>
+            <button> Aggie <br> Shakes </button>
+            <button> Cookie Ice Cream Sundae </button>
+        </div>
+    </div>
 </body>
 </html>
