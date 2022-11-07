@@ -1,11 +1,20 @@
 
 // menu functions
-function viewMenu(){
+async function viewMenu(){
     alert("view menu");
+    
+    //const results = await pool.query("select * from menu_items");
+    const contentId = document.getElementById('currContent');
+    contentId.hidden = false;
+    contentId.innerHTML = '<span style="background-color: lime" id = "cool">Replacement HTML</span>';
+
+    //return results.rows;
 }
 
 function addMenuItem(){
-    alert("add menu");
+    const contentId = document.getElementById('cool');
+    contentId.hidden = true;
+    contentId.innerHTML = '<span style="background-color: blue" id = "currContent">Bruh</span>';
 }
 
 function updateMenu(){
