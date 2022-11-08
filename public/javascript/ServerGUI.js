@@ -82,13 +82,13 @@ function submitOrder(pool){
 
 
 //This is for database
+const testObj = '10';
+const orderObj = new order('burger', 2, 7.35);
 
 const button = document.getElementById("serverSubmit");
 button.addEventListener('click', function(e) {
   console.log('Server submit was clicked');
-  const testObj = '10';
-  const testObj2 = 13;
-  const data = {testObj, testObj2};
+  const data = {testObj, orderObj};
 
   fetch('/serverSubmit', {
         method: 'POST',

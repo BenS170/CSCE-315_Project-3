@@ -27,8 +27,9 @@ app.use(express.json({extended: true, limit: '1mb'}))
 
 app.post('/serverSubmit', (req, res) => {
     console.log("inside server");
-    const { testObj, testObj2 } = req.body;
-    console.log(req.body);
+    const { testObj, orderObj } = req.body;
+    console.log(orderObj.name);
+    console.log(orderObj.price);
   
     // Database Code here
     pool.query('select * from orders where order_id<'+testObj+';')
