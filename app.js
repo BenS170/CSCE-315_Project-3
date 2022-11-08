@@ -1,7 +1,7 @@
+const { query } = require('express');
 const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
-const server = require(__dirname + '/public/javascript/ServerGUI.js');
 
 const app = express();
 const port = 3000;
@@ -46,3 +46,21 @@ app.listen(port, () => {
     console.log(__dirname);
 });
 
+
+// app.post() updates state on the server
+// app.get() receives information form the server
+
+app.get('/getMenu', (req, res) => {
+    menu_items = [];
+    pool
+        .query('select * from menu_items;')
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
