@@ -1,7 +1,6 @@
 const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
-const server = require(__dirname + '/public/javascript/ServerGUI.js');
 
 const app = express();
 const port = 3000;
@@ -23,6 +22,25 @@ process.on('SIGINT', function() {
 
 app.set("view engine", "ejs");
 app.use(express.static('public'));
+app.use(express.json({extended: true, limit: '1mb'}))
+
+
+app.post('/serverSubmit', (req, res) => {
+    console.log("inside server");
+    const { testObj, testObj2 } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    pool.query('select * from orders where order_id<'+testObj+';')
+    .then(query_res => {
+        for (let i = 0; i < query_res.rowCount; i++){
+            console.log(query_res.rows[i]);
+        }
+    })
+
+    res.status(200).json({ testObj});
+});
+
 
 app.get('/', function(req, res) {
     res.render('index');
@@ -33,8 +51,7 @@ app.get('/customergui', (req, res) => {
 });
 
 app.get('/servergui', (req, res) => {
-    const data = {pool:pool};
-    res.render('ServerGUI/Server', data);
+    res.render('ServerGUI/Server');
 });
 
 app.get('/managergui', (req, res) => {

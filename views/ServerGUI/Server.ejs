@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/ServerGUI.css"></link>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet'>
-    <script src="javascript/ServerGUI.js"></script>
     <title>ServerGUI</title>
 </head>
 <body>
@@ -25,20 +24,20 @@
             <div class="taxtitle">
                 <h4> Tax </h4>
             </div>
-            <div class="taxnum" id="demo">
-                <h4> + 2.31 </h4>
+            <div class="taxnum">
+                <h4 id="tax"> + </h4>
             </div>
             <hr>
             <div class="taxtitle">
                 <h4> Total </h4>
             </div>
             <div class="taxnum">
-                <h4 id="demo"> $16.20 </h4>
+                <h4 id="total"> $ </h4>
             </div>
         </div>
         <div class="checkout">
             <button class="cancel" onclick="clearOrder()"> CANCEL <br> ORDER </button>
-            <button class="submit" onclick="submitOrder('<%=pool%>')"> SUBMIT <br> ORDER </button>
+            <button class="submit" id="serverSubmit"> SUBMIT <br> ORDER </button>
         </div>
     </div>
     <div class="items">
@@ -64,5 +63,6 @@
             <button onclick="addToOrder('Cookie Sandwhich', '1', '4.69')"> Cookie Sandwhich </button>
         </div>
     </div>
+    <script src="javascript/ServerGUI.js"></script>
 </body>
 </html>
