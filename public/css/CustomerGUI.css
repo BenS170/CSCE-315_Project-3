@@ -1,92 +1,142 @@
 body {
+  font-family: Verdana;
+
+}
+
+h3{
   font-family: Verdana, sans-serif;
   color: #5B0726;
+  font-size: 70px;
+  margin-top: 50px;
+  text-align: center;
 }
 
-h2 {
-  font-family: Verdana, sans-serif;
-  color: white;
-}
-  
-.sidenav {
-  height: 100%;
-  width: 360px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
+/* Style the tab */
+.tab {
+  float: left;
+  margin-left: -10px;
+  margin-top: -10px;
   background-color: #5B0726;
-  overflow-x: hidden;
-  padding-top: -20px;
+  width: 25%;
+  height: 100%;
 }
-  
-.sidenav a {
-  padding: 20px 33px 55px 16px;
-  text-decoration: none;
-  text-align: center;
-  font-size: 33px;
-  font-family: Verdana;
-  color: white;
+
+/* Style the buttons inside the tab */
+.tab button {
   display: block;
+  background-color: #5B0726;
+  color: #F8BE14;
+  padding: 15px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.05s;
+  font-family: verdana;
+  height: 165px;
+  font-size: 26px;
 }
-  
-.sidenav a:hover {
-  color: white;
+
+.tab orderButton {
+  display: block;
+  background-color: #5B0726;
+  color: #F8BE14;
+  padding: 15px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.05s;
+  font-family: verdana;
+  height: 155px;
+  font-size: 26px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color:#F8BE14;
+  color: #5B0726;
+  font-weight: bold;
+}
+
+.tab orderButton:hover {
+  background-color:#5B0726;
+  color: #F8BE14;
   text-decoration: underline;
   font-weight: bold;
+}
 
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+  background-color:#F8BE14;
+  color: #5B0726;
+  font-weight: bold;
+}
+
+/* Style the tab content */
+.tabcontent {
+  float: left;
+  padding: 0px 12px;
+  padding-top: 20px;
+  border: none;
+  width: 70%;
+  border-left: none;
+  height: 100%;
 }
 
 .logo {
   display: block;
-  width: 270px;
-  height: 235px;
-  margin: auto;
-  padding-left: -50px;
-  padding-top: -20px;
-  
+  width: 100%;
+  height: 185%;
+  float: left;
+  margin-left: -10px;
+  margin-top: -55px;
 }
 
-.order{
-  background-color: white;
-  color: #5B0726;
-  border: 2.5px solid #5B0726;
-  font-size: 20px;
+.orderButton{
+  background-color: #5B0726;
+  color: #F8BE14;
+  border: none;
+  height: 55px;
+  width: 24%;
   font-weight: bold;
   font-family: verdana;
+  font-size: 20px;
   text-align: center;
-  text-decoration: none;
   float: right;
-  height: 50px;
-  width: 200px;
 }
 
-.order:hover {
-  background-color: #5B0726;
-  color: white;
+.orderButton:hover {
+  background-color: #F8BE14;
+  color: #5B0726;
   font-weight: bold;
   cursor: pointer;
   padding: 0px 10px;
 }
 
+.outline {
+  background-color: #F8BE14;
+  margin: 70px;
+  border: 9px solid #5B0726;
+  padding-top: 50px;
+  padding-bottom: -10px;
+  height: 25%;
+  width: 95%;
+  margin-top: 55px;
+}
+
 .div1 {
   margin: 60px;
-  height: 365px;
+  height: 385px;
   background-color: #5B0726;
+  border: none;
   color: white;
   text-align: center;
   margin-top: 8px;
-  margin-left: 60px;
+  margin-left: 50px;
+  margin-right: 50px;
   padding-top: 10px;
-}
-
-.main {
-  margin-left: 500px; /* Same as the width of the sidenav */
-  font-size: 28px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
 }
