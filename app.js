@@ -53,12 +53,27 @@ app.listen(port, () => {
 app.get('/getMenu', (req, res) => {
     menu_items = [];
     pool
-        .query('select * from menu_items;')
+        .query('select * from menu_items order by menu_id;')
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
             }
             data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
+
+app.get('/getInv', (req, res) => {
+    inv_items = [];
+    pool
+        .query('select * from inventory order by itemid;')
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                inv_items.push(query_res.rows[i]);
+            }
+            data = { result : inv_items };
             console.log("Query done");
             res.json(data);
         }

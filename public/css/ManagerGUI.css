@@ -111,7 +111,35 @@ body{
     border-radius: 2%;
     
     width: 95%;
-    height: 770px;
+    height: fit-content;
 }
 
-.content{}
+table{
+    display:block;
+    align-self: center;
+    width:fit-content;
+
+    border: black 2px;
+    margin: 1%;
+
+    text-transform: capitalize;
+
+    border-radius: 5px;
+}
+
+table th{
+    background-color: #5B0726;
+    color: white;
+    
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: uppercase;
+    font-size: larger;
+    white-space: nowrap;
+}
+
+#menuItem{
+    background-color: white;
+    color: black;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

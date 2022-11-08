@@ -53,4 +53,28 @@ function submitOrder(pool){
     console.log(results.rows);
 }
 
+const submitButton = document.getElementById("submitButton");
 
+submitButton.addEventListener('click', function(e) {
+    console.log('button was clicked');
+  
+    fetch('/serverSubmit', 
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({a : 1, b : 2})
+        })
+        .then(function(response) {
+        if(response.ok) {
+          console.log('Click was recorded');
+          return;
+        }
+        throw new Error('Request failed.');
+    })
+        .catch(function(error) {
+        console.log(error);
+    });
+});
