@@ -26,8 +26,13 @@ class orderSum{
 }
 
 var myOrder = new orderSum();
+var order_items = [];
+var order_prices = [];
 
-function addToOrder(name, qty, price){
+function addToOrder(itemid, name, qty, price){
+    order_items.push(itemid);
+    order_prices.push(price);
+
     myOrder.addOrder(name, qty, price);
     var table = document.getElementById('orderTable');
     var row = table.insertRow(1);
@@ -43,6 +48,9 @@ function addToOrder(name, qty, price){
     let total = Number((parseFloat(getTax()) + parseFloat(getTotal())).toFixed(2));
     var total_h = document.getElementById('total')
     total_h.innerHTML = total;
+
+    console.log(order_items);
+    console.log(order_prices);
 }
 
 function clearOrder(){
@@ -52,6 +60,8 @@ function clearOrder(){
         table.deleteRow(1);
     }
     myOrder.clear();
+    order_items = [];
+    order_prices = [];
 
     var tax_h = document.getElementById('tax');
     tax_h.innerHTML = getTax();
@@ -74,21 +84,13 @@ function getTax(){
     return tax;
 }
 
-function submitOrder(pool){
-    console.log("test");
-    var results = pool.query('select * from teammembers');
-    console.log(results.rows);
-}
-
 
 //This is for database
-const testObj = '10';
-const orderObj = new order('burger', 2, 7.35);
 
 const button = document.getElementById("serverSubmit");
 button.addEventListener('click', function(e) {
   console.log('Server submit was clicked');
-  const data = {testObj, orderObj};
+  const data = {order_items, order_prices};
 
   fetch('/serverSubmit', {
         method: 'POST',
@@ -100,6 +102,7 @@ button.addEventListener('click', function(e) {
     .then(function(response) {
       if(response.ok) {
         console.log('Click was recorded');
+        clearOrder();
         return;
       }
       throw new Error('Request failed.');
