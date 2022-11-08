@@ -7,32 +7,57 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
             <link rel="stylesheet" type="text/css" href="css/ManagerGUI.css"></link>
             <title>Document</title>
-            <script src="javascript/ManagerGUI.js"></script>
         </head>
 
         <body>
-            <h1>
-                Menu:
-            </h1>
-            <button onclick="viewMenu()">View Menu</button>
-            <button onclick="addMenuItem()">Add Menu Item</button>
-            <button onclick="updateMenu()">Update Menu</button>
-            <button onclick="deleteMenuItem()">Delete Menu Item</button>
+            <!-- the following will display the available submenus to the manager -->
+            <div class="headers">
+                <img src="https://i.ibb.co/1b4NdSg/revsLogo.png" alt="Rev's Logo">
+                <p>Welcome, Manager</p>
+            </div>
+            
+            <div class="mainContent">
+                <div class="subMenus">
+                    <div class="menuSection">
+                        <h1>
+                            Menu
+                        </h1>
+                        <!--
+                        <button onclick="viewMenu()">View Menu</button>
+                        -->
+                        <button id="viewMenuButton">View Menu</button>
+                        <button onclick="addMenuItem()">Add Menu Item</button>
+                        <button onclick="updateMenu()">Update Menu</button>
+                        <button onclick="deleteMenuItem()">Delete Menu Item</button>
+                    </div>
 
-            <h1>
-                Inventory:
-            </h1>
-            <button onclick="viewInventory()">View Inventory</button>
-            <button onclick="orderInventory()">Order Inventory</button>
-            <button onclick="addInventoryItem()">Add Inventory Item</button>
+                    <div class="menuSection">
+                        <h1>
+                            Inventory
+                        </h1>
+                        <button onclick="viewInventory()">View Inventory</button>
+                        <button onclick="orderInventory()">Order Inventory</button>
+                        <button onclick="addInventoryItem()">Add Inventory Item</button>
+                    </div>
 
-            <h1>
-                Reports:
-            </h1>
-            <button onclick="salesReport()">Sales Report</button>
-            <button onclick="popularMenuReport()">Popular Menu Item Report</button>
-            <button onclick="excessReport()">Excess Report</button>
-            <button onclick="restockReport()">Restock Report</button>
+                    <div class="menuSection">
+                        <h1>
+                            Reports
+                        </h1>
+                        <button onclick="salesReport()">Sales Report</button>
+                        <button onclick="popularMenuReport()">Popular Menu Item Report</button>
+                        <button onclick="excessReport()">Excess Report</button>
+                        <button onclick="restockReport()">Restock Report</button>
+                    </div>
+                </div>
 
+                <div class="contentContainer">
+                    <div class="content" id="managerView">
+                        <p>Welcome Manager</p>
+                    </div>
+                </div>
+            </div>
+
+            <script src="javascript/ManagerGUI.js"></script>
         </body>
     </html>
