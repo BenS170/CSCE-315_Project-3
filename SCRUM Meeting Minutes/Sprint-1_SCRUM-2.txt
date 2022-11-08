@@ -1,0 +1,27 @@
+Project 3 - Sprint 1
+
+SCRUM Meeting #2
+
+11/4/2022
+
+Start Time - 9:35
+
+Notes:
+
+All Team members were present for this meeting
+
+9:35 - Octavio asked each team member what they did last week, what they will do this week, and their main 
+barriers. Each member responded in kind starting with Priyanka.
+
+9:36 - Priyanka talked about how she updated the Customer GUI to look nicer and included a side navigation bar.
+9:38 - Hannah designed a small html layout for all the buttons and functions in the Manager GUI.
+9:40 - Anoop told everyone how he created a bunch of .ejs files for everyone to use instead of html. He also
+created the necessary buttons for the frontend Customer GUI.
+9:42 - Ben talked about how he changed the repository directories to be more organized and fit with the Render. 
+He also successfully launched the repository on render and is currently working on getting the buttons 
+to query the database.
+9:45 - Octavio explained how he will begin making up for his absence during the last week. He was assigned to work
+on frontend and backend functions for the Manager GUI with Hannah. He also added separate columns to the menu menu_items
+in the database
+
+End Time - 9:51
