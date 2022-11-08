@@ -90,6 +90,10 @@ app.get('/customergui', (req, res) => {
     res.render('CustomerGUI/Customer');
 });
 
+app.get('/customerorder', (req, res) => {
+    res.render('CustomerGUI/CustomerOrder');
+});
+
 app.get('/servergui', (req, res) => {
     res.render('ServerGUI/Server');
 });
