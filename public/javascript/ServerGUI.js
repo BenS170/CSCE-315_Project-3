@@ -1,4 +1,6 @@
 
+
+//This is for HTML purposes
 class order{
     constructor(name, qty, price){
         this.name = name;
@@ -24,8 +26,13 @@ class orderSum{
 }
 
 var myOrder = new orderSum();
+var order_items = [];
+var order_prices = [];
 
-function addToOrder(name, qty, price){
+function addToOrder(itemid, name, qty, price){
+    order_items.push(itemid);
+    order_prices.push(price);
+
     myOrder.addOrder(name, qty, price);
     var table = document.getElementById('orderTable');
     var row = table.insertRow(1);
@@ -35,6 +42,15 @@ function addToOrder(name, qty, price){
     cell1.innerHTML = name;
     cell2.innerHTML = qty;
     cell3.innerHTML = price;
+
+    var tax_h = document.getElementById('tax');
+    tax_h.innerHTML = Number((getTax()).toFixed(2));
+    let total = Number((parseFloat(getTax()) + parseFloat(getTotal())).toFixed(2));
+    var total_h = document.getElementById('total')
+    total_h.innerHTML = total;
+
+    console.log(order_items);
+    console.log(order_prices);
 }
 
 function clearOrder(){
@@ -44,37 +60,53 @@ function clearOrder(){
         table.deleteRow(1);
     }
     myOrder.clear();
-    console.log(myOrder.orders.length);
+    order_items = [];
+    order_prices = [];
+
+    var tax_h = document.getElementById('tax');
+    tax_h.innerHTML = getTax();
+    var total = getTax() + getTotal();
+    var total_h = document.getElementById('total');
+    total_h.innerHTML = total;
 }
 
-function submitOrder(pool){
-    console.log("test")
-    var results = pool.query('select * from teammembers');
-    console.log(results.rows);
+function getTotal(){
+    let total = 0;
+    for(let i = 0; i<myOrder.orders.length; i++){
+        total += parseFloat(myOrder.orders[i].price);
+    }
+    return total;
 }
 
-const submitButton = document.getElementById("submitButton");
+function getTax(){
+    let tax = parseFloat(getTotal());
+    tax = tax * .0825;
+    return tax;
+}
 
-submitButton.addEventListener('click', function(e) {
-    console.log('button was clicked');
-  
-    fetch('/serverSubmit', 
-        {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify({a : 1, b : 2})
-        })
-        .then(function(response) {
-        if(response.ok) {
-          console.log('Click was recorded');
-          return;
-        }
-        throw new Error('Request failed.');
+//This is for database
+
+const button = document.getElementById("serverSubmit");
+button.addEventListener('click', function(e) {
+  console.log('Server submit was clicked');
+  const data = {order_items, order_prices};
+
+  fetch('/serverSubmit', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
     })
-        .catch(function(error) {
-        console.log(error);
+    .then(function(response) {
+      if(response.ok) {
+        console.log('Click was recorded');
+        clearOrder();
+        return;
+      }
+      throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+      console.log(error);
     });
 });
