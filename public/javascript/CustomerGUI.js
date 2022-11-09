@@ -152,6 +152,54 @@
 // Cancel Order
 // Submit order
 
+function makeMenuTable(data){
+  htmlMenuTable = '<table> <tr id = "titleRow">';
+  htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
+  htmlMenuTable = htmlMenuTable + "<th>No. Ingredients</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Ingredients List</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Item Type</th>";
+  htmlMenuTable = htmlMenuTable + "</tr>";
+
+  for (let i = 0; i < data.result.length; i++){
+      htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].num_ingredients + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + (data.result[i].ingredient_list) + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].type + "</td>";
+      htmlMenuTable = htmlMenuTable + "</tr>";
+  }
+  htmlMenuTable = htmlMenuTable + "</table>";
+  return htmlMenuTable;
+}
+
+
+const viewEntreesButton = document.getElementById("viewEntreesButton");
+
+viewEntreesButton.addEventListener('click', function(e) {
+    console.log('view entrees was clicked');
+  
+    fetch('/getMenu', {method: 'GET'})
+        .then(function(response) {
+            if(response.ok) return response.json();
+            throw new Error('Request failed.');
+        })
+            .then(function(data) {
+            // TODO: Modify HTML using the information received from the database
+            content = document.getElementById("CustomerView");
+            htmlMenuTable = makeMenuTable(data);
+            content.innerHTML = htmlMenuTable;
+
+            console.log(data.result);
+        })
+        .catch(function(error) {
+            console.log(error);
+    });
+});
+
 
 
 function openTab(evt, tabName) {
