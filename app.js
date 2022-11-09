@@ -26,6 +26,61 @@ app.use(express.static('public'));
 app.use(express.json({extended: true, limit: '1mb'}))
 
 
+app.post('/serverSubmit', async (req, res) => {
+    console.log("inside server");
+    const { order_items, order_prices } = req.body;
+
+    // Getting Date Made
+    let dateobj = new Date();
+    var myDate = dateobj.toISOString().split('T')[0];
+
+    // Getting Week Day
+    var day = 'X';
+    var day_num = dateobj.getDay();
+    switch(day_num){
+        case 0:
+            day = 'U';
+            break;
+        case 1:
+            day = 'M';
+            break;
+        case 2:
+            day = 'T';
+            break;
+        case 3:
+            day = 'W';
+            break;
+        case 4:
+            day = 'H';
+            break;
+        case 5:
+            day = 'F';
+            break;
+        case 6:
+            day = 'S';
+            break;
+        default:
+            day = 'X';
+            break;
+    }
+  
+    // Getting next Order ID
+    var order_id = 0;
+    await pool.query('select MAX(order_id) from orders;')
+    .then(query_res => {
+        order_id = query_res.rows[0].max;
+        order_id += 1;
+    });
+
+
+    // Inputing Orders
+    for(let i = 0; i<order_items.length; i++){
+        await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_id+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+    }
+
+    res.status(200).json({ order_items, order_prices});
+});
+
 
 app.get('/', function(req, res) {
     res.render('index');
