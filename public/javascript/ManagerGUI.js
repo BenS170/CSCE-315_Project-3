@@ -32,13 +32,9 @@ addMenuItemButton.addEventListener('click', function(e) {
   const menuIngredients = prompt("What ingredients do you want for the new item?");
   const menuIngNum = prompt("How many ingredients is in the new item");
   const menuType = prompt("What type of item is this?");
-
-  console.log('finished add menu prompts');
   
   const data = {menuID, menuName,menuPrice, menuIngredients, menuIngNum, menuType};
 
-  console.log("after data");
-  
   fetch('/addMenuItem', {
         method: 'POST',
         headers:{

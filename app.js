@@ -26,35 +26,60 @@ app.use(express.static('public'));
 app.use(express.json({extended: true, limit: '1mb'}))
 
 
+
 app.get('/', function(req, res) {
     res.render('index');
 });
 
-app.get('/customergui', function(req, res) {
+app.get('/customergui', (req, res) => {
     res.render('CustomerGUI/Customer');
 });
 
-app.get('/servergui', function(req, res) {
+app.get('/customerorder', (req, res) => {
+    res.render('CustomerGUI/CustomerOrder');
+});
+
+app.get('/servergui', (req, res) => {
     res.render('ServerGUI/Server');
 });
 
-app.get('/managergui', function(req, res) {
+app.get('/managergui', (req, res) => {
     res.render('ManagerGUI/Manager');
 });
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
+    console.log(__dirname);
 });
+
+
+// app.post() updates state on the server
+// app.get() receives information form the server
 
 app.get('/getMenu', (req, res) => {
     menu_items = [];
     pool
-        .query('select * from menu_items;')
+        .query('select * from menu_items order by menu_id;')
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
             }
             data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
+
+app.get('/getInv', (req, res) => {
+    inv_items = [];
+    pool
+        .query('select * from inventory order by itemid;')
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                inv_items.push(query_res.rows[i]);
+            }
+            data = { result : inv_items };
             console.log("Query done");
             res.json(data);
         }
@@ -68,8 +93,10 @@ app.post('/addMenuItem', (req, res) => {
   
     console.log("before the query");
     // Database Code here
+    const queryString = "INSERT INTO menu_items ( menu_id , item_name , item_price , num_ingredients, ingredient_list, type ) VALUES( " + menuID + ", '" + menuName + "', " + menuPrice + ", " + menuIngNum + ", '" + menuIngredients + "', '" + menuType + "');";
+    console.log(queryString);
     pool
-        .query("INSERT INTO menu_items ( menu_id , item_name , item_price , num_ingredients, ingredient_list,type ) VALUES( " + menuID + ", '" + menuName + "', " + menuPrice + ", " + menuIngNum + ", " + menuIngredients + + ", '" + menuType + "');")
+        .query(queryString)
         .then(query_res => {
         // for (let i = 0; i < query_res.rowCount; i++){
         //     console.log(query_res.rows[i]);
@@ -82,20 +109,21 @@ app.post('/addMenuItem', (req, res) => {
 
 app.post('/updateMenuItem', (req, res) => {
     console.log("inside update Menu item");
-    const { ID, price } = req.body;
+    const { menuID, menuPrice } = req.body;
     console.log(req.body);
   
     // Database Code here
+    const queryString = "UPDATE menu_items SET item_price= '" + menuPrice +"' WHERE menu_id= '" + menuID +"';";
+    console.log(queryString);
      pool
-        .query("UPDATE menu_items SET item_price= '" + price +"' WHERE menu_id= '" + ID +"';")
+        .query(queryString)
         .then(query_res => {
         // for (let i = 0; i < query_res.rowCount; i++){
         //     console.log(query_res.rows[i]);
         // }
-        alert("item updated");
     })
 
-    res.status(200).json({ ID, price });
+    res.status(200).json({ menuID, menuPrice });
 });
 
 app.post('/deleteMenuItem', (req, res) => {
@@ -104,13 +132,14 @@ app.post('/deleteMenuItem', (req, res) => {
     console.log(req.body);
   
     // Database Code here
+    const queryString = "DELETE FROM menu_items WHERE menu_id= '" + menuID + "';";
+    console.log(queryString);
     pool
-        .query("DELETE FROM menu_items WHERE menu_id= '" + menuID + "';")
+        .query(queryString)
         .then(query_res => {
         // for (let i = 0; i < query_res.rowCount; i++){
         //     console.log(query_res.rows[i]);
         // }
-        alert("item deleted");
     })
 
     res.status(200).json({ menuID });

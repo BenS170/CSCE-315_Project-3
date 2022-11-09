@@ -1,0 +1,28 @@
+Project 3 - Sprint 1
+
+SCRUM Meeting #3
+
+11/6/22
+
+Start Time - 6:40
+
+Notes:
+
+All team members were present for this meeting
+
+6:40 - Octavio started the meeting by asking what everyone did since the last meeting, what they
+plan to accomplish before the end of the sprint, and the main barriers getting in their way.
+6:41 - Hannah mentioned how she began working on all the Manager GUI functions for this sprint with the exception
+of a couple inventory functions. She also explained that she is unable to query yet.
+6:42 - Ben talked about how he completed a base Server GUI layout that can add menu items, get the total price,
+and clear the items from a single order. However he is still working on connecting and quering the database to 
+submit an order.
+6:44 - Anoop created a new ejs file for customer orders and created the necessary buttons for it on the front end
+of the Customer GUI.
+6:46 - Octavio talked about how he was able to work on the Manager GUI front end, but the end design is not
+finalized.
+6:47 - The group discussed the issues regarding querying the database and made a plan for the following day
+to schedule a meeting with the TAs and talk about what our errors are and how to resolve them before the end
+of the sprint.
+
+End Time - 6:49
