@@ -7,17 +7,16 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
             <link rel="stylesheet" type="text/css" href="css/ManagerGUI.css"></link>
             <title>Document</title>
-            <script src="javascript/ManagerGUI.js"></script>
         </head>
 
         <body>
             <h1>
                 Menu:
             </h1>
-            <button onclick="viewMenu()">View Menu</button>
-            <button onclick="addMenuItem()">Add Menu Item</button>
-            <button onclick="updateMenu()">Update Menu</button>
-            <button onclick="deleteMenuItem()">Delete Menu Item</button>
+            <button id="viewMenuButton">View Menu</button>
+            <button id="addMenuItemButton">Add Menu Item</button>
+            <button id="updateMenuItemButton">Update Menu</button>
+            <button id="deleteMenuItemButton">Delete Menu Item</button>
 
             <h1>
                 Inventory:
@@ -33,6 +32,8 @@
             <button onclick="popularMenuReport()">Popular Menu Item Report</button>
             <button onclick="excessReport()">Excess Report</button>
             <button onclick="restockReport()">Restock Report</button>
+
+            <script src="javascript/ManagerGUI.js"></script>
 
         </body>
     </html>
