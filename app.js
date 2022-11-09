@@ -140,3 +140,72 @@ app.get('/getInv', (req, res) => {
         }
     );
 });
+
+// To get entrees
+app.get('/getEntree', (req, res) => {
+    menu_items = [];
+    pool
+        // SQL query is not 100% CORRECT, should display type but does not...
+        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'entree';")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
+
+// To get sides
+app.get('/getSide', (req, res) => {
+    menu_items = [];
+    pool
+        // SQL query is not 100% CORRECT, should display type but does not...
+        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'side';")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
+
+// To get drinks
+app.get('/getDrink', (req, res) => {
+    menu_items = [];
+    pool
+        // SQL query is not 100% CORRECT, should display type but does not...
+        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'drink';")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
+
+
+// To get dessert
+app.get('/getDessert', (req, res) => {
+    menu_items = [];
+    pool
+        // SQL query is not 100% CORRECT, should display type but does not...
+        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'dessert';")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
