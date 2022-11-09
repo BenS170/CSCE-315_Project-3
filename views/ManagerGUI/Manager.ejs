@@ -6,28 +6,41 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
             <link rel="stylesheet" type="text/css" href="css/ManagerGUI.css"></link>
-
+            <title>Document</title>
         </head>
 
         <body>
+            <!-- the following will display the available submenus to the manager -->
+            <div class="headers">
+                <img src="https://i.ibb.co/1b4NdSg/revsLogo.png" alt="Rev's Logo">
+                <p>Welcome, Manager</p>
+            </div>
             
-            
+            <div class="mainContent">
+                <div class="subMenus">
+                    <div class="menuSection">
                         <h1>
                             Menu
                         </h1>
-                 
+                        <!--
+                        <button onclick="viewMenu()">View Menu</button>
+                        -->
                         <button id="viewMenuButton">View Menu</button>
                         <button id="addMenuItemButton">Add Menu Item</button>
                         <button id="updateMenuItemButton">Update Menu</button>
                         <button id="deleteMenuItemButton">Delete Menu Item</button>
-                   
+                    </div>
+
+                    <div class="menuSection">
                         <h1>
                             Inventory
                         </h1>
                         <button id="viewInventoryButton">View Inventory</button>
                         <button onclick="orderInventory()">Order Inventory</button>
                         <button onclick="addInventoryItem()">Add Inventory Item</button>
-                    
+                    </div>
+
+                    <div class="menuSection">
                         <h1>
                             Reports
                         </h1>
@@ -35,7 +48,15 @@
                         <button onclick="popularMenuReport()">Popular Menu Item Report</button>
                         <button onclick="excessReport()">Excess Report</button>
                         <button onclick="restockReport()">Restock Report</button>
+                    </div>
+                </div>
 
+                <div class="contentContainer">
+                    <div class="content" id="managerView">
+                        <p>Welcome Manager</p>
+                    </div>
+                </div>
+            </div>
 
             <script src="javascript/ManagerGUI.js"></script>
         </body>
