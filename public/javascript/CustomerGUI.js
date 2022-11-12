@@ -109,11 +109,10 @@
 
 // // SQL Queries - To display type of menu item and corresponding price:
 
-// // For Entrees: SELECT item_name, item_price FROM menu_items WHERE type = 'entree';
-// // For Sides: SELECT item_name, item_price FROM menu_items WHERE type = 'side';
-// // For Desserts: SELECT item_name, item_price FROM menu_items WHERE type = 'dessert';
-// // For Drinks: SELECT item_name, item_price FROM menu_items WHERE type = 'drink';
-
+// // For Entrees: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'entree';
+// // For Sides: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'side';
+// // For Desserts: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'dessert';
+// // For Drinks: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'drink';
 
 // // inventory functions
 // async function viewInventory(){
@@ -132,19 +131,6 @@
 
 // }
 
-
-
-// SQL Queries:
-
-
-// For Entrees: SELECT item_name, item_price FROM menu_items WHERE type = 'entree';
-
-// For Sides: SELECT item_name, item_price FROM menu_items WHERE type = 'side';
-
-// For Desserts: SELECT item_name, item_price FROM menu_items WHERE type = 'dessert';
-
-// For Drinks: SELECT item_name, item_price FROM menu_items WHERE type = 'drink';
-
 // CustomerOrder.ejs
 
 // Add Items, Remove Items
@@ -152,14 +138,11 @@
 // Cancel Order
 // Submit order
 
-function makeMenuTable(data){
+function makeEntreeTable(data){
   htmlMenuTable = '<table> <tr id = "titleRow">';
   htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-  htmlMenuTable = htmlMenuTable + "<th>No. Ingredients</th>";
-  htmlMenuTable = htmlMenuTable + "<th>Ingredients List</th>";
-  htmlMenuTable = htmlMenuTable + "<th>Item Type</th>";
   htmlMenuTable = htmlMenuTable + "</tr>";
 
   for (let i = 0; i < data.result.length; i++){
@@ -167,9 +150,6 @@ function makeMenuTable(data){
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_price + "</td>";
-      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].num_ingredients + "</td>";
-      htmlMenuTable = htmlMenuTable + "<td>" + (data.result[i].ingredient_list) + "</td>";
-      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].type + "</td>";
       htmlMenuTable = htmlMenuTable + "</tr>";
   }
   htmlMenuTable = htmlMenuTable + "</table>";
@@ -181,8 +161,7 @@ const viewEntreesButton = document.getElementById("viewEntreesButton");
 
 viewEntreesButton.addEventListener('click', function(e) {
     console.log('view entrees was clicked');
-  
-    fetch('/getMenu', {method: 'GET'})
+    fetch('/getEntree', {method: 'GET'})
         .then(function(response) {
             if(response.ok) return response.json();
             throw new Error('Request failed.');
@@ -190,7 +169,144 @@ viewEntreesButton.addEventListener('click', function(e) {
             .then(function(data) {
             // TODO: Modify HTML using the information received from the database
             content = document.getElementById("CustomerView");
-            htmlMenuTable = makeMenuTable(data);
+            htmlMenuTable = makeEntreeTable(data);
+            content.innerHTML = htmlMenuTable;
+
+            console.log(data.result);
+        })
+        .catch(function(error) {
+            console.log(error);
+    });
+});
+
+
+
+function makeSideTable(data){
+  htmlMenuTable = '<table> <tr id = "titleRow">';
+  htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
+  htmlMenuTable = htmlMenuTable + "</tr>";
+
+  for (let i = 0; i < data.result.length; i++){
+
+      htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + "</tr>";
+  }
+  htmlMenuTable = htmlMenuTable + "</table>";
+  return htmlMenuTable;
+}
+
+
+const viewSidesButton = document.getElementById("viewSidesButton");
+
+viewSidesButton.addEventListener('click', function(e) {
+    console.log('view sides was clicked');
+  
+    fetch('/getSide', {method: 'GET'})
+        .then(function(response) {
+            if(response.ok) return response.json();
+            throw new Error('Request failed.');
+        })
+            .then(function(data) {
+            // TODO: Modify HTML using the information received from the database
+            content = document.getElementById("CustomerView");
+            htmlMenuTable = makeSideTable(data);
+            content.innerHTML = htmlMenuTable;
+
+            console.log(data.result);
+        })
+        .catch(function(error) {
+            console.log(error);
+    });
+});
+
+
+
+
+function makeDrinkTable(data){
+  htmlMenuTable = '<table> <tr id = "titleRow">';
+  htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
+  htmlMenuTable = htmlMenuTable + "</tr>";
+
+  for (let i = 0; i < data.result.length; i++){
+
+      htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + "</tr>";
+  }
+  htmlMenuTable = htmlMenuTable + "</table>";
+  return htmlMenuTable;
+}
+
+
+const viewDrinksButton = document.getElementById("viewDrinksButton");
+
+viewDrinksButton.addEventListener('click', function(e) {
+    console.log('view drinks was clicked');
+  
+    fetch('/getDrink', {method: 'GET'})
+        .then(function(response) {
+            if(response.ok) return response.json();
+            throw new Error('Request failed.');
+        })
+            .then(function(data) {
+            // TODO: Modify HTML using the information received from the database
+            content = document.getElementById("CustomerView");
+            htmlMenuTable = makeDrinkTable(data);
+            content.innerHTML = htmlMenuTable;
+
+            console.log(data.result);
+        })
+        .catch(function(error) {
+            console.log(error);
+    });
+});
+
+
+
+
+function makeDessertTable(data){
+  htmlMenuTable = '<table> <tr id = "titleRow">';
+  htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
+  htmlMenuTable = htmlMenuTable + "</tr>";
+
+  for (let i = 0; i < data.result.length; i++){
+
+      htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + "</tr>";
+  }
+  htmlMenuTable = htmlMenuTable + "</table>";
+  return htmlMenuTable;
+}
+
+
+const viewDessertsButton = document.getElementById("viewDessertsButton");
+
+viewDessertsButton.addEventListener('click', function(e) {
+    console.log('view desserts was clicked');
+  
+    fetch('/getDessert', {method: 'GET'})
+        .then(function(response) {
+            if(response.ok) return response.json();
+            throw new Error('Request failed.');
+        })
+            .then(function(data) {
+            // TODO: Modify HTML using the information received from the database
+            content = document.getElementById("CustomerView");
+            htmlMenuTable = makeDessertTable(data);
             content.innerHTML = htmlMenuTable;
 
             console.log(data.result);

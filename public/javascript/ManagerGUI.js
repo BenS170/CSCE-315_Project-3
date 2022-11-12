@@ -58,24 +58,99 @@ viewMenuButton.addEventListener('click', function(e) {
 });
 
 
-function addMenuItem(){
-    const contentId = document.getElementById('cool');
-    contentId.hidden = true;
-    contentId.innerHTML = '<span style="background-color: blue" id = "currContent">Bruh</span>';
-}
 
-function updateMenu(){
-    alert("update menu");
+const addMenuItemButton = document.getElementById("addMenuItemButton");
 
-}
+addMenuItemButton.addEventListener('click', function(e) {
+  console.log('add menu was clicked');
+  const menuID = prompt("What is the menu ID?");
+  const menuName = prompt("What is the name of the item?");
+  const menuPrice = prompt("What is the new price");
+  const menuIngredients = prompt("What ingredients do you want for the new item?");
+  const menuIngNum = prompt("How many ingredients is in the new item");
+  const menuType = prompt("What type of item is this?");
+  
+  const data = {menuID, menuName,menuPrice, menuIngredients, menuIngNum, menuType};
 
-function deleteMenuItem(){
-    alert("delete menu");
+  fetch('/addMenuItem', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(function(response) {
+      if(response.ok) {
+        console.log('Click was recorded');
+        return;
+      }
+      throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});
 
-}
+
+const  updateMenuItemButton = document.getElementById("updateMenuItemButton");
+
+updateMenuItemButton.addEventListener('click', function(e) {
+  console.log('update menu was clicked');
+  const menuID = prompt("What is the menu ID?");
+  const menuPrice = prompt("What is the new price");
+ 
+  
+  const data = {menuID,menuPrice};
+
+  fetch('/updateMenuItem', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(function(response) {
+      if(response.ok) {
+        console.log('Click was recorded');
+        return;
+      }
+      throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});
 
 
-// inventory functions
+const  deleteMenuItemButton = document.getElementById("deleteMenuItemButton");
+
+deleteMenuItemButton.addEventListener('click', function(e) {
+  console.log('menu delete was clicked');
+  const menuID = prompt("What is the menu ID?"); 
+  
+  const data = {menuID};
+
+  fetch('/deleteMenuItem', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(function(response) {
+      if(response.ok) {
+        console.log('Click was recorded');
+        return;
+      }
+      throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});
+
+
+
 function makeInventoryTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Item ID</th>";
@@ -121,36 +196,37 @@ viewInventoryButton.addEventListener('click', function(e) {
         .catch(function(error) {
             console.log(error);
     });
-});
+})
 
-function orderInventory(){
+// inventory functions
+async function orderInventory(){
     alert("order inventory");
 
 }
 
-function addInventoryItem(){
+async function addInventoryItem(){
     alert("add inventory");
 
 }
 
 
 // manager reports
-function salesReport(){
+async function salesReport(){
     alert("sales report");
 
 }
 
-function popularMenuReport(){
+async function popularMenuReport(){
     alert("popular report");
 
 }
 
-function excessReport(){
+async function excessReport(){
     alert("excess report");
 
 }
 
-function restockReport(){
+async function restockReport(){
     alert("restock report");
 
 }

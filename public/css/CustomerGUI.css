@@ -140,3 +140,31 @@ h3{
   margin-right: 50px;
   padding-top: 10px;
 }
+
+
+/* Idea is to have this as a div that borders the CustomerView
+.Container{
+  display:flex;
+
+  background-color: lightgray;
+  border-style: ridge;
+  border-color: goldenrod;
+  border-radius: 2%;
+  
+  width: 95%;
+  height: fit-content;
+} */
+
+#CustomerView {
+
+  position: relative;
+  left: 400px;
+  bottom: 900px;
+  height: 1000px;
+  width: 1000px;
+  background-color: lightgray;
+  border-style: ridge;
+  border-color: goldenrod;
+  border-radius: 2%;
+
+}

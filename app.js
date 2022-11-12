@@ -90,6 +90,10 @@ app.get('/customergui', (req, res) => {
     res.render('CustomerGUI/Customer');
 });
 
+app.get('/customerorder', (req, res) => {
+    res.render('CustomerGUI/CustomerOrder');
+});
+
 app.get('/servergui', (req, res) => {
     res.render('ServerGUI/Server');
 });
@@ -135,4 +139,132 @@ app.get('/getInv', (req, res) => {
             res.json(data);
         }
     );
+});
+
+// To get entrees
+app.get('/getEntree', (req, res) => {
+    menu_items = [];
+    pool
+        // SQL query is not 100% CORRECT, should display type but does not...
+        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'entree';")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
+
+// To get sides
+app.get('/getSide', (req, res) => {
+    menu_items = [];
+    pool
+        // SQL query is not 100% CORRECT, should display type but does not...
+        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'side';")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
+
+// To get drinks
+app.get('/getDrink', (req, res) => {
+    menu_items = [];
+    pool
+        // SQL query is not 100% CORRECT, should display type but does not...
+        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'drink';")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
+
+
+// To get dessert
+app.get('/getDessert', (req, res) => {
+    menu_items = [];
+    pool
+        // SQL query is not 100% CORRECT, should display type but does not...
+        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'dessert';")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
+});
+
+app.post('/addMenuItem', (req, res) => {
+    console.log("inside add Menu item");
+    const { menuID, menuName,menuPrice,menuIngredients, menuIngNum, menuType } = req.body;
+    console.log(req.body);
+  
+    console.log("before the query");
+    // Database Code here
+    const queryString = "INSERT INTO menu_items ( menu_id , item_name , item_price , num_ingredients, ingredient_list, type ) VALUES( " + menuID + ", '" + menuName + "', " + menuPrice + ", " + menuIngNum + ", '" + menuIngredients + "', '" + menuType + "');";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+        console.log("item added");
+    })
+
+    res.status(200).json({ menuID, menuName,menuPrice,menuIngredients, menuIngNum, menuType });
+});
+
+app.post('/updateMenuItem', (req, res) => {
+    console.log("inside update Menu item");
+    const { menuID, menuPrice } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "UPDATE menu_items SET item_price= '" + menuPrice +"' WHERE menu_id= '" + menuID +"';";
+    console.log(queryString);
+     pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ menuID, menuPrice });
+});
+
+app.post('/deleteMenuItem', (req, res) => {
+    console.log("inside update Menu item");
+    const { menuID } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "DELETE FROM menu_items WHERE menu_id= '" + menuID + "';";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ menuID });
 });
