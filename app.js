@@ -231,7 +231,7 @@ app.post('/addMenuItem', (req, res) => {
     res.status(200).json({ menuID, menuName,menuPrice,menuIngredients, menuIngNum, menuType });
 });
 
-app.post('/updateMenuItem', (req, res) => {
+app.post('/updateMenuPriceItem', (req, res) => {
     console.log("inside update Menu item");
     const { menuID, menuPrice } = req.body;
     console.log(req.body);
@@ -248,6 +248,25 @@ app.post('/updateMenuItem', (req, res) => {
     })
 
     res.status(200).json({ menuID, menuPrice });
+});
+
+app.post('/updateMenuNameItem', (req, res) => {
+    console.log("inside update Menu item");
+    const { menuID, menuName } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "UPDATE menu_items SET item_name= '" + menuName +"' WHERE menu_id= '" + menuID +"';";
+    console.log(queryString);
+     pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ menuID, menuName });
 });
 
 app.post('/deleteMenuItem', (req, res) => {
@@ -267,4 +286,39 @@ app.post('/deleteMenuItem', (req, res) => {
     })
 
     res.status(200).json({ menuID });
+});
+
+app.post('/addInventoryItem', (req, res) => {
+    console.log("inside add inveneotry item");
+    const { inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded } = req.body;
+    console.log(req.body);
+  
+    console.log("before the query");
+    // Database Code here
+    const queryString = "INSERT INTO inventory ( itemid , stockprice , unit , quantity, serving_size, quantity_needed ) VALUES( '" + inventoryID + "', " + inventoryStockprice + ", '" + inventoryUnits + "', " + inventoryQuantity + ", " + inventoryServingSize + ", " + inventoryNeeded + ");";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+            console.log("item added");
+    })
+
+    res.status(200).json({ inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded });
+});
+
+app.post('/orderInventoryItem', (req, res) => {
+    console.log("inside update inventory item");
+    const { inventoryID, inventoryQuantity } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "UPDATE inventory SET quantity= '" + inventoryQuantity +"' WHERE itemid= '" + inventoryID +"';";
+    console.log(queryString);
+    console.log(queryString);
+     pool
+        .query(queryString)
+        .then(query_res => {
+    })
+
+    res.status(200).json({ inventoryID, inventoryQuantity });
 });
