@@ -285,5 +285,6 @@ app.post('/getSalesRep', (req, res) => {
             }
             data = { result : sales };
             res.json(data);
-    })
-});
+        })
+    }
+);
