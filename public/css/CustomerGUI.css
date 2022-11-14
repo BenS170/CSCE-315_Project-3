@@ -155,12 +155,42 @@ h3{
   height: fit-content;
 } */
 
+table, td, th {  
+  border: 2.5px solid #5B0726;
+  text-align: left;
+  color: #5B0726;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-style: ridge;
+  vertical-align: center;
+}
+
+th, td {
+  padding: 20px;
+}
+
+.addToOrder{
+  background-color: #5B0726; 
+  border: none;
+  color: #F8BE14;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
 #CustomerView {
 
   position: relative;
-  left: 400px;
+  left: 350px;
   bottom: 900px;
-  height: 1000px;
+  height: 2000px;
   width: 1000px;
   background-color: lightgray;
   border-style: ridge;

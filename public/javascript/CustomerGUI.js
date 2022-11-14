@@ -114,7 +114,6 @@
 // // For Desserts: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'dessert';
 // // For Drinks: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'drink';
 
-
 // // inventory functions
 // async function viewInventory(){
 //     alert("view inventory");
@@ -144,14 +143,15 @@ function makeEntreeTable(data){
   htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
   htmlMenuTable = htmlMenuTable + "</tr>";
 
   for (let i = 0; i < data.result.length; i++){
-
       htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = addToOrder()>ADD TO ORDER</button></td>';
       htmlMenuTable = htmlMenuTable + "</tr>";
   }
   htmlMenuTable = htmlMenuTable + "</table>";
@@ -163,7 +163,6 @@ const viewEntreesButton = document.getElementById("viewEntreesButton");
 
 viewEntreesButton.addEventListener('click', function(e) {
     console.log('view entrees was clicked');
-  
     fetch('/getEntree', {method: 'GET'})
         .then(function(response) {
             if(response.ok) return response.json();
@@ -189,6 +188,7 @@ function makeSideTable(data){
   htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
   htmlMenuTable = htmlMenuTable + "</tr>";
 
   for (let i = 0; i < data.result.length; i++){
@@ -196,7 +196,8 @@ function makeSideTable(data){
       htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder">ADD TO ORDER</button></td>';
       htmlMenuTable = htmlMenuTable + "</tr>";
   }
   htmlMenuTable = htmlMenuTable + "</table>";
@@ -235,6 +236,7 @@ function makeDrinkTable(data){
   htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
+  htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
   htmlMenuTable = htmlMenuTable + "</tr>";
 
   for (let i = 0; i < data.result.length; i++){
@@ -242,7 +244,8 @@ function makeDrinkTable(data){
       htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + "$" +  data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder">ADD TO ORDER</button></td>';
       htmlMenuTable = htmlMenuTable + "</tr>";
   }
   htmlMenuTable = htmlMenuTable + "</table>";
@@ -281,14 +284,15 @@ function makeDessertTable(data){
   htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
   htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-  htmlMenuTable = htmlMenuTable + "</tr>";
+  htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
 
   for (let i = 0; i < data.result.length; i++){
 
       htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
       htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-      htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
+      htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder">ADD TO ORDER</button></td>';
       htmlMenuTable = htmlMenuTable + "</tr>";
   }
   htmlMenuTable = htmlMenuTable + "</table>";
@@ -319,6 +323,9 @@ viewDessertsButton.addEventListener('click', function(e) {
     });
 });
 
+function googleTranslateElementInit(){
+    new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
 
 /*
 function openTab(evt, tabName) {
@@ -337,3 +344,9 @@ function openTab(evt, tabName) {
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 */
+function addToOrder(){
+    console.log('add to order was clicked');
+    const itemQty = prompt("Enter a quantity");
+    
+    const data = {itemQty};
+}

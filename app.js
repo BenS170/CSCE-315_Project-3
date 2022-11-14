@@ -288,6 +288,25 @@ app.post('/deleteMenuItem', (req, res) => {
     res.status(200).json({ menuID });
 });
 
+app.post('/getSalesRep', (req, res) => {
+    console.log("Inside getSalesRep");
+    const { startDate, endDate } = req.body;
+    console.log(req.body);
+
+    sales = [];
+    // Database Code here
+    const queryString = "SELECT T1.item_name, T1.sales, ROUND(T1.sales*T2.item_price::numeric, 2) AS profit FROM (SELECT item_name, COUNT(item) as sales FROM orders INNER JOIN menu_items on menu_items.menu_id = orders.item WHERE orders.date_made >= '" + startDate + "' AND orders.date_made <= '" + endDate + "' GROUP BY menu_items.item_name) AS T1 JOIN(SELECT item_name, item_price FROM menu_items) as T2 ON T1.item_name = T2.item_name";
+    pool
+        .query(queryString)
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                sales.push(query_res.rows[i]);
+            }
+            data = { result : sales };
+            res.json(data);
+    })
+});
+
 app.post('/addInventoryItem', (req, res) => {
     console.log("inside add inveneotry item");
     const { inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded } = req.body;
