@@ -10,6 +10,7 @@
         </head>
 
         <body>
+            <div id="google_translate_element"></div>
             <!-- the following will display the available submenus to the manager -->
             <div class="headers">
                 <img src="https://i.ibb.co/1b4NdSg/revsLogo.png" alt="Rev's Logo">
@@ -44,20 +45,81 @@
                         <h1>
                             Reports
                         </h1>
-                        <button onclick="salesReport()">Sales Report</button>
-                        <button onclick="popularMenuReport()">Popular Menu Item Report</button>
-                        <button onclick="excessReport()">Excess Report</button>
-                        <button onclick="restockReport()">Restock Report</button>
+                        <button id="salesReportButton">Sales Report</button>
+                        <button id="popMenuItemButton">Popular Menu Item Report</button>
+                        <button id="excessReportButton">Excess Report</button>
+                        <button id="restockReportButton">Restock Report</button>
                     </div>
                 </div>
 
                 <div class="contentContainer">
                     <div class="content" id="managerView">
-                        <p>Welcome Manager</p>
+                        <p>Welcome, Manager</p>
+                    </div>
+
+                    <!-- The date selectors for any Manager Function that requires a date range-->
+                    <div id="dateSelectors" hidden="true" value="0">
+                        <div id="datePanel1">
+                            <select id="startMonth">
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+
+                            <select id="startDay">
+                                <option>1</option> <option>2</option>  <option>3</option> <option>4</option> <option>5</option> <option>6</option> <option>7</option> <option>8</option> <option>9</option> <option>10</option>
+                                <option>11</option> <option>12</option>  <option>13</option> <option>14</option> <option>15</option> <option>16</option> <option>17</option> <option>18</option> <option>19</option> <option>20</option>
+                                <option>21</option> <option>22</option>  <option>23</option> <option>24</option> <option>25</option> <option>26</option> <option>27</option> <option>28</option> <option>29</option> <option>30</option>
+                                <option>31</option>
+                            </select>
+
+                            <select id="startYear">
+                                <option>2022</option>
+                            </select>
+                        </div>
+
+                        <div id="datePanel1">
+                            <select id="endMonth">
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+
+                            <select id="endDay">
+                                <option>1</option> <option>2</option>  <option>3</option> <option>4</option> <option>5</option> <option>6</option> <option>7</option> <option>8</option> <option>9</option> <option>10</option>
+                                <option>11</option> <option>12</option>  <option>13</option> <option>14</option> <option>15</option> <option>16</option> <option>17</option> <option>18</option> <option>19</option> <option>20</option>
+                                <option>21</option> <option>22</option>  <option>23</option> <option>24</option> <option>25</option> <option>26</option> <option>27</option> <option>28</option> <option>29</option> <option>30</option>
+                                <option>31</option>
+                            </select>
+
+                            <select id="endYear">
+                                <option>2022</option>
+                            </select>
+                        </div>
+
+                        <button id="submitDates">Submit dates</button>
                     </div>
                 </div>
             </div>
-
+            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>            >
             <script src="javascript/ManagerGUI.js"></script>
         </body>
     </html>
