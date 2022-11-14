@@ -66,6 +66,10 @@ body{
     background-color: gray;
 }
 
+.sides:active{
+    background-color: gray;
+}
+
 .desserts{
     width: 100%;
     border-radius: 50px;
