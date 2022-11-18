@@ -1,0 +1,25 @@
+body{
+    background-color: maroon;
+}
+
+.allButtons{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+    align-items: center;
+}
+
+.title{
+    padding-top: 10%;
+    text-align: center;
+    margin: auto;
+    color: white;
+}
+
+.allButtons button{
+    height: 100px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
