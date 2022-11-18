@@ -64,31 +64,56 @@ const addMenuItemButton = document.getElementById("addMenuItemButton");
 addMenuItemButton.addEventListener('click', function(e) {
   console.log('add menu was clicked');
   const menuID = prompt("What is the menu ID?");
-  const menuName = prompt("What is the name of the item?");
-  const menuPrice = prompt("What is the new price");
-  const menuIngredients = prompt("What ingredients do you want for the new item?");
-  const menuIngNum = prompt("How many ingredients is in the new item");
-  const menuType = prompt("What type of item is this?");
+  if(menuID == null || menuID == ""){
+    alert("add menu item was canceled");
+  } else{
+    const menuName = prompt("What is the name of the item?");
+    if (menuName == null || menuName == ""){
+        alert("add menu item was canceled");
+    } else {
+        const menuPrice = prompt("What is the new price");
+        if (menuPrice == null || menuPrice == ""){
+            alert("add menu item was canceled");
+        } else{
+            const menuIngredients = prompt("What ingredients do you want for the new item?");
+            if (menuIngredients == null || menuIngredients == ""){
+                alert("add menu item was canceled");
+            } else {
+                const menuIngNum = prompt("How many ingredients is in the new item");
+                if (menuIngNum == null || menuIngNum == ""){
+                    alert("add menu item was canceled");
+                } else{
+                    const menuType = prompt("What type of item is this?");
+                    if (menuType == null || menuType == ""){
+                        alert("add menu item was canceled");
+                    } else{
+                        const data = {menuID, menuName,menuPrice, menuIngredients, menuIngNum, menuType};
   
-  const data = {menuID, menuName,menuPrice, menuIngredients, menuIngNum, menuType};
+                        fetch('/addMenuItem', {
+                              method: 'POST',
+                              headers:{
+                                  'Content-Type': 'application/json'
+                              },
+                              body: JSON.stringify(data)
+                          })
+                          .then(function(response) {
+                            if(response.ok) {
+                              console.log('Click was recorded');
+                              return;
+                            }
+                            throw new Error('Request failed.');
+                          })
+                          .catch(function(error) {
+                            console.log(error);
+                          });
+                      }
+                    }
 
-  fetch('/addMenuItem', {
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(function(response) {
-      if(response.ok) {
-        console.log('Click was recorded');
-        return;
-      }
-      throw new Error('Request failed.');
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+                }
+            }
+
+        }
+    }
 });
 
 
@@ -97,28 +122,60 @@ const  updateMenuItemButton = document.getElementById("updateMenuItemButton");
 updateMenuItemButton.addEventListener('click', function(e) {
   console.log('update menu was clicked');
   const menuID = prompt("What is the menu ID?");
-  const menuPrice = prompt("What is the new price");
- 
-  
-  const data = {menuID,menuPrice};
+  if (menuID == null || menuID == ""){
+    alert("menu update canceled");
+  } else {
+    if (confirm("Do you want to update the price?")){
+        const menuPrice = prompt("What is the new price");
+     
+        const data = {menuID,menuPrice};
+    
+        fetch('/updateMenuPriceItem', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+          if(response.ok) {
+            console.log('Click was recorded');
+            return;
+          }
+          throw new Error('Request failed.');
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      } else {
+        if (confirm("Do you want to update the name?")){
+            const menuName = prompt("What is the new name?");
 
-  fetch('/updateMenuItem', {
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(function(response) {
-      if(response.ok) {
-        console.log('Click was recorded');
-        return;
+            const data2 = {menuID,menuName};
+
+            fetch('/updateMenuNameItem', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data2)
+            })
+            .then(function(response) {
+              if(response.ok) {
+                console.log('Click was recorded');
+                return;
+              }
+              throw new Error('Request failed.');
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+
+        }
       }
-      throw new Error('Request failed.');
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+
+  }
+  
 });
 
 
@@ -198,14 +255,72 @@ viewInventoryButton.addEventListener('click', function(e) {
 });
 
 // inventory functions
-async function orderInventory(){
-    alert("order inventory");
-}
 
-async function addInventoryItem(){
-    alert("add inventory");
+const  orderInventoryButton = document.getElementById("orderInventoryButton");
 
-}
+orderInventoryButton.addEventListener('click', function(e) {
+  console.log('order inventory was clicked');
+
+  const inventoryIDPrompt = prompt("What is the inventory ID?", "i.e. bacon");
+  const inventoryQuantity = prompt("what is the quantity to update to?");
+
+  const inventoryID = inventoryIDPrompt.toLowerCase();
+
+  const data = {inventoryID, inventoryQuantity};
+
+  fetch('/orderInventoryItem', {
+    method: 'POST',
+    headers:{
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+})
+.then(function(response) {
+  if(response.ok) {
+    console.log('Click was recorded');
+    return;
+  }
+  throw new Error('Request failed.');
+})
+.catch(function(error) {
+  console.log(error);
+});
+
+});
+
+const addInventoryItemButton = document.getElementById("addInventoryItemButton");
+
+addInventoryItemButton.addEventListener('click', function(e) {
+  console.log('add inventory was clicked');
+  const inventoryID = prompt("What is the inventory ID?", "i.e. bacon");
+  const inventoryStockprice = prompt("What is the stockprice of this item?");
+  const inventoryUnits = prompt("What is the units of the item?");
+  const inventoryQuantity = prompt("How much of the item do you have?");
+  const inventoryServingSize = prompt("What is the serving size for this item?");
+  const inventoryNeeded = prompt("How much of the item is needed?");
+  
+  const data = {inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded};
+
+  fetch('/addInventoryItem', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(function(response) {
+      if(response.ok) {
+        console.log('Click was recorded');
+        return;
+      }
+      throw new Error('Request failed.');
+    })
+    .catch(function(error) {
+      console.log(error);
+    });
+});
+
+
 // manager reports
 
 // Helper function: 
