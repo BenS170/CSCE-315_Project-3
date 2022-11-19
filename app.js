@@ -307,6 +307,26 @@ app.post('/getSalesRep', (req, res) => {
     })
 });
 
+app.post('/getOrdersBetweenDates', (req, res) => {
+    console.log("Inside getOrdersBetweenDates");
+    const { startDate, endDate } = req.body;
+    console.log(req.body);
+
+    orders = [];
+    // Database Code here
+    const queryString = "SELECT * FROM orders WHERE '" + startDate + "' <= date_made AND date_made <= '" + endDate + "' order by order_id";
+    console.log(queryString);
+    pool.query(queryString)
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                orders.push(query_res.rows[i]);
+            }
+            data = { result : orders };
+            res.json(data);
+        })
+    }
+);
+
 app.post('/addInventoryItem', (req, res) => {
     console.log("inside add inveneotry item");
     const { inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded } = req.body;
