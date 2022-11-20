@@ -2,6 +2,7 @@ const { query } = require('express');
 const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
+const session = require('express-session');
 
 const app = express();
 const port = 3000;
@@ -22,8 +23,61 @@ process.on('SIGINT', function() {
 });
 
 app.set("view engine", "ejs");
+app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: 'SECRET'
+}));
 app.use(express.static('public'));
 app.use(express.json({extended: true, limit: '1mb'}))
+
+
+// Passport Setup
+const passport = require('passport');
+var userProfile;
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.set('view engine', 'ejs');
+
+app.get('/success', (req, res) => res.send(userProfile));
+app.get('/error', (req, res) => res.send("error logging in"));
+
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+
+// Google AUTH
+
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GOOGLE_CLIENT_ID = '404136506802-g4dscms79u7q3lloe7a7o8r3f0iftmic.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = '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';
+passport.use(new GoogleStrategy({
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL: "http://localhost:3000/auth/google/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+      userProfile=profile;
+      return done(null, userProfile);
+  }
+));
+ 
+app.get('/auth/google', 
+  passport.authenticate('google', { scope : ['profile', 'email'] }));
+ 
+app.get('/auth/google/callback', 
+  passport.authenticate('google', { failureRedirect: '/error' }),
+  function(req, res) {
+    // Successful authentication, redirect success.
+    res.redirect('/index');
+  });
 
 
 app.post('/serverSubmit', async (req, res) => {
@@ -32,7 +86,9 @@ app.post('/serverSubmit', async (req, res) => {
 
     // Getting Date Made
     let dateobj = new Date();
+    dateobj.toLocaleString('en-US', { timeZone: 'America/New_York' });
     var myDate = dateobj.toISOString().split('T')[0];
+    console.log(dateobj.toISOString());
 
     // Getting Week Day
     var day = 'X';
@@ -83,8 +139,12 @@ app.post('/serverSubmit', async (req, res) => {
 
 
 app.get('/', function(req, res) {
-    res.render('index');
+    res.render('pages/auth');
 });
+
+app.get('/index', function(req,res){
+    res.render('index');
+})
 
 app.get('/customergui', (req, res) => {
     res.render('CustomerGUI/Customer');
