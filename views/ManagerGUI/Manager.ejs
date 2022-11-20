@@ -2,57 +2,57 @@
 
 <html lang="en">
         <head>
-            <!-- <meta charset="UTF-8">
+            <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Manager GUI</title>
+            <link rel="icon" type="image/x-icon" href="https://i.ibb.co/vJ3nFnL/revs-Square.png">
             <link rel="stylesheet" type="text/css" href="css/ManagerGUI.css"></link>
             <title>Document</title>
         </head>
 
         <body>
-            <div id="google_translate_element"></div>
             <!-- the following will display the available submenus to the manager -->
-            <div class="headers">
-                <img src="https://i.ibb.co/1b4NdSg/revsLogo.png" alt="Rev's Logo">
-                <p>Welcome, Manager</p>
-            </div>
             
-            <div class="mainContent">
-                <div class="subMenus">
-                    <div class="menuSection">
-                        <h1>
-                            Menu
-                        </h1>
-                        <!--
-                        <button onclick="viewMenu()">View Menu</button>
-                        -->
-                        <button id="viewMenuButton">View Menu</button>
-                        <button id="addMenuItemButton">Add Menu Item</button>
-                        <button id="updateMenuItemButton">Update Menu</button>
-                        <button id="deleteMenuItemButton">Delete Menu Item</button>
-                    </div>
+            <div class="subMenus">
 
-                    <div class="menuSection">
-                        <h1>
-                            Inventory
-                        </h1>
-                        <button id="viewInventoryButton">View Inventory</button>
-                        <button id="orderInventoryButton">Order Inventory</button>
-                        <button id="addInventoryItemButton">Add Inventory Item</button>
-                    </div>
+                <img src="https://i.ibb.co/1b4NdSg/revsLogo.png" alt="Rev's Logo" id="revImg">
+                <div id="google_translate_element"></div>
 
-                    <div class="menuSection">
-                        <h1>
-                            Reports
-                        </h1>
-                        <button id="salesReportButton">Sales Report</button>
-                        <button id="popMenuItemButton">Popular Menu Item Report</button>
-                        <button id="excessReportButton">Excess Report</button>
-                        <button id="restockReportButton">Restock Report</button>
-                    </div>
+                <div class="menuSection">
+                    <h1>Menu</h1>
+                    <button id="viewMenuButton">View Menu</button>
+                    <button id="addMenuItemButton">Add Menu Item</button>
+                    <button id="updateMenuItemButton">Update Menu</button>
+                    <button id="deleteMenuItemButton">Delete Menu Item</button>
                 </div>
 
+                <div class="menuSection">
+                    <h1>Inventory</h1>
+                    <button id="viewInventoryButton">View Inventory</button>
+                    <button id="orderInventoryButton">Order Inventory</button>
+                    <button id="addInventoryItemButton">Add Inventory Item</button>
+                </div>
+
+                <div class="menuSection">
+                    <h1>Reports</h1>
+                    <button id="salesReportButton">Sales Report</button>
+                    <button id="popMenuItemButton">Popular Menu Item Report</button>
+                    <button id="excessReportButton">Excess Report</button>
+                    <button id="restockReportButton">Restock Report</button>
+                </div>
+            </div>
+  
+            <div class="mainContent">
+
+                <div class="headers">
+                    <p>Welcome, Manager
+                    <a href="/"><button>Log Out</button> </a>
+                    </p>
+                </div>
+                
                 <div class="contentContainer">
+
                     <div class="content" id="managerView">
                         <p>Welcome, Manager</p>
                     </div>
@@ -87,7 +87,7 @@
                             </select>
                         </div>
 
-                        <div id="datePanel1">
+                        <div id="datePanel2">
                             <select id="endMonth">
                                 <option value="1">January</option>
                                 <option value="2">February</option>
