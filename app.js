@@ -65,21 +65,22 @@ app.post('/serverSubmit', async (req, res) => {
     }
   
     // Getting next Order ID
-    var order_id = 0;
+    var order_ID = 0;
     await pool.query('select MAX(order_id) from orders;')
     .then(query_res => {
-        order_id = query_res.rows[0].max;
-        order_id += 1;
+        order_ID = query_res.rows[0].max;
+        order_ID += 1;
     });
 
 
     // Inputing Orders
     for(let i = 0; i<order_items.length; i++){
-        await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_id+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+        await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
     }
 
     res.status(200).json({ order_items, order_prices});
 });
+
 
 
 app.get('/', function(req, res) {
