@@ -1,58 +1,32 @@
 
-
-//This is for HTML purposes
-class order{
-    constructor(name, qty, price){
-        this.name = name;
-        this.qty = qty;
-        this.price = price;
-    }
-}
-
-class orderSum{
-    constructor(){
-        this.orders = [];
-    }
-
-    addOrder(name, qty, price){
-        var o = new order(name, qty, price);
-        this.orders.push(o)
-        return o;
-    }
-
-    clear(){
-        this.orders = [];
-    }
-}
-
-var myOrder = new orderSum();
+var order_rows = 0;
 var order_items = [];
 var order_prices = [];
 
 function addToOrder(itemid, name, qty, price){
 
     if(order_items.includes(itemid)){
-        incQty(itemid, name, price);
+        incQty(itemid, price);
         return;
     }
 
     order_items.push(itemid);
     order_prices.push(price);
 
-    myOrder.addOrder(name, qty, price);
+    order_rows++;
 
     var inc = document.createElement('input');
     inc.type = "button";
     inc.value = "+";
     inc.onclick = function(){
-        incQty(itemid, name, price);
+        incQty(itemid, price);
     };
 
     var dec = document.createElement('input');
     dec.type = "button";
     dec.value = "-";
     dec.onclick = function(){
-        decQty(itemid, name, price);
+        decQty(itemid, price);
     };
 
     var table = document.getElementById('orderTable');
@@ -65,9 +39,11 @@ function addToOrder(itemid, name, qty, price){
     var cell5 = row.insertCell(4);
     cell1.innerHTML = name;
     cell2.appendChild(dec);
-    cell3.innerHTML = qty;
+    cell3.value = qty;
+    cell3.textContent = qty;
     cell4.appendChild(inc);
-    cell5.innerHTML = price;
+    cell5.value = price;
+    cell5.textContent = price;
 
     var tax_h = document.getElementById('tax');
     tax_h.innerHTML = Number((getTax()).toFixed(2));
@@ -77,22 +53,23 @@ function addToOrder(itemid, name, qty, price){
 
 }
 
-function incQty(itemid, name, price){
+function incQty(itemid, price){
     order_items.push(itemid);
     order_prices.push(price);
 
     var table = document.getElementById('orderTable');
     for(var i = 1; i<table.rows.length; i++){
         var row = table.getElementsByTagName('tr')[i];
-        var cell = row.cells[0];
-        if(cell.innerHTML == name){
+        if(row.id == itemid){
             //increasing quantity
-            cell = row.cells[2];
-            cell.innerHTML++;
+            var cell = row.cells[2];
+            cell.value = String(Number(cell.value) + 1);
+            cell.textContent = cell.value;
 
             //increasing price
             cell = row.cells[4];
-            cell.innerHTML = Number((parseFloat(cell.innerHTML) + parseFloat(price)).toFixed(2));
+            cell.value = Number((parseFloat(cell.value) + parseFloat(price)).toFixed(2));
+            cell.textContent = cell.value;
         }
     }
     
@@ -105,25 +82,28 @@ function incQty(itemid, name, price){
     
 }
 
-function decQty(itemid, name, price){
+function decQty(itemid, price){
     order_items.splice(order_items.indexOf(itemid), 1);
     order_prices.splice(order_prices.indexOf(price), 1);
-
+    
     var table = document.getElementById('orderTable');
     for(var i = 1; i<table.rows.length; i++){
         var row = table.getElementsByTagName('tr')[i];
-        var cell = row.cells[0];
-        if(cell.innerHTML == name){
+        if(row.id == itemid){
             //decreasing quantity
-            cell = row.cells[2];
-            cell.innerHTML--;
-            if(cell.innerHTML == '0'){
+            var cell = row.cells[2];
+            cell.value = String(Number(cell.value) - 1);
+            cell.textContent = cell.value;
+
+            if(cell.innerHTML == '0' || cell.innerHTML == 'NaN'){
                 table.deleteRow(i);
+                order_rows--;
             }
 
             //decreasing price
             cell = row.cells[4];
-            cell.innerHTML = Number((parseFloat(cell.innerHTML) - parseFloat(price)).toFixed(2));
+            cell.value = Number((parseFloat(cell.value) - parseFloat(price)).toFixed(2));
+            cell.textContent = cell.value;
         }
     }
 
@@ -137,10 +117,11 @@ function decQty(itemid, name, price){
 
 function clearOrder(){
     var table = document.getElementById('orderTable');
-    for(let i = 0; i<myOrder.orders.length; i++){
+    for(let i = 0; i<order_rows; i++){
         table.deleteRow(1);
     }
-    myOrder.clear();
+
+    order_rows = 0;
     order_items = [];
     order_prices = [];
 
