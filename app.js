@@ -361,3 +361,37 @@ app.post('/orderInventoryItem', (req, res) => {
 
     res.status(200).json({ inventoryID, inventoryQuantity });
 });
+
+function toSQLArr(str){
+    arr = str.split(", ")
+    var arrStr = "'{";
+    for (let i = 0; i < arr.length; i++){
+        arrStr+= '"' + arr[i] + '"'
+        if (i != arr.length-1){
+            arrStr += ", "
+        }
+    }
+    return arrStr + "}'";
+}
+
+app.post('/updateMenuItem', (req, res) => {
+    const {menu_id, item_name, item_price, num_ingredients, ingredient_list, type} = req.body;
+    
+    // Database Code here
+    var queryString = "UPDATE menu_items SET item_name='" + item_name + "', ";
+    queryString += "item_price= '" + item_price.slice(1) + "', ";
+    queryString += "num_ingredients= '" + num_ingredients + "', ";
+    queryString += "ingredient_list=" + toSQLArr(ingredient_list) + ", ";
+    queryString += "type= '" + type + "' ";
+    queryString += "WHERE menu_id= '" + menu_id + "';";
+    console.log(queryString + "\n");
+    pool
+        .query(queryString)
+        .then(query_res => {
+        for (let i = 0; i < query_res.rowCount; i++){
+            console.log(query_res.rows[i]);
+        }
+    })
+
+    res.status(200).json({menu_id, item_name, item_price, num_ingredients, ingredient_list, type});
+});

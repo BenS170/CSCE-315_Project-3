@@ -8,7 +8,7 @@
             <title>Manager GUI</title>
             <link rel="icon" type="image/x-icon" href="https://i.ibb.co/vJ3nFnL/revs-Square.png">
             <link rel="stylesheet" type="text/css" href="css/ManagerGUI.css"></link>
-            <title>Document</title>
+            <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script> 
         </head>
 
         <body>
@@ -55,6 +55,8 @@
 
                     <div class="content" id="managerView">
                         <p>Welcome, Manager</p>
+                        <!--The div element for the map -->
+                        <div id="map"></div>
                     </div>
 
                     <!-- The date selectors for any Manager Function that requires a date range-->
@@ -119,7 +121,9 @@
                     </div>
                 </div>
             </div>
-            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>            >
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClF9f4G213q3k_eWnxvTXiGAEvJhEI2gg&callback=initMap&v=weekly" defer></script>
+            <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSy7RmfslAlt6zzOiyTjxQh1nO4FWGv_0&callback=initMap"></script>-->
+            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
             <script src="javascript/ManagerGUI.js"></script>
         </body>
     </html>
