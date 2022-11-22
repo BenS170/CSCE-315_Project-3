@@ -56,8 +56,8 @@ passport.deserializeUser(function(obj, cb) {
 // Google AUTH
 
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const GOOGLE_CLIENT_ID = '404136506802-g4dscms79u7q3lloe7a7o8r3f0iftmic.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
+const GOOGLE_CLIENT_ID = '423217933208-4kho4js0167unhr69r9h5rjg0n7gq3u1.apps.googleusercontent.com';
+const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
@@ -69,15 +69,17 @@ passport.use(new GoogleStrategy({
   }
 ));
  
-app.get('/auth/google', 
+app.get('/auth/google',
   passport.authenticate('google', { scope : ['profile', 'email'] }));
  
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/error' }),
   function(req, res) {
     // Successful authentication, redirect success.
-    res.redirect('/index');
+    res.redirect('/managergui');
   });
+
+  
 
 
 app.post('/serverSubmit', async (req, res) => {
@@ -121,30 +123,31 @@ app.post('/serverSubmit', async (req, res) => {
     }
   
     // Getting next Order ID
-    var order_id = 0;
+    var order_ID = 0;
     await pool.query('select MAX(order_id) from orders;')
     .then(query_res => {
-        order_id = query_res.rows[0].max;
-        order_id += 1;
+        order_ID = query_res.rows[0].max;
+        order_ID += 1;
     });
 
 
     // Inputing Orders
     for(let i = 0; i<order_items.length; i++){
-        await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_id+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+        await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
     }
 
     res.status(200).json({ order_items, order_prices});
 });
 
 
+
 app.get('/', function(req, res) {
-    res.render('pages/auth');
+    res.render('index');
 });
 
-app.get('/index', function(req,res){
-    res.render('index');
-})
+app.get('/auth', function(req,res){
+    res.render('pages/auth');
+});
 
 app.get('/customergui', (req, res) => {
     res.render('CustomerGUI/Customer');
@@ -454,4 +457,43 @@ app.post('/updateMenuItem', (req, res) => {
     })
 
     res.status(200).json({menu_id, item_name, item_price, num_ingredients, ingredient_list, type});
+});
+
+
+app.post('/getRestockRep', (req, res) => {
+    console.log("Inside getRestockRep");
+    const { startDate, endDate } = req.body;
+    console.log(req.body);
+
+    restock = [];
+    // Database Code here
+    const queryString = "SELECT T1.itemid, T1.servings_sold, T2.servings_needed, T2.servings_left FROM (SELECT inventory.itemid, COUNT(orders.order_id) as servings_sold FROM orders INNER JOIN menu_items ON orders.item = menu_items.menu_id INNER JOIN inventory ON inventory.itemid = ANY(menu_items.ingredient_list) WHERE orders.date_made >= '"+startDate+"' AND orders.date_made<='"+endDate+"' AND inventory.itemid = ANY(menu_items.ingredient_list) GROUP BY inventory.itemid) AS T1 JOIN (SELECT itemid, CEIL(quantity_needed/serving_size) as servings_needed, CEIL(quantity/serving_size) as servings_left from inventory) AS T2 ON T1.itemid = T2.itemid;";
+    pool
+        .query(queryString)
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                restock.push(query_res.rows[i]);
+            }
+            data = { result : restock };
+            res.json(data);
+    })
+});
+
+app.post('/getExcessRep', (req, res) => {
+    console.log("Inside getExcessRep");
+    const { startDate } = req.body;
+    console.log(req.body);
+
+    excess = [];
+    // Database Code here
+    const queryString = "SELECT T1.itemid, ROUND(T1.servings_sold*T2.serving_size::numeric, 3) as quantity_sold, ROUND(T2.quantity::numeric, 3) as quantity FROM (SELECT inventory.itemid, COUNT(orders.order_id) as servings_sold FROM orders INNER JOIN menu_items ON orders.item = menu_items.menu_id INNER JOIN inventory ON inventory.itemid = ANY(menu_items.ingredient_list) WHERE orders.date_made >= '"+ startDate +"' AND inventory.itemid = ANY(menu_items.ingredient_list) GROUP BY inventory.itemid) AS T1 JOIN (SELECT * from inventory) AS T2 ON T1.itemid = T2.itemid WHERE (T1.servings_sold*T2.serving_size)/(T1.servings_sold*T2.serving_size+T2.quantity)<0.10;";
+    pool
+        .query(queryString)
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                excess.push(query_res.rows[i]);
+            }
+            data = { result : excess };
+            res.json(data);
+    })
 });

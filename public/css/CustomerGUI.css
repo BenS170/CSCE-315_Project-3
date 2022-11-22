@@ -1,200 +1,184 @@
-body {
-  font-family: Verdana;
-
-}
-
-h3{
-  font-family: Verdana, sans-serif;
-  color: #5B0726;
-  font-size: 70px;
-  margin-top: 50px;
-  text-align: center;
-}
-
-/* Style the tab */
-.tab {
-  float: left;
-  margin-left: -10px;
-  margin-top: -10px;
-  background-color: #5B0726;
-  width: 25%;
+.sidenav {
   height: 100%;
-}
-
-/* Style the buttons inside the tab */
-.tab button {
-  display: block;
+  width: 30%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
   background-color: #5B0726;
-  color: #F8BE14;
-  padding: 15px 16px;
-  width: 100%;
-  border: none;
-  outline: none;
-  text-align: left;
-  cursor: pointer;
-  transition: 0.05s;
-  font-family: verdana;
-  height: 165px;
-  font-size: 26px;
-}
-
-.tab orderButton {
-  display: block;
-  background-color: #5B0726;
-  color: #F8BE14;
-  padding: 15px 16px;
-  width: 100%;
-  border: none;
-  outline: none;
-  text-align: left;
-  cursor: pointer;
-  transition: 0.05s;
-  font-family: verdana;
-  height: 155px;
-  font-size: 26px;
-}
-
-/* Change background color of buttons on hover */
-.tab button:hover {
-  background-color:#F8BE14;
-  color: #5B0726;
-  font-weight: bold;
-}
-
-.tab orderButton:hover {
-  background-color:#5B0726;
-  color: #F8BE14;
-  text-decoration: underline;
-  font-weight: bold;
-}
-
-
-/* Create an active/current "tab button" class */
-.tab button.active {
-  background-color:#F8BE14;
-  color: #5B0726;
-  font-weight: bold;
-}
-
-/* Style the tab content */
-.tabcontent {
-  float: left;
-  padding: 0px 12px;
+  overflow-x: hidden;
   padding-top: 20px;
-  border: none;
-  width: 70%;
-  border-left: none;
-  height: 100%;
 }
 
-.logo {
-  display: block;
-  width: 100%;
-  height: 185%;
-  float: left;
-  margin-left: -10px;
-  margin-top: -55px;
+.menuButtons {
+background-color: #5B0726;
+border-color: white;
+color: white;
+width: 75%;
+text-align: center;
+text-decoration: none;
+display: block;
+font-size: 150%;
+cursor: pointer;
+margin: 0;
+position: relative;
+top: 12%;
+left: 45%;
+-ms-transform: translate(-50%, -50%);
+transform: translate(-50%, -50%);
+margin: 3%;
+padding: 5%; 
+margin-bottom: 15%;
 }
 
 .orderButton{
-  background-color: #5B0726;
-  color: #F8BE14;
-  border: none;
-  height: 55px;
-  width: 24%;
-  font-weight: bold;
-  font-family: verdana;
-  font-size: 20px;
-  text-align: center;
-  float: right;
+background-color: #5B0726;
+border: none;
+color: white;
+width: 75%;
+text-align: center;
+text-decoration: none;
+display: block;
+font-size: 165%;
+cursor: pointer;
+margin: 0;
+position: relative;
+top: 12%;
+left: 45%;
+-ms-transform: translate(-50%, -50%);
+transform: translate(-50%, -50%);
+margin: 3%;
+padding: 5%; 
+margin-bottom: 35%;
 }
 
-.orderButton:hover {
-  background-color: #F8BE14;
-  color: #5B0726;
-  font-weight: bold;
+.menuButtons:hover{
+  background-color: white;
+  color:#5B0726;
+}
+.orderButton:hover{
+  text-decoration: underline;
+}
+
+.addToOrder{
+  color:white;
+  background-color: #5B0726;
+  border-color:#5B0726;
+  height: 45px;
+  width: 175px;
   cursor: pointer;
-  padding: 0px 10px;
+}
+.addToOrder:hover{
+ text-decoration: underline;
 }
 
-.outline {
-  background-color: #F8BE14;
-  margin: 70px;
-  border: 9px solid #5B0726;
-  padding-top: 50px;
-  padding-bottom: -10px;
-  height: 25%;
-  width: 95%;
-  margin-top: 55px;
-}
-
-.div1 {
-  margin: 60px;
-  height: 385px;
+.deleteFromOrder{
+  color:white;
   background-color: #5B0726;
-  border: none;
-  color: white;
-  text-align: center;
-  margin-top: 8px;
-  margin-left: 50px;
-  margin-right: 50px;
-  padding-top: 10px;
+  border-color:#5B0726;
+  height: 45px;
+  width: 175px;
+  cursor: pointer;
+}
+.deleteFromOrder:hover{
+ text-decoration: underline;
 }
 
+.logo{
+margin: 0;
+position: relative;
+top: 10%;
+left: 45%;
+-ms-transform: translate(-50%, -50%);
+transform: translate(-50%, -50%);
+margin: 3%;
+padding: 5%;
+width: 90%;
+margin-bottom: -50%;
+}
 
-/* Idea is to have this as a div that borders the CustomerView
-.Container{
-  display:flex;
-
-  background-color: lightgray;
-  border-style: ridge;
-  border-color: goldenrod;
-  border-radius: 2%;
-  
-  width: 95%;
-  height: fit-content;
-} */
+#CustomerView{
+  margin-left: 35%; /* Same as the width of the sidenav */
+}
 
 table, td, th {  
   border: 2.5px solid #5B0726;
-  text-align: left;
+  text-align: center;
+  font-family: Arial;
   color: #5B0726;
 }
 
 table {
+  border: 2.5px solid #5B0726;
+  margin-top:5%;
   border-collapse: collapse;
-  width: 100%;
-  border-style: ridge;
-  vertical-align: center;
+  align-self: center;
+  float: center;
+  width: 95%;
 }
 
 th, td {
   padding: 20px;
 }
 
-.addToOrder{
-  background-color: #5B0726; 
-  border: none;
-  color: #F8BE14;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+#order-summary {
+  margin-left: 35%;
+  margin-top: 5%;
+  font-family: Arial;
+  color: #5B0726;
+  float: center;
+  height: 100%;
+  width: 60%;
+  text-align:center;
+  border-color: #5B0726;
+  border-style:double;
+  border-width: 5px;
 }
 
-#CustomerView {
+.submit{
+  background-color: white;
+  color: #5B0726;
+  border: 2.5px solid #5B0726;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: verdana;
+  text-align: center;
+  text-decoration: none;
+  position:fixed;
+  bottom:10px;
+  right:60px;
+  height: 50px;
+  width: 200px;
+}
 
-  position: relative;
-  left: 350px;
-  bottom: 900px;
-  height: 2000px;
-  width: 1000px;
-  background-color: lightgray;
-  border-style: ridge;
-  border-color: goldenrod;
-  border-radius: 2%;
+.submit:hover {
+  background-color: #5B0726;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0px 10px;
+}
 
+.cancel{
+  background-color: white;
+  color: #5B0726;
+  border: 2.5px solid #5B0726;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: verdana;
+  text-align: center;
+  text-decoration: none;
+  position:fixed;
+  bottom:10px;
+  right:300px;
+  height: 50px;
+  width: 200px;
+}
+
+.cancel:hover {
+  background-color: #5B0726;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0px 10px;
 }
