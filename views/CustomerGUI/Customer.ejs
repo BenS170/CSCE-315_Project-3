@@ -29,64 +29,40 @@
         <button id="viewDessertsButton">View Desserts</button>
 
         <!-- Takes to CustomerOrder.ejs page -->
-        <button onclick="location.href = 'customerorder';" id="ViewOrderButton" >View Order</button>
+        <!-- <button onclick="location.href = 'customerorder';" id="viewOrderButton" >View Order</button> -->
 
-        <!-- <button class="tablinks" onclick="openTab(event, 'Sides')" style="height:130px;">SIDES</button>
->>>>>>> 77f0cd6896e437cb27472f3b2ff2302a8d1862ac
+        <button id="OrderButton">Order</button>
 
-        <button class="tablinks" onclick="openTab(event, 'Drinks')" style="height:130px;">DRINKS</button>
 
-        <button class="tablinks" onclick="openTab(event, 'Desserts')" style="height:130px;">DESSERTS</button>
-      </div>
 
-       <div id="Logo" class="tabcontent">
->>>>>>> 77f0cd6896e437cb27472f3b2ff2302a8d1862ac
-        <center>
-
-          <div class="outline">
-            <div class="div1">
-              <h2 style="font-size:100px; color: #F8BE14; margin-left:20px; margin-top:55px"> HOWDY </h2>
-              <p style="margin-left:20px; color: #F8BE14; font-size:25px"> Welcome to <b>Rev's American Grill</b>!</p>
-            </div>
-          </div>
-        </center>
-      </div> -->
-
-      <!-- <div id="Entrees" class="tabcontent">
->>>>>>> 77f0cd6896e437cb27472f3b2ff2302a8d1862ac
-        <a href="customerorder">
-          <button class="orderButton">VIEW ORDER</button>
-        </a>
-        <h3>Entrees</h3>
->>>>>>> 77f0cd6896e437cb27472f3b2ff2302a8d1862ac
-      </div>
-
-      <div id="Sides" class="tabcontent">
-        <a href="customerorder">
-          <button class="orderButton">VIEW ORDER</button>
-        </a>
-        <h3>Sides</h3>
-      </div>
-
-      <div id="Drinks" class="tabcontent">
-        <a href="customerorder">
-          <button class="orderButton">VIEW ORDER</button>
-        </a>
-        <h3>Drinks</h3>
-      </div>
-
-      <div id="Desserts" class="tabcontent">
-        <a href="customerorder">
-          <button class="orderButton">VIEW ORDER</button>
-        </a>
-        <h3>Desserts</h3>
-
-      </div> -->
-      
-      
       <div id="CustomerView">
         <p style ="text-align:center; font:verdana; font-weight:bold; color:#5B0726; font-size:80px;">Welcome, Customer</p>
       </div> 
+
+      <div hidden = "true" id = "order-summary">
+        <h1>Order Summary</h1>
+        
+        <div id = "CustomerOrderTable">
+
+        </div>
+
+        <div id = "order-tax">
+          
+        </div>
+
+        <div id = "order-total">
+          
+        </div>
+
+        <div id = "order-buttons">
+          <button id = "SubmitButton">SUBMIT ORDER</button>
+          <button id = "CancelButton">CANCEL ORDER</button>
+        </div>
+
+
+
+      </div>
+
 
       <script src="javascript/CustomerGUI.js"></script>
       <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
