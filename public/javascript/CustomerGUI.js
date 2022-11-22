@@ -163,7 +163,7 @@ function makeEntreeTable(data){
   }
   
   
-  const viewEntreesButton = document.getElementById("viewEntreesButton");
+  const viewEntreesButton = document.getElementById("Entrees");
   
   viewEntreesButton.addEventListener('click', function(e) {
       console.log('view entrees was clicked');
@@ -218,7 +218,7 @@ function makeEntreeTable(data){
   }
   
   
-  const viewSidesButton = document.getElementById("viewSidesButton");
+  const viewSidesButton = document.getElementById("Sides");
   
   viewSidesButton.addEventListener('click', function(e) {
       console.log('view sides was clicked');
@@ -274,7 +274,7 @@ function makeEntreeTable(data){
   }
   
   
-  const viewDrinksButton = document.getElementById("viewDrinksButton");
+  const viewDrinksButton = document.getElementById("Drinks");
   
   viewDrinksButton.addEventListener('click', function(e) {
       console.log('view drinks was clicked');
@@ -329,7 +329,7 @@ function makeEntreeTable(data){
   }
   
   
-  const viewDessertsButton = document.getElementById("viewDessertsButton");
+  const viewDessertsButton = document.getElementById("Desserts");
   
   viewDessertsButton.addEventListener('click', function(e) {
       console.log('view desserts was clicked');
@@ -359,7 +359,7 @@ function makeEntreeTable(data){
   });
 
 
-  const OrderButton = document.getElementById("OrderButton");
+  const OrderButton = document.getElementById("View Order");
   
   OrderButton.addEventListener('click', function(e) {
       console.log('order was clicked');
