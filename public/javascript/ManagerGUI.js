@@ -465,7 +465,7 @@ function submitDateLogic(){
     }else if (value == POPITEMS){
         popReportLogic(startDate, endDate);
     }else if (value == EXCESS){
-        excessReportLogic(startDate, endDate);
+        excessReportLogic(startDate);
     }else if (value == RESTOCK){
         restockReportLogic(startDate, endDate);
     }
