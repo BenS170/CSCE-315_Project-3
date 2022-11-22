@@ -69,15 +69,17 @@ passport.use(new GoogleStrategy({
   }
 ));
  
-app.get('/auth/google', 
+app.get('/auth/google',
   passport.authenticate('google', { scope : ['profile', 'email'] }));
  
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/error' }),
   function(req, res) {
     // Successful authentication, redirect success.
-    res.redirect('/index');
+    res.redirect('/managergui');
   });
+
+  
 
 
 app.post('/serverSubmit', async (req, res) => {
@@ -140,11 +142,11 @@ app.post('/serverSubmit', async (req, res) => {
 
 
 app.get('/', function(req, res) {
-    res.render('pages/auth');
+    res.render('index');
 });
 
-app.get('/index', function(req,res){
-    res.render('index');
+app.get('/auth', function(req,res){
+    res.render('pages/auth');
 });
 
 app.get('/customergui', (req, res) => {
