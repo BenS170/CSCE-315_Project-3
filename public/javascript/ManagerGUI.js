@@ -760,21 +760,7 @@ createRestockReport.addEventListener('click', function(e) {
     document.getElementById("dateSelectors").value = RESTOCK;
 });
 
-// const submitDate_RESTOCK = document.getElementById("submitDates");
-// submitDate_RESTOCK.addEventListener('click', function(e) {
-//     // IMPORTANT: Check if the "Submit Dates" button was clicked 
-//     // because the manager wanted a restock report:
-//     if (document.getElementById("dateSelectors").value != RESTOCK){
-//         return;
-//     }
 
-//     startDate = getStartDate();
-//     endDate = getEndDate();
-
-//     document.getElementById("dateSelectors").hidden = true;
-//     document.getElementById("managerView").hidden = false;
-//     restockReportLogic(startDate, endDate);
-// });
 
 function restockReportLogic(startDate, endDate){
     // SALES QUERY:
@@ -845,20 +831,6 @@ createExcessReport.addEventListener('click', function(e) {
     document.getElementById("dateSelectors").value = EXCESS;
 });
 
-/*const submitDate_EXCESS = document.getElementById("submitDates");
-submitDate_EXCESS.addEventListener('click', function(e) {
-    // IMPORTANT: Check if the "Submit Dates" button was clicked 
-    // because the manager wanted a sales report:
-    if (document.getElementById("dateSelectors").value != EXCESS){
-        return;
-    }
-
-    startDate = getStartDate();
-
-    document.getElementById("dateSelectors").hidden = true;
-    document.getElementById("managerView").hidden = false;
-    excessReportLogic(startDate);
-});*/
 
 
 function excessReportLogic(startDate){
