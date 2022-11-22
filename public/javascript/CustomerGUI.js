@@ -581,7 +581,7 @@ function makeEntreeTable(data){
     order_prices = [];
 
     console.log('clearing table');
-    var clearTable = document.getElementById("CustomerOrderTable")
+    var clearTable = document.getElementById("CustomerOrderTable");
     clearTable.innerHTML = "";
 
     //reset price and tax
