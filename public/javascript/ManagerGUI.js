@@ -139,55 +139,73 @@ viewMenuButton.addEventListener('click', function(e) {
     });
 });
 
-
+/*************** ADD MENU ITEM **********************/
 
 const addMenuItemButton = document.getElementById("addMenuItemButton");
 
 addMenuItemButton.addEventListener('click', function(e) {
   console.log('add menu was clicked');
-  const menuID = prompt("What is the menu ID?");
+  const menuID = prompt("What is the menu ID?", "23");
   if(menuID == null || menuID == ""){
     alert("add menu item was canceled");
   } else{
-    const menuName = prompt("What is the name of the item?");
+    const menuName = prompt("What is the name of the item?", "bacon");
     if (menuName == null || menuName == ""){
         alert("add menu item was canceled");
     } else {
-        const menuPrice = prompt("What is the new price");
+        const menuPrice = prompt("What is the new price", "2.90");
         if (menuPrice == null || menuPrice == ""){
             alert("add menu item was canceled");
         } else{
-            const menuIngredients = prompt("What ingredients do you want for the new item?");
+            const menuIngredients = prompt("What ingredients do you want for the new item?", 'i.e. {lettuce, bacon, "salad dressing", ...}');
             if (menuIngredients == null || menuIngredients == ""){
                 alert("add menu item was canceled");
             } else {
                 const menuIngNum = prompt("How many ingredients is in the new item");
-                if (menuIngNum == null || menuIngNum == ""){
+                const commas = 0;
+                if (menuIngredients.length() > 0){
+                    commas = 1;
+                    for(var i = 0; i < menuIngredients.length(); i++){
+                        if(i == ","){
+                            commas++;
+                        }
+    
+                    }
+
+                }
+
+                menuIngNum = toString(commas);
+                
+                if (menuIngNum == null || menuIngNum == "" || menuIngNum == "0"){
                     alert("add menu item was canceled");
                 } else{
-                    const menuType = prompt("What type of item is this?");
+                    const menuType = prompt("What type of item is this?", "entree");
                     if (menuType == null || menuType == ""){
                         alert("add menu item was canceled");
                     } else{
-                        const data = {menuID, menuName,menuPrice, menuIngredients, menuIngNum, menuType};
+
+                        if (confirm(" are you sure you want to make an item with these values? (id, name, price, ingredients, type" + menuID + ", " + menuName + ", " + menuPrice + ", " + menuIngredients, ", " + menuType)){
+                            const data = {menuID, menuName,menuPrice, menuIngredients, menuIngNum, menuType};
   
-                        fetch('/addMenuItem', {
+                            fetch('/addMenuItem', {
                               method: 'POST',
                               headers:{
                                   'Content-Type': 'application/json'
                               },
                               body: JSON.stringify(data)
-                          })
-                          .then(function(response) {
-                            if(response.ok) {
-                              console.log('Click was recorded');
-                              return;
-                            }
-                            throw new Error('Request failed.');
-                          })
-                          .catch(function(error) {
-                            console.log(error);
-                          });
+                            })
+                            .then(function(response) {
+                                if(response.ok) {
+                                    console.log('Click was recorded');
+                                    return;
+                                }
+                                throw new Error('Request failed.');
+                            })
+                            .catch(function(error) {
+                                console.log(error);
+                            });
+                        }
+                        
                       }
                     }
 
@@ -198,12 +216,13 @@ addMenuItemButton.addEventListener('click', function(e) {
     }
 });
 
+/**************** UPDATE MENU ITEM *****************************/
 
 const  updateMenuItemButton = document.getElementById("updateMenuItemButton");
 
 updateMenuItemButton.addEventListener('click', function(e) {
   console.log('update menu was clicked');
-  const menuID = prompt("What is the menu ID?");
+  const menuID = prompt("What is the menu ID?", "1");
   if (menuID == null || menuID == ""){
     alert("menu update canceled");
   } else {
@@ -261,32 +280,42 @@ updateMenuItemButton.addEventListener('click', function(e) {
 });
 
 
+/*************** DELETE MENU ITEM ***********************/
 const  deleteMenuItemButton = document.getElementById("deleteMenuItemButton");
 
 deleteMenuItemButton.addEventListener('click', function(e) {
   console.log('menu delete was clicked');
-  const menuID = prompt("What is the menu ID?"); 
-  
-  const data = {menuID};
+  const menuID = prompt("What is the menu ID?", "1");
+  if(menuID == null || menuID == ""){
+    alert("add menu item was canceled");
+  } else{
+    const data = {menuID};
 
-  fetch('/deleteMenuItem', {
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(function(response) {
-      if(response.ok) {
-        console.log('Click was recorded');
-        return;
+    if (confirm("Are you suer that you want to delete item: " + menuID)){
+        fetch('/deleteMenuItem', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+          if(response.ok) {
+            console.log('Click was recorded');
+            return;
+          }
+          throw new Error('Request failed.');
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
       }
-      throw new Error('Request failed.');
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+
+    }
+  
 });
+
+
 
 
 function makeInventoryTable(data){
@@ -341,69 +370,107 @@ viewInventoryButton.addEventListener('click', function(e) {
 
 // inventory functions
 
-const  orderInventoryButton = document.getElementById("orderInventoryButton");
+/********************** ORDER INVENTORY *********************/
 
 orderInventoryButton.addEventListener('click', function(e) {
-  console.log('order inventory was clicked');
-
-  const inventoryIDPrompt = prompt("What is the inventory ID?", "i.e. bacon");
-  const inventoryQuantity = prompt("what is the quantity to update to?");
-
-  const inventoryID = inventoryIDPrompt.toLowerCase();
-
-  const data = {inventoryID, inventoryQuantity};
-
-  fetch('/orderInventoryItem', {
-    method: 'POST',
-    headers:{
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-})
-.then(function(response) {
-  if(response.ok) {
-    console.log('Click was recorded');
-    return;
-  }
-  throw new Error('Request failed.');
-})
-.catch(function(error) {
-  console.log(error);
-});
-
-});
-
-const addInventoryItemButton = document.getElementById("addInventoryItemButton");
-
-addInventoryItemButton.addEventListener('click', function(e) {
-  console.log('add inventory was clicked');
-  const inventoryID = prompt("What is the inventory ID?", "i.e. bacon");
-  const inventoryStockprice = prompt("What is the stockprice of this item?");
-  const inventoryUnits = prompt("What is the units of the item?");
-  const inventoryQuantity = prompt("How much of the item do you have?");
-  const inventoryServingSize = prompt("What is the serving size for this item?");
-  const inventoryNeeded = prompt("How much of the item is needed?");
+    console.log('order inventory was clicked');
   
-  const data = {inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded};
-
-  fetch('/addInventoryItem', {
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(function(response) {
-      if(response.ok) {
-        console.log('Click was recorded');
-        return;
+    const inventoryIDPrompt = prompt("What is the inventory ID?", "i.e. bacon");
+    prompt()
+    if (inventoryIDPrompt == NULL || inventoryIDPrompt == ""){
+      alert("Order Inventory was cancelled")
+    }else{
+      const inventoryQuantity = prompt("what is the quantity to update to?", "100");
+      if (inventoryQuantity == NULL || inventoryQuantity == ""){
+          alert("order inventory was cancelled")
+      } else{
+  
+          const inventoryID = inventoryIDPrompt.toLowerCase();
+  
+          const data = {inventoryID, inventoryQuantity};
+          fetch('/orderInventoryItem', {
+              method: 'POST',
+              headers:{
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+          })
+          .then(function(response) {
+            if(response.ok) {
+              console.log('Click was recorded');
+              return;
+            }
+            throw new Error('Request failed.');
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
       }
-      throw new Error('Request failed.');
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
-});
+     }
+  
+    
+  
+  });
+
+
+  /************************* ADD INVENTORY ITEM ************************/
+
+  const addInventoryItemButton = document.getElementById("addInventoryItemButton");
+
+  addInventoryItemButton.addEventListener('click', function(e) {
+    console.log('add inventory was clicked');
+    const inventoryID = prompt("What is the inventory ID?", "i.e. bacon");
+    if (inventoryID == ""){
+      alert("Add inventory was canceled")
+    } else{
+      const inventoryStockprice = prompt("What is the stockprice of this item?", "23");
+      if (inventoryID == ""){
+          alert("Add inventory was canceled")
+      } else{  
+          const inventoryUnits = prompt("What is the units of the item?", "Gallons");
+          if (inventoryID == ""){
+              alert("Add inventory was canceled")
+          } else{
+              const inventoryQuantity = prompt("How much of the item do you have?", "0");
+              if (inventoryID == ""){
+                  alert("Add inventory was canceled")
+              } else{
+                  const inventoryServingSize = prompt("What is the serving size for this item?",".25");
+                  if (inventoryID == ""){
+                      alert("Add inventory was canceled")
+                  } else{
+                      const inventoryNeeded = prompt("How much of the item is needed?","400");
+                      if (inventoryID == ""){
+                          alert("Add inventory was canceled")
+                      } else{
+                              
+                          const data = {inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded};
+            
+                          fetch('/addInventoryItem', {
+                              method: 'POST',
+                              headers:{
+                                  'Content-Type': 'application/json'
+                              },
+                              body: JSON.stringify(data)
+                          })
+                          .then(function(response) {
+                              if(response.ok) {
+                                  console.log('Click was recorded');
+                                  return;
+                              }   
+                              throw new Error('Request failed.');
+                          })
+                          .catch(function(error) {
+                          console.log(error);
+                          });
+                          }
+                      }
+                  }
+              }
+          }
+      }
+    
+  });
 
 
 // manager reports
@@ -442,6 +509,7 @@ createSalesReport.addEventListener('click', function(e) {
     console.log('Sales Report Button was clicked');
     document.getElementById("managerView").hidden = true;
     document.getElementById("dateSelectors").hidden = false;
+    document.getElementById("datePanel2").hidden = false;
     document.getElementById("dateSelectors").value = SALES;
 });
 
@@ -465,7 +533,7 @@ function submitDateLogic(){
     }else if (value == POPITEMS){
         popReportLogic(startDate, endDate);
     }else if (value == EXCESS){
-        excessReportLogic(startDate, endDate);
+        excessReportLogic(startDate);
     }else if (value == RESTOCK){
         restockReportLogic(startDate, endDate);
     }
@@ -584,6 +652,7 @@ const createPopMenuItemReport = document.getElementById("popMenuItemButton");
 createPopMenuItemReport.addEventListener('click', function(e){
     document.getElementById("dateSelectors").value = POPITEMS;
     document.getElementById("dateSelectors").hidden = false;
+    document.getElementById("datePanel2").hidden = false;
     document.getElementById("managerView").hidden = true;
 });
 
@@ -678,11 +747,172 @@ async function popReportLogic(startDate, endDate){
     displayPopItems(startDate, endDate, arrOfMenuItemsAndQty, 20);
 }
 
+/************************************ RESTOCK REPORT ******************************/
+
 // Restock Report - Display the list of items whose current inventory is less than the item's minimum amount to have around before needing to restock.
 const createRestockReport = document.getElementById("restockReportButton");
 
+createRestockReport.addEventListener('click', function(e) {
+    console.log('Restock Report Button was clicked');
+    document.getElementById("managerView").hidden = true;
+    document.getElementById("datePanel2").hidden = false;
+    document.getElementById("dateSelectors").hidden = false;
+    document.getElementById("dateSelectors").value = RESTOCK;
+});
+
+// const submitDate_RESTOCK = document.getElementById("submitDates");
+// submitDate_RESTOCK.addEventListener('click', function(e) {
+//     // IMPORTANT: Check if the "Submit Dates" button was clicked 
+//     // because the manager wanted a restock report:
+//     if (document.getElementById("dateSelectors").value != RESTOCK){
+//         return;
+//     }
+
+//     startDate = getStartDate();
+//     endDate = getEndDate();
+
+//     document.getElementById("dateSelectors").hidden = true;
+//     document.getElementById("managerView").hidden = false;
+//     restockReportLogic(startDate, endDate);
+// });
+
+function restockReportLogic(startDate, endDate){
+    // SALES QUERY:
+    console.log(startDate + " to " + endDate);
+    const data = {startDate, endDate};
+  
+    fetch('/getRestockRep', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    }).then(function(response) {
+        if (response.ok){return response.json();}
+        throw new Error('Request failed.');
+    }).then(function(data){
+        console.log(data.result);
+        
+        htmlRestockRep = restockReport(data);
+        console.log(htmlRestockRep);
+        content = document.getElementById("managerView");
+        content.innerHTML = htmlRestockRep;
+
+    }).catch(function(error) {
+        console.log(error);
+    }
+);}
+
+function restockReport(data){
+    restockTable = '<table><tbody><tr>';
+    restockTable = restockTable + "<th>Item Name</th>";
+    restockTable = restockTable + "<th>Servings Sold</th>";
+    restockTable = restockTable + "<th>Servings Needed</th>";
+    restockTable = restockTable + "<th>Servings Left</th>";
+    restockTable = restockTable + "</tr>"
+    let currColor = "";
+    for (let i = 0; i < data.result.length; i++){
+        if (i%2){
+            currColor = "lightgray";
+        }else{
+            currColor = "white";
+        }
+        restockTable = restockTable + '<tr id = "itemSold" style="background-color:' + currColor + '">';
+        restockTable = restockTable + "<td>" + data.result[i].itemid + "</td>";
+        restockTable = restockTable + "<td>" + data.result[i].servings_sold + "</td>";
+        restockTable = restockTable + "<td>" + data.result[i].servings_needed + "</td>";
+        restockTable = restockTable + "<td>" + data.result[i].servings_left + "</td>";
+        restockTable = restockTable + "</tr>"
+
+    }
+
+    restockTable = restockTable + '</tbody></table>'
+    return restockTable;
+}
+
+/********************** EXCESS REPORT *******************************/
+
 // Excess Report - Given a timestamp, display the list of items that only sold less than 10% of their inventory between the timestamp and the current time, assuming no restocks have happened during the window.
 const createExcessReport = document.getElementById("excessReportButton");
+
+createExcessReport.addEventListener('click', function(e) {
+    console.log('Excess Report Button was clicked');
+    document.getElementById("managerView").hidden = true;
+    document.getElementById("dateSelectors").hidden = false;
+
+    document.getElementById("datePanel2").hidden = true;
+
+    document.getElementById("dateSelectors").value = EXCESS;
+});
+
+/*const submitDate_EXCESS = document.getElementById("submitDates");
+submitDate_EXCESS.addEventListener('click', function(e) {
+    // IMPORTANT: Check if the "Submit Dates" button was clicked 
+    // because the manager wanted a sales report:
+    if (document.getElementById("dateSelectors").value != EXCESS){
+        return;
+    }
+
+    startDate = getStartDate();
+
+    document.getElementById("dateSelectors").hidden = true;
+    document.getElementById("managerView").hidden = false;
+    excessReportLogic(startDate);
+});*/
+
+
+function excessReportLogic(startDate){
+    // SALES QUERY:
+    console.log("start from: " + startDate);
+    const data = {startDate};
+  
+    fetch('/getExcessRep', {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    }).then(function(response) {
+        if (response.ok){return response.json();}
+        throw new Error('Request failed.');
+    }).then(function(data){
+        console.log(data.result);
+        
+        htmlExcessRep = excessReport(data);
+        console.log(htmlExcessRep);
+        content = document.getElementById("managerView");
+        content.innerHTML = htmlExcessRep;
+
+    }).catch(function(error) {
+        console.log(error);
+    }
+);}
+
+function excessReport(data){
+    excessTable = '<table><tbody><tr>';
+    excessTable = excessTable + "<th>Item Name</th>";
+    excessTable = excessTable + "<th>Quantity Sold</th>";
+    excessTable = excessTable + "<th>Quantity</th>";
+    excessTable = excessTable + "</tr>"
+    let currColor = "";
+    for (let i = 0; i < data.result.length; i++){
+        if (i%2){
+            currColor = "lightgray";
+        }else{
+            currColor = "white";
+        }
+        excessTable = excessTable + '<tr id = "itemSold" style="background-color:' + currColor + '">';
+        excessTable = excessTable + "<td>" + data.result[i].itemid + "</td>";
+        excessTable = excessTable + "<td>" + data.result[i].quantity_sold + "</td>";
+        excessTable = excessTable + "<td>" + data.result[i].quantity + "</td>";
+        excessTable = excessTable + "</tr>"
+    }
+    
+    excessTable = excessTable + '</tbody></table>'
+    return excessTable;
+}
+
+/********************** GOOGLE **********************/
 
 function googleTranslateElementInit(){
     new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');

@@ -456,3 +456,42 @@ app.post('/updateMenuItem', (req, res) => {
 
     res.status(200).json({menu_id, item_name, item_price, num_ingredients, ingredient_list, type});
 });
+
+
+app.post('/getRestockRep', (req, res) => {
+    console.log("Inside getRestockRep");
+    const { startDate, endDate } = req.body;
+    console.log(req.body);
+
+    restock = [];
+    // Database Code here
+    const queryString = "SELECT T1.itemid, T1.servings_sold, T2.servings_needed, T2.servings_left FROM (SELECT inventory.itemid, COUNT(orders.order_id) as servings_sold FROM orders INNER JOIN menu_items ON orders.item = menu_items.menu_id INNER JOIN inventory ON inventory.itemid = ANY(menu_items.ingredient_list) WHERE orders.date_made >= '"+startDate+"' AND orders.date_made<='"+endDate+"' AND inventory.itemid = ANY(menu_items.ingredient_list) GROUP BY inventory.itemid) AS T1 JOIN (SELECT itemid, CEIL(quantity_needed/serving_size) as servings_needed, CEIL(quantity/serving_size) as servings_left from inventory) AS T2 ON T1.itemid = T2.itemid;";
+    pool
+        .query(queryString)
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                restock.push(query_res.rows[i]);
+            }
+            data = { result : restock };
+            res.json(data);
+    })
+});
+
+app.post('/getExcessRep', (req, res) => {
+    console.log("Inside getExcessRep");
+    const { startDate } = req.body;
+    console.log(req.body);
+
+    excess = [];
+    // Database Code here
+    const queryString = "SELECT T1.itemid, ROUND(T1.servings_sold*T2.serving_size::numeric, 3) as quantity_sold, ROUND(T2.quantity::numeric, 3) as quantity FROM (SELECT inventory.itemid, COUNT(orders.order_id) as servings_sold FROM orders INNER JOIN menu_items ON orders.item = menu_items.menu_id INNER JOIN inventory ON inventory.itemid = ANY(menu_items.ingredient_list) WHERE orders.date_made >= '"+ startDate +"' AND inventory.itemid = ANY(menu_items.ingredient_list) GROUP BY inventory.itemid) AS T1 JOIN (SELECT * from inventory) AS T2 ON T1.itemid = T2.itemid WHERE (T1.servings_sold*T2.serving_size)/(T1.servings_sold*T2.serving_size+T2.quantity)<0.10;";
+    pool
+        .query(queryString)
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                excess.push(query_res.rows[i]);
+            }
+            data = { result : excess };
+            res.json(data);
+    })
+});
