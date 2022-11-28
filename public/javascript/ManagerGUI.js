@@ -522,7 +522,7 @@ createSalesReport.addEventListener('click', function(e) {
     console.log('Sales Report Button was clicked');
     document.getElementById("managerView").hidden = true;
     document.getElementById("dateSelectors").hidden = false;
-    document.getElementById("datePanel2").hidden = false;
+    document.getElementById("hideMe").hidden = false;
     document.getElementById("dateSelectors").value = SALES;
 });
 
@@ -553,13 +553,16 @@ function submitDateLogic(){
 }
 
 function salesReport(data){
-    salesTable = '<table><tbody><tr>';
+    salesTable = '<p id = "salesReportTitle">Sales Report</p><table><tbody><tr>';
     salesTable = salesTable + "<th>Item Name</th>";
     salesTable = salesTable + "<th>Sales</th>";
     salesTable = salesTable + "<th>Profit</th>";
-    salesTable = salesTable + "</tr>"
+    salesTable = salesTable + "</tr>";
+    let currColor = "";
     for (let i = 0; i < data.result.length; i++){
-        salesTable = salesTable + '<tr id = "itemSold">';
+        if (i%2){ currColor = "lightgray"; }
+        else{ currColor = "white"; }
+        salesTable = salesTable + '<tr id = "itemSold" style="background-color:' + currColor + '">';
         salesTable = salesTable + "<td>" + data.result[i].item_name + "</td>";
         salesTable = salesTable + "<td>" + data.result[i].sales + "</td>";
         salesTable = salesTable + "<td>" + data.result[i].profit + "</td>";
@@ -665,7 +668,7 @@ const createPopMenuItemReport = document.getElementById("popMenuItemButton");
 createPopMenuItemReport.addEventListener('click', function(e){
     document.getElementById("dateSelectors").value = POPITEMS;
     document.getElementById("dateSelectors").hidden = false;
-    document.getElementById("datePanel2").hidden = false;
+    document.getElementById("hideMe").hidden = false;
     document.getElementById("managerView").hidden = true;
 });
 
@@ -768,7 +771,7 @@ const createRestockReport = document.getElementById("restockReportButton");
 createRestockReport.addEventListener('click', function(e) {
     console.log('Restock Report Button was clicked');
     document.getElementById("managerView").hidden = true;
-    document.getElementById("datePanel2").hidden = false;
+    document.getElementById("hideMe").hidden = false;
     document.getElementById("dateSelectors").hidden = false;
     document.getElementById("dateSelectors").value = RESTOCK;
 });
@@ -839,7 +842,8 @@ createExcessReport.addEventListener('click', function(e) {
     document.getElementById("managerView").hidden = true;
     document.getElementById("dateSelectors").hidden = false;
 
-    document.getElementById("datePanel2").hidden = true;
+    document.getElementById("hideMe").hidden = true;
+
 
     document.getElementById("dateSelectors").value = EXCESS;
 });
@@ -874,7 +878,7 @@ function excessReportLogic(startDate){
 );}
 
 function excessReport(data){
-    excessTable = '<table><tbody><tr>';
+    excessTable = '<p id="excessReportTitle">Excess Report</p><table><tbody><tr>';
     excessTable = excessTable + "<th>Item Name</th>";
     excessTable = excessTable + "<th>Quantity Sold</th>";
     excessTable = excessTable + "<th>Quantity</th>";
