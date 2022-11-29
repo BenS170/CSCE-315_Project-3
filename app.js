@@ -61,7 +61,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "https://three15-team-3.onrender.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;

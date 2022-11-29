@@ -1,0 +1,26 @@
+Project 3 - Sprint 2
+
+SCRUM Meeting #1
+
+11/11/22
+
+Start Time - 9:30
+
+Notes:
+
+All team members were present for this meeting
+
+9:30 - Octavio started the meeting by asking what everyone did since the last meeting, what they
+plan to accomplish before the end of the sprint, and the main barriers getting in their way.
+9:31 - Ben talked about how he and Octavio worked together to get the database fully connected. Ben was also able
+to get the web app hosted on render while still being connected to the database. 
+9:33 - Ben also talked about how he completed the POST functions for the server and plans to create increase
+and decrease quantity buttons for the Server GUI.
+9:34 - Anoop was able to get viewing the menu working for the customer GUI as well as separated them by section.
+He plans to get the backend working for the customer GUI before the end of the sprint.
+9:36 - Hannah talked about how she completed the basic functions for add, delete, and updating menu items. 
+She plans to start working on the reports and get a couple working before next meeting.
+9:39 - Octavio and Priyanka were both helpers to the manager and customer gui respectively. They also took
+important roles during the SCRUM meeting and helping write the documentation for the group. 
+
+End Time - 9:39
