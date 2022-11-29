@@ -157,24 +157,25 @@ addMenuItemButton.addEventListener('click', function(e) {
         if (menuPrice == null || menuPrice == ""){
             alert("add menu item was canceled");
         } else{
-            const menuIngredients = prompt("What ingredients do you want for the new item?", 'i.e. {lettuce, bacon, "salad dressing", ...}');
+            const menuIngredients = prompt("What ingredients do you want for the new item?", 'i.e. {lettuce, bacon, salad dressing, ...}');
             if (menuIngredients == null || menuIngredients == ""){
                 alert("add menu item was canceled");
             } else {
                 const menuIngNum = prompt("How many ingredients is in the new item");
-                const commas = 0;
-                if (menuIngredients.length() > 0){
-                    commas = 1;
-                    for(var i = 0; i < menuIngredients.length(); i++){
-                        if(i == ","){
-                            commas++;
-                        }
+                // const commas = 0;
+                // if (menuIngredients.length() > 0){
+                //     commas = 1;
+                //     for(var i = 0; i < menuIngredients.length(); i++){
+                //         if(i == ","){
+                //             commas++;
+                //         }
     
-                    }
+                //     }
 
-                }
+                // }
 
-                menuIngNum = toString(commas);
+                //menuIngNum = toString(commas);
+                
                 
                 if (menuIngNum == null || menuIngNum == "" || menuIngNum == "0"){
                     alert("add menu item was canceled");
@@ -272,6 +273,31 @@ updateMenuItemButton.addEventListener('click', function(e) {
               console.log(error);
             });
 
+        } else {
+            if(confirm("Do you wan to change the ingredients list?")){
+                const menuIngredients = prompt("What is the new ingredients?", "{bacon,lettuce,ranch,'paper plate',...}");
+                const menuIngNum = prompt("How many ingredients are there now?", "5")
+
+                const data3 = {menuID,menuIngredients,menuIngNum};
+    
+                fetch('/updateMenuIngredients', {
+                    method: 'POST',
+                    headers:{
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data3)
+                })
+                .then(function(response) {
+                  if(response.ok) {
+                    console.log('Click was recorded');
+                    return;
+                  }
+                  throw new Error('Request failed.');
+                })
+                .catch(function(error) {
+                  console.log(error);
+                });
+            }
         }
       }
 
@@ -907,3 +933,40 @@ function initMap() {
 }
   
   window.initMap = initMap;
+
+
+  /******************************* Delete Inventory ************************/
+  const  deleteInventoryItemButton = document.getElementById("deleteInventoryItemButton");
+
+deleteInventoryItemButton.addEventListener('click', function(e) {
+  console.log('inventory delete was clicked');
+  const ID = prompt("What is the inventory ID?", "bacon");
+  if(ID == null || ID == ""){
+    alert("delete menu item was canceled");
+  } else{
+    const inventoryID = ID.toLowerCase();
+    const data = {inventoryID};
+
+    if (confirm("Are you suer that you want to delete item: " + ID)){
+        fetch('/deleteInventoryItem', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+          if(response.ok) {
+            console.log('Click was recorded');
+            return;
+          }
+          throw new Error('Request failed.');
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      }
+
+    }
+  
+});

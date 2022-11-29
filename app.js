@@ -497,3 +497,41 @@ app.post('/getExcessRep', (req, res) => {
             res.json(data);
     })
 });
+
+app.post('/deleteInventoryItem', (req, res) => {
+    console.log("inside update Menu item");
+    const { inventoryID } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "DELETE FROM inventory WHERE itemid= '" + inventoryID + "';";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ inventoryID });
+});
+
+app.post('/updateMenuIngredients', (req, res) => {
+    console.log("inside update Menu item");
+    const { menuID,menuIngredients,menuIngNum } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "UPDATE menu_items SET ingredient_list= '" + menuIngredients +"', num_ingredients = '"+ menuIngNum + "' WHERE menu_id= '" + menuID +"';";
+    console.log(queryString);
+     pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ menuID,menuIngredients,menuIngNum });
+});
