@@ -61,7 +61,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "https://three15-team-3.onrender.com/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
@@ -426,7 +426,8 @@ app.post('/orderInventoryItem', (req, res) => {
 });
 
 function toSQLArr(str){
-    arr = str.split(", ")
+    arr = "" + str;
+    arr = arr.split(",")
     var arrStr = "'{";
     for (let i = 0; i < arr.length; i++){
         arrStr+= '"' + arr[i] + '"'
@@ -496,4 +497,42 @@ app.post('/getExcessRep', (req, res) => {
             data = { result : excess };
             res.json(data);
     })
+});
+
+app.post('/updateInvItem', (req, res) => {
+    const {itemid, stockprice, unit, quantity, serving_size, oldName} = req.body;
+
+    // Database Code here
+    var queryString = "UPDATE inventory SET itemid='" + itemid + "', ";
+    queryString += "stockprice= '" + stockprice + "', ";
+    queryString += "unit= '" + unit + "', ";
+    queryString += "quantity=" + quantity + ", ";
+    queryString += "serving_size= " + serving_size + " ";
+    queryString += "WHERE itemid= '" + oldName + "';";
+    console.log(queryString + "\n");
+    pool
+        .query(queryString)
+        .then(query_res => {
+        for (let i = 0; i < query_res.rowCount; i++){
+            console.log(query_res.rows[i]);
+        }
+    })
+
+    res.status(200).json({itemid, stockprice, unit, quantity, serving_size});
+});
+
+app.post('/updateMenuItemInventoryArr', (req,res) => {
+    const {menu_id, newIngredients} = req.body;
+    var queryString = "UPDATE menu_items SET ingredient_list = " + toSQLArr(newIngredients) + " WHERE menu_id = " + menu_id;
+    console.log(queryString);
+
+    pool
+        .query(queryString)
+        .then(query_res => {
+        for (let i = 0; i < query_res.rowCount; i++){
+            console.log(query_res.rows[i]);
+        }
+    })
+
+    res.status(200).json({menu_id, newIngredients});
 });

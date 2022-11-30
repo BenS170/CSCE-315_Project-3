@@ -1,25 +1,66 @@
 body{
-    background-color: maroon;
+    background-color: #5B0726;
+}
+
+#indexContent{
+    border: ridge goldenrod 5px;
+    background-color: lightgrey;
+
+    max-width: 50%;
+    max-height: 100%;
+
+    padding: 2%;
+    margin:auto;
+    margin-top: 5%;
+}
+
+#indexContent img{
+    width:30%;
+    margin-left: 35%;
 }
 
 .allButtons{
     display: flex;
-    justify-content: center;
-    margin: auto;
-    width: 50%;
-    padding: 10px;
-    align-items: center;
+    flex-direction: column;
+
+    width: 100%;
+}
+
+.linkButton{
+    width: 70%;
+    border: ridge black 2px;
+    border-radius: 5px;
+
+
+    margin:auto;
+    margin-top: 2%;
+
+}
+
+.linkButton button{
+    width:100%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+
+    font-size: 125%;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .title{
-    padding-top: 10%;
+    margin:auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    margin-top: 2%;
+    margin-bottom: 3%;
+
     text-align: center;
-    margin: auto;
-    color: white;
 }
 
-.allButtons button{
-    height: 100px;
-    margin-left: 10px;
-    margin-right: 10px;
+h1{
+    text-transform: uppercase;
+}
+
+h2{
+    color: #282828;
 }

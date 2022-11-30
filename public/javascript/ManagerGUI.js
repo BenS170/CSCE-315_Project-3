@@ -99,8 +99,6 @@ async function updateTableFunction(){
         const data = {menu_id, item_name, item_price, num_ingredients, ingredient_list, type};
         console.log(data);
         x = await fetchPost('/updateMenuItem', data);
-        // REMOVE ME!!!!
-        break;
     }
 }
 
@@ -120,6 +118,9 @@ const viewMenuButton = document.getElementById("viewMenuButton");
 
 viewMenuButton.addEventListener('click', function(e) {
     console.log('view menu was clicked');
+
+    document.getElementById("dateSelectors").hidden = true;
+    document.getElementById("managerView").hidden = false;
   
     fetch('/getMenu', {method: 'GET'})
         .then(function(response) {
@@ -315,11 +316,14 @@ deleteMenuItemButton.addEventListener('click', function(e) {
   
 });
 
-
-
+let modified = false;
+let originalInvItems = [];
+let oldInvItems = [];
 
 function makeInventoryTable(data){
-    htmlMenuTable = '<table> <tr id = "titleRow">';
+    oldInvItems = [];
+    htmlMenuTable = '<div id="tableAndUpdateButton">';
+    htmlMenuTable = htmlMenuTable + '<table id="inventoryTable"> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Item ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Stock Price</th>";
     htmlMenuTable = htmlMenuTable + "<th>Units</th>";
@@ -330,18 +334,25 @@ function makeInventoryTable(data){
 
     currColor = "";
     for (let i = 0; i < data.result.length; i++){
+        let currItem = [];
         if (i%2){ currColor = "lightgray"; }
         else{ currColor = "white"; }
         htmlMenuTable = htmlMenuTable + '<tr id = "menuItem" style="background-color:' + currColor + '">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].itemid + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].stockprice + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].unit + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].quantity + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].serving_size + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].quantity_needed + "</td>";
+        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].itemid + "</td>";
+        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].stockprice + "</td>";
+        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].unit + "</td>";
+        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].quantity + "</td>";
+        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].serving_size + "</td>";
+        htmlMenuTable = htmlMenuTable + '<td>' + data.result[i].quantity_needed + "</td>";
         htmlMenuTable = htmlMenuTable + "</tr>";
+        
+        // We want a sort-of "backup" in the case the manager makes a mistake
+        if (!modified){ originalInvItems.push(data.result[i]); }
+        oldInvItems.push(data.result[i]);
     }
+    modified = true;
     htmlMenuTable = htmlMenuTable + "</table>";
+    htmlMenuTable = htmlMenuTable + '</table><button id="updateInvTable" onClick="updateInvFunction()">Update Table</button></div>';
     return htmlMenuTable;
 }
 
@@ -349,6 +360,8 @@ const viewInventoryButton = document.getElementById("viewInventoryButton");
 
 viewInventoryButton.addEventListener('click', function(e) {
     console.log('View Inventory was clicked');
+    document.getElementById("dateSelectors").hidden = true;
+    document.getElementById("managerView").hidden = false;
   
     fetch('/getInv', {method: 'GET'})
         .then(function(response) {
@@ -509,7 +522,7 @@ createSalesReport.addEventListener('click', function(e) {
     console.log('Sales Report Button was clicked');
     document.getElementById("managerView").hidden = true;
     document.getElementById("dateSelectors").hidden = false;
-    document.getElementById("datePanel2").hidden = false;
+    document.getElementById("hideMe").hidden = false;
     document.getElementById("dateSelectors").value = SALES;
 });
 
@@ -540,13 +553,16 @@ function submitDateLogic(){
 }
 
 function salesReport(data){
-    salesTable = '<table><tbody><tr>';
+    salesTable = '<p id = "salesReportTitle">Sales Report</p><table><tbody><tr>';
     salesTable = salesTable + "<th>Item Name</th>";
     salesTable = salesTable + "<th>Sales</th>";
     salesTable = salesTable + "<th>Profit</th>";
-    salesTable = salesTable + "</tr>"
+    salesTable = salesTable + "</tr>";
+    let currColor = "";
     for (let i = 0; i < data.result.length; i++){
-        salesTable = salesTable + '<tr id = "itemSold">';
+        if (i%2){ currColor = "lightgray"; }
+        else{ currColor = "white"; }
+        salesTable = salesTable + '<tr id = "itemSold" style="background-color:' + currColor + '">';
         salesTable = salesTable + "<td>" + data.result[i].item_name + "</td>";
         salesTable = salesTable + "<td>" + data.result[i].sales + "</td>";
         salesTable = salesTable + "<td>" + data.result[i].profit + "</td>";
@@ -652,7 +668,7 @@ const createPopMenuItemReport = document.getElementById("popMenuItemButton");
 createPopMenuItemReport.addEventListener('click', function(e){
     document.getElementById("dateSelectors").value = POPITEMS;
     document.getElementById("dateSelectors").hidden = false;
-    document.getElementById("datePanel2").hidden = false;
+    document.getElementById("hideMe").hidden = false;
     document.getElementById("managerView").hidden = true;
 });
 
@@ -755,7 +771,7 @@ const createRestockReport = document.getElementById("restockReportButton");
 createRestockReport.addEventListener('click', function(e) {
     console.log('Restock Report Button was clicked');
     document.getElementById("managerView").hidden = true;
-    document.getElementById("datePanel2").hidden = false;
+    document.getElementById("hideMe").hidden = false;
     document.getElementById("dateSelectors").hidden = false;
     document.getElementById("dateSelectors").value = RESTOCK;
 });
@@ -826,7 +842,8 @@ createExcessReport.addEventListener('click', function(e) {
     document.getElementById("managerView").hidden = true;
     document.getElementById("dateSelectors").hidden = false;
 
-    document.getElementById("datePanel2").hidden = true;
+    document.getElementById("hideMe").hidden = true;
+
 
     document.getElementById("dateSelectors").value = EXCESS;
 });
@@ -861,7 +878,7 @@ function excessReportLogic(startDate){
 );}
 
 function excessReport(data){
-    excessTable = '<table><tbody><tr>';
+    excessTable = '<p id="excessReportTitle">Excess Report</p><table><tbody><tr>';
     excessTable = excessTable + "<th>Item Name</th>";
     excessTable = excessTable + "<th>Quantity Sold</th>";
     excessTable = excessTable + "<th>Quantity</th>";
@@ -882,6 +899,71 @@ function excessReport(data){
     
     excessTable = excessTable + '</tbody></table>'
     return excessTable;
+}
+
+/************************ Inventory Table Modification ****************************/
+
+// If they change the name of an item, we have to update its name in the inventory table
+// AND ALSO modify its name in the menu item table (it's the same item, just different name)
+    // This could be done with array_replace(ARR, ELEMENT_TO_REPLACE, REPLACEMENT)
+    // OR
+    // array_remove(ARR, ELEMENT_TO_REMOVE) then array_append(ARR, NEW_ELEMENT);
+
+// A drop down would be cool to select the Units, but that can come in later
+
+function updateInvFunction(){
+    // Revert back to english:
+    var invTable = document.getElementById("inventoryTable");
+    for (let i = 1, row; row = invTable.rows[i]; i++){
+        // iterating through rows. Starting at row 1 bc 0 is headers
+        itemid = -1;
+        stockprice = -1.0;
+        unit = "";
+        quantity = -1;
+        serving_size = -1.0;
+
+        for (let j = 0, col; col = row.cells[j]; j++){
+            if (j == 0){ itemid = col.textContent; }
+            else if (j == 1){ stockprice = col.textContent; }
+            else if (j == 2){ unit = col.textContent; }
+            else if (j == 3){ quantity = col.textContent; }
+            else if (j == 4){ serving_size = col.textContent; }
+            else if (j == 5){ quantity_needed = col.textContent; }
+            else { break; }
+        }
+        let oldName = oldInvItems[i-1]["itemid"];
+
+        const data = {itemid, stockprice, unit, quantity, serving_size, oldName};
+        console.log(data);
+        x = fetchPost('/updateInvItem', data);
+        oldInvItems[i-1]["itemid"] = itemid;
+        changeMenuItemInventoryArr(oldName, itemid);
+    }
+}
+
+async function changeMenuItemInventoryArr(oldName, newName){
+    let menuItems = await getMenuItemArray();
+    for (let i = 0; i < menuItems.length; i++){
+        if (menuItems[i]["ingredient_list"].includes(oldName)){
+            menu_id = i+1
+            
+            newIngredients = [];
+            for (let j = 0; j < menuItems[i]["ingredient_list"].length; j++){
+                if (menuItems[i]["ingredient_list"][j] == oldName){
+                    newIngredients.push(newName);
+                }else{
+                    newIngredients.push(menuItems[i]["ingredient_list"][j]);
+                }
+            }
+
+            console.log("Old: " + menuItems[i]["ingredient_list"]);
+            console.log("New: " + newIngredients);
+
+            const data = {menu_id, newIngredients};
+            let x = fetchPost("/updateMenuItemInventoryArr", data);
+
+        }
+    }
 }
 
 /********************** GOOGLE **********************/

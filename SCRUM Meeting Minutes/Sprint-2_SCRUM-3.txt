@@ -1,0 +1,30 @@
+Project 3 - Sprint 2
+
+SCRUM Meeting #3
+
+11/21/22
+
+Start Time - 5:30
+
+Notes:
+
+All team members were present for this meeting
+
+5:30 - Octavio started the meeting by asking what everyone did since the last meeting, what they
+plan to accomplish before the end of the sprint, and the main barriers getting in their way.
+5:31 - Anoop began by talking about how he was able to get add to order and submit order working, most of delete
+order working, and viewing the order on the same page in the Customer GUI. He plans to finish debugging some functions
+and help with adding pictures to the front end.
+5:33 - Ben talked about how he was able to get OAuth API implemented. However it still has some bugs that need
+to be worked out. He plans to finish the OAuth and work on getting the menu items from the database while also
+redesigning the Server GUI.
+5:35 - Hannah started working on the excess and restock reports which are mostly finished. She also made 
+the cancel buttons work more effectively and added more prompts for the user. She wants to finish all the reports
+before the end of the sprint. 
+5:38 - Octavio implemented the Google Maps API and finished the popular menu items report. He plans to help out
+with the OAuth API and implementing more accessibility features.
+5:39 - Priyanka explained how she was still working withing the front end of the customer GUI. She made some 
+nice changes and made the front end look much more organized. However, she ran into trouble recently when pulling
+new code changes from github. Her next goal is to get the pictures for the menu items working for the customer GUI.
+
+End Time - 5:41
