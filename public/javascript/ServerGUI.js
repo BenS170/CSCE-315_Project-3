@@ -118,6 +118,7 @@ function decQty(itemid, price){
 function clearOrder(){
     var table = document.getElementById('orderTable');
     for(let i = 0; i<order_rows; i++){
+        console.log(typeof(table));
         table.deleteRow(1);
     }
 

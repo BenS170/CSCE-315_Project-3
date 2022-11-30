@@ -194,7 +194,7 @@ function makeEntreeTable(data){
   
   
   
-  function makeSideTable(data){
+function makeSideTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
@@ -215,7 +215,7 @@ function makeEntreeTable(data){
     }
     htmlMenuTable = htmlMenuTable + "</table>";
     return htmlMenuTable;
-  }
+    }
   
   
   const viewSidesButton = document.getElementById("Sides");
@@ -250,7 +250,7 @@ function makeEntreeTable(data){
   
   
   
-  function makeDrinkTable(data){
+function makeDrinkTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
@@ -306,7 +306,7 @@ function makeEntreeTable(data){
   
   
   
-  function makeDessertTable(data){
+function makeDessertTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
@@ -326,7 +326,7 @@ function makeEntreeTable(data){
     }
     htmlMenuTable = htmlMenuTable + "</table>";
     return htmlMenuTable;
-  }
+}
   
   
   const viewDessertsButton = document.getElementById("Desserts");
@@ -362,7 +362,7 @@ function makeEntreeTable(data){
   const OrderButton = document.getElementById("View Order");
   
   OrderButton.addEventListener('click', function(e) {
-      console.log('order was clicked');
+    console.log('order was clicked');
 
     CustomerView = document.getElementById("CustomerView");
     CustomerView.hidden = true;
@@ -409,41 +409,43 @@ function makeEntreeTable(data){
   // };
   
 
-  
+  var order_rows = 0;
   var order_items = [];
   var order_name = [];
   var order_quantity = [];
   var order_prices = [];
   
   
-  function addToOrder(menuId, itemName, itemPrice){
-      console.log('add to order was clicked');
-  
-      console.log(menuId);
-      console.log(itemName);
-      console.log(itemPrice); 
+function addToOrder(menuId, itemName, itemPrice){
+    console.log('add to order was clicked');
 
-      if(order_items.includes(menuId)) {
+    console.log(menuId);
+    console.log(itemName);
+    console.log(itemPrice); 
+
+    if(order_items.includes(menuId)) {
         var ind = order_items.indexOf(menuId);
         order_quantity[ind]++;
-      }
+    }
 
-      else {
+    else {
         order_items.push(menuId);
         order_name.push(itemName);
         order_prices.push(itemPrice);
         order_quantity.push(1);
-        
-      }
+
+        order_rows++;
+    
+    }
+
+    for(var i = 0; i < order_items.length; i++) {    
+        console.log(order_items[i]);
+    }
   
-      for(var i = 0; i < order_items.length; i++) {    
-          console.log(order_items[i]);
-      }
-  
-  }
+}
 
   // does not work 100%...
-  function deleteFromOrder(menuId, itemName, itemPrice){
+function deleteFromOrder(menuId, itemName, itemPrice){
     console.log('delete from order was clicked');
 
     console.log('quantity array is:')
@@ -497,10 +499,10 @@ function makeEntreeTable(data){
         console.log('Cannot delete an item not in the order!');
     }
 
-  }
+}
 
 
-  function updateOrderTable(){
+function updateOrderTable(){
 
     var OrderTable = document.getElementById("CustomerOrderTable");
     var htmlstring = '<table><tr id = "titleRow">';
@@ -517,31 +519,14 @@ function makeEntreeTable(data){
     htmlstring = htmlstring + "</table>";
     OrderTable.innerHTML = htmlstring;
 
-  }
+}
 
 
   // total and tax calculations are redundant, can prolly pass in tax to total to make it less code or combine into 1 function
 
-//   function calTax(tot_price){
-//     var tax = 0; 
-//     var tot_price = 0;
-
-//     for (var t = 0; t < order_price.length; t++) {
-//         tot_price += order_price[t] * order_quantity[t];
-//     }
-
-//     var Tax = document.getElementById("order-tax");
-
-//     tax = 0.0825 * tot_price;
-//     var tax_string = 'Tax: $' + tax;
-//     Tax.innerHTML = tax_string;
-
-
-//   }
-
 
   // total price calculation is wrong?
-  function calTotal(){
+function calTotal(){
     var tax = 0; 
     var tot_price = 0; // total without tax
     var total = 0; // final total
@@ -566,28 +551,33 @@ function makeEntreeTable(data){
     Total.innerHTML = tot_string;
 
 
-  }
+}
 
 
 
-
-  
   // clear all arrays
-  function cancelOrder() {
-
-    order_items = [];
-    order_name = []
-    order_quantity = [];
-    order_prices = [];
+function cancelOrder() {
 
     console.log('clearing table');
-    var clearTable = document.getElementById("CustomerOrderTable");
-    clearTable.innerHTML = "";
+    var clTable = document.getElementById('CustomerOrderTable');
+    for(var i = 0; i < order_rows; i++) {
+        console.log(order_rows);
+        console.log(typeof(clTable));
+        clTable.deleteRow(1);
+    }
+
+    //clearTable.innerHTML = "";
+
+    order_rows = 0;
+    order_items = [];
+    order_name = [];
+    order_quantity = [];
+    order_prices = [];
 
     //reset price and tax
     
 
-  }
+}
 
 
 // order_prices[]
