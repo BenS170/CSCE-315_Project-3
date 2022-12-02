@@ -3,6 +3,14 @@ var order_rows = 0;
 var order_items = [];
 var order_prices = [];
 
+/**
+ * Adds a menu item to the order summary.
+ * @constructor
+ * @param {Number} itemid - The id of the item in the database.
+ * @param {string} name - name of the item.
+ * @param {Number} qty - current qty of the item
+ * @param {Float} price - The set price of the item in the database
+ */
 function addToOrder(itemid, name, qty, price){
 
     if(order_items.includes(itemid)){
@@ -186,8 +194,6 @@ fetch('/getMenu', {method: 'GET'})
         .then(function(data) {
         // TODO: Modify HTML using the information received from the database
         populateGUI(data.result);
-
-        console.log(data.result);
     })
     .catch(function(error) {
         console.log(error);
