@@ -25,6 +25,9 @@ function makeEntreeTable(data){
     htmlMenuTable = htmlMenuTable + "</tr>";
   
     for (let i = 0; i < data.result.length; i++){
+        // if (i%4 == 0){
+        //     htmlMenuTable = htmlMenuTable + "</tr><tr>"
+        // }
   
         htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
@@ -354,13 +357,13 @@ function deleteFromOrder(menuId, itemName, itemPrice){
             // order_id.splice(del_id, 1);
             // order_name.splice(del_name, 1);
             // order_price.splice(del_price, 1);
-            order_items.splice(menuId, 1);
-            order_name.splice(itemName, 1);
-            order_prices.splice(itemPrice, 1);
+            order_items.splice(ind, 1);
+            order_name.splice(ind, 1);
+            order_prices.splice(ind, 1);
             // need to replace the 1 quantity value with a 0 now 
             // logic: if quantity is 0, then delete that row from the table...
             // get element by id...?
-            order_quantity.splice(ind, 1, 0);
+            //order_quantity.splice(ind, 1, 0);
         }
 
         console.log('quantity array is:')
@@ -386,6 +389,13 @@ function updateOrderTable(){
 
 
     for(var i = 0; i < order_items.length; i++) {
+        if (order_quantity[i] == 0){
+            order_quantity.splice(i,1);
+            order_items.splice(i,1);
+            order_name.splice(i,1);
+            order_prices.splice(i,1);
+            continue;
+        }
         htmlstring = htmlstring + '<tr><td>' + order_name[i] + '</td>';
         htmlstring = htmlstring + '<td>' + order_quantity[i] + '</td>';
         htmlstring = htmlstring + '<td>' + order_prices[i] * order_quantity[i] + '</td></tr>';
@@ -481,9 +491,9 @@ function ClearOrder() {
 const button = document.getElementById("SubmitButton");
 button.addEventListener('click', function(e) {
   console.log('Server submit was clicked');
-  const data = {order_items, order_prices};
+  const data = {order_items, order_prices, order_quantity};
 
-  fetch('/serverSubmit', {
+  fetch('/customerSubmit', {
         method: 'POST',
         headers:{
             'Content-Type': 'application/json'
@@ -494,6 +504,11 @@ button.addEventListener('click', function(e) {
       if(response.ok) {
         console.log('Click was recorded');
         ClearOrder();
+
+        console.log("here");
+        // can change to confirm order first then alert with order #
+        const subConfirmation = alert("Thank you for your order!", "1");
+
         return;
       }
       throw new Error('Request failed.');
@@ -501,6 +516,9 @@ button.addEventListener('click', function(e) {
     .catch(function(error) {
       console.log(error);
     });
+
+
+
 });
 
 
