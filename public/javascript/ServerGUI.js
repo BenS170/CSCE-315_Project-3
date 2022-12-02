@@ -176,3 +176,54 @@ button.addEventListener('click', function(e) {
 function googleTranslateElementInit(){
     new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
+
+
+fetch('/getMenu', {method: 'GET'})
+    .then(function(response) {
+        if(response.ok) return response.json();
+        throw new Error('Request failed.');
+    })
+        .then(function(data) {
+        // TODO: Modify HTML using the information received from the database
+        populateGUI(data.result);
+
+        console.log(data.result);
+    })
+    .catch(function(error) {
+        console.log(error);
+});
+
+function populateGUI(menu_items){
+    for(var i = 0; i<menu_items.length; i++){
+        var entrees = document.getElementById('entrees');
+        var sides = document.getElementById('sides');
+        var desserts = document.getElementById('desserts');
+        var drinks = document.getElementById('drink-menu');
+        switch(menu_items[i].type){
+            case "entree":
+                var button = "<button onclick=\"addToOrder("+menu_items[i].menu_id+", '"+menu_items[i].item_name+"', '1', '"+menu_items[i].item_price+"')\"> "+menu_items[i].item_name+" </button>";
+                entrees.innerHTML += button;
+                break;
+            case "side":
+                var button = "<button onclick=\"addToOrder("+menu_items[i].menu_id+", '"+menu_items[i].item_name+"', '1', '"+menu_items[i].item_price+"')\"> "+menu_items[i].item_name+" </button>";
+                sides.innerHTML += button;
+                break;
+            case "drink":
+                var button = "<button onclick=\"addToOrder("+menu_items[i].menu_id+", '"+menu_items[i].item_name+"', '1', '"+menu_items[i].item_price+"')\"> "+menu_items[i].item_name+" </button>";
+                drinks.innerHTML += button;
+                break;
+            case "dessert":
+                var button = "<button onclick=\"addToOrder("+menu_items[i].menu_id+", '"+menu_items[i].item_name+"', '1', '"+menu_items[i].item_price+"')\"> "+menu_items[i].item_name+" </button>";
+                desserts.innerHTML += button;
+                break;
+        }
+    }
+}
+
+function openDrinks() {
+  document.getElementById("drink-menu").style.display = "block";
+}
+
+function closeDrinks() {
+  document.getElementById("drink-menu").style.display = "none";
+}

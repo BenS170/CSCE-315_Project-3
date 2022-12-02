@@ -1,0 +1,29 @@
+Project 3 - Sprint 2
+
+SCRUM Meeting #2
+
+11/18/22
+
+Start Time - 9:15
+
+Notes:
+
+All members were present except Priyanka Rao
+
+9:15 - Octavio started the meeting by asking what everyone did since the last meeting, what they
+plan to accomplish before the end of the sprint, and the main barriers getting in their way.
+9:16 - Anoop started by explaining how he made some progress on the add to order functionality and getting the 
+order summary on the same page. He plans to get full backend functionality before the next meeting.
+9:18 - Hannah talked about how she completed the add inventory functions. She also made some changes to these
+functions that help the user easily use them. Hannah wants to complete the manager GUI available functionality
+before the next meeting.
+9:19 - Ben told everyone how he was able to get the increase and decrease quantity buttons working. He also was
+able to successfully implement the Google Translate API for all the GUIs. He plans to work on the server design and 
+OAuth API for the remainder of the Sprint.
+9:23 - Octavio talked about how he created helper functions for the manager gui as well as made some changes
+that reflected the information gathered during our user studies. He made some buttons bigger and fixed a lot of the 
+formating. Octavio plans to continue working on the sales report.
+9:24 - Priyanka continues to work on the Customer GUI frontend making it look nicer and adding more accessibility features
+for the remainder of the sprint.
+
+End Time - 9:25
