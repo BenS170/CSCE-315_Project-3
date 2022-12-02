@@ -140,6 +140,8 @@ app.post('/serverSubmit', async (req, res) => {
     for(let i = 0; i<order_items.length; i++){
         await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
         var ingredients = [];
+
+        // removing ingredients
         await pool
             .query("SELECT ingredient_list FROM menu_items WHERE menu_id="+order_items[i]+";")
             .then(query_res => {
@@ -148,14 +150,12 @@ app.post('/serverSubmit', async (req, res) => {
                     if(i!=0){
                         res = query_res.rows[0]["ingredient_list"][i].slice(1);
                     }
-                    console.log(res);
                     ingredients.push(res);
                 }
             }
         );
-
+        
         for(let i = 0; i<ingredients.length; i++){
-            console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
             await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
         }
     }
