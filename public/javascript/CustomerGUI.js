@@ -1,111 +1,4 @@
 
-// // Potential Functions...
-
-// class OrderItem {
-//     constructor(menu_id, name, price) {
-//         this.menu_id = menu_id;
-//         this.name = name;
-//         this.price = price;
-//     }
-// }
-
-// var order = []; 
-
-// // add items
-// async function addItem() {
-//     var menu_id = prompt("Enter the menu ID: ");
-
-
-//     let MenuID = result.parseInt("menu_id");
-//     let Name = result.getString("item_name");
-//     let Price = result.parseFloat("item_price");
-
-//     let thisOrder = new OrderItem(MenuID, Name, Price);
-//     order.push(thisOrder);
-
-// }
-
-// delete items from the order
-// async function deleteItem() {
-
-//     if(orders.length() == 0) {
-//         return;
-//     }
-
-//     var menu_id = prompt("Enter the menu ID: ");
-//     let MenuID = parseInt("menu_id");
-
-//     let thisOrder = new OrderItem();
-
-//     for(var i = 0; i < orders.length(); i++) {
-
-//         thisOrder = orders[i];
-
-//         if(thisOrder.menu_id == menu_id) {
-//             orders.splice(i, 1);
-//         }
-        
-//     }
-
-// }
-
-
-
-
-// // submit order
-// async function submitOrder() {
-
-//     const pool = new Pool;
-//     var orderID = pool.query("SELECT MAX(order_id) FROM orders;");
-//     var order_ID = parseInt(orderID);
-//     order_ID += 1;
-
-//     // NOTE: HARDCODED
-//     let date = "2022-11-06";
-//     let day = "U";
-
-//     let thisOrder = new OrderItem();
-
-//     for(var i = 0; i < order.length(); i++) {
-
-//         thisOrder = order[i];
-//         pool.query("INSERT INTO orders (order_id, order_total, item, date_made, day_made) VALUES("+order_ID+", "+thisOrder.price()+", "+thisOrder.menu_id()+", '"+date+"', '"+day+"');")
-
-//     }
-
-//     orders.splice(0, orders.length());
-
-// }
-
-// // cancel order
-// async function cancelOrder() {
-//     var u_sure = confirm("Are you sure you want to cancel the order?");
-
-//     if(!u_sure) {
-//         return;
-//     }
-
-//     orders.splice(0, orders.length());
-// }
-
-
-// // Total Price Calculation
-// async function totalOrderPrice() {
-
-//     var totalPrice = 0;
-
-//     let thisOrder = new OrderItem();
-//     for(var i = 0; i < order.length(); i++) {
-//         totalPrice += thisOrder.price;
-//     }
-
-//     totalPrice = Math.round((totalPrice * 1.0825) * 100) / 100;
-
-//     console.log("Your total is: " + totalPrice);
-// }
-
-
-// // Viewing menu, by types?
 
 // // SQL Queries - To display type of menu item and corresponding price:
 
@@ -114,23 +7,6 @@
 // // For Desserts: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'dessert';
 // // For Drinks: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'drink';
 
-
-// // inventory functions
-// async function viewInventory(){
-//     alert("view inventory");
-//     var inventoryWindow = window.open('','View Inventory');
-//     inventoryWindow.document.open();
-//     try {
-//         const results = await client.query("select * from inventory");
-//         inventoryWindow.document.write('<html><body onload="window.print()">'+ results.innerHTML + '</body></html>');
-//         inventoryWindow.document.close();
-//         setTimeout(function(){inventoryWindow.close();}, 100)
-//         return results.rows;
-//     }catch (e){
-//         return [];
-//     }
-
-// }
 
 // CustomerOrder.ejs
 
@@ -160,7 +36,7 @@ function makeEntreeTable(data){
     }
     htmlMenuTable = htmlMenuTable + "</table>";
     return htmlMenuTable;
-  }
+}
   
   
   const viewEntreesButton = document.getElementById("Entrees");
@@ -194,7 +70,7 @@ function makeEntreeTable(data){
   
   
   
-  function makeSideTable(data){
+function makeSideTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
@@ -215,7 +91,7 @@ function makeEntreeTable(data){
     }
     htmlMenuTable = htmlMenuTable + "</table>";
     return htmlMenuTable;
-  }
+}
   
   
   const viewSidesButton = document.getElementById("Sides");
@@ -250,7 +126,7 @@ function makeEntreeTable(data){
   
   
   
-  function makeDrinkTable(data){
+function makeDrinkTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
@@ -271,7 +147,7 @@ function makeEntreeTable(data){
     }
     htmlMenuTable = htmlMenuTable + "</table>";
     return htmlMenuTable;
-  }
+}
   
   
   const viewDrinksButton = document.getElementById("Drinks");
@@ -306,7 +182,7 @@ function makeEntreeTable(data){
   
   
   
-  function makeDessertTable(data){
+function makeDessertTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
@@ -326,7 +202,7 @@ function makeEntreeTable(data){
     }
     htmlMenuTable = htmlMenuTable + "</table>";
     return htmlMenuTable;
-  }
+}
   
   
   const viewDessertsButton = document.getElementById("Desserts");
@@ -362,7 +238,7 @@ function makeEntreeTable(data){
   const OrderButton = document.getElementById("View Order");
   
   OrderButton.addEventListener('click', function(e) {
-      console.log('order was clicked');
+    console.log('order was clicked');
 
     CustomerView = document.getElementById("CustomerView");
     CustomerView.hidden = true;
@@ -383,7 +259,7 @@ function makeEntreeTable(data){
   CancelButton.addEventListener('click', function(e) {
       console.log('cancel order was clicked');
 
-      cancelOrder();
+      ClearOrder();
 
   });
 
@@ -409,41 +285,43 @@ function makeEntreeTable(data){
   // };
   
 
-  
+  var order_rows = 0;
   var order_items = [];
   var order_name = [];
   var order_quantity = [];
   var order_prices = [];
   
   
-  function addToOrder(menuId, itemName, itemPrice){
-      console.log('add to order was clicked');
-  
-      console.log(menuId);
-      console.log(itemName);
-      console.log(itemPrice); 
+function addToOrder(menuId, itemName, itemPrice){
+    console.log('add to order was clicked');
 
-      if(order_items.includes(menuId)) {
+    console.log(menuId);
+    console.log(itemName);
+    console.log(itemPrice); 
+
+    if(order_items.includes(menuId)) {
         var ind = order_items.indexOf(menuId);
         order_quantity[ind]++;
-      }
+    }
 
-      else {
+    else {
         order_items.push(menuId);
         order_name.push(itemName);
         order_prices.push(itemPrice);
         order_quantity.push(1);
-        
-      }
+
+        order_rows++;
+    
+    }
+
+    for(var i = 0; i < order_items.length; i++) {    
+        console.log(order_items[i]);
+    }
   
-      for(var i = 0; i < order_items.length; i++) {    
-          console.log(order_items[i]);
-      }
-  
-  }
+}
 
   // does not work 100%...
-  function deleteFromOrder(menuId, itemName, itemPrice){
+function deleteFromOrder(menuId, itemName, itemPrice){
     console.log('delete from order was clicked');
 
     console.log('quantity array is:')
@@ -497,10 +375,10 @@ function makeEntreeTable(data){
         console.log('Cannot delete an item not in the order!');
     }
 
-  }
+}
 
 
-  function updateOrderTable(){
+function updateOrderTable(){
 
     var OrderTable = document.getElementById("CustomerOrderTable");
     var htmlstring = '<table><tr id = "titleRow">';
@@ -517,31 +395,14 @@ function makeEntreeTable(data){
     htmlstring = htmlstring + "</table>";
     OrderTable.innerHTML = htmlstring;
 
-  }
+}
 
 
   // total and tax calculations are redundant, can prolly pass in tax to total to make it less code or combine into 1 function
 
-//   function calTax(tot_price){
-//     var tax = 0; 
-//     var tot_price = 0;
-
-//     for (var t = 0; t < order_price.length; t++) {
-//         tot_price += order_price[t] * order_quantity[t];
-//     }
-
-//     var Tax = document.getElementById("order-tax");
-
-//     tax = 0.0825 * tot_price;
-//     var tax_string = 'Tax: $' + tax;
-//     Tax.innerHTML = tax_string;
-
-
-//   }
-
 
   // total price calculation is wrong?
-  function calTotal(){
+function calTotal(){
     var tax = 0; 
     var tot_price = 0; // total without tax
     var total = 0; // final total
@@ -553,41 +414,63 @@ function makeEntreeTable(data){
     console.log('total price is ' +  tot_price);
 
     tax = 0.0825 * tot_price;
+    var total = tax + tot_price;
+
+    tax = Number(0.0825 * tot_price).toFixed(2);
 
     var Tax = document.getElementById("order-tax");
     var tax_string = 'Tax: $' + tax;
     Tax.innerHTML = tax_string;
-    
 
-    var total = tax + tot_price;
+    total = Number(total).toFixed(2);
 
     var Total = document.getElementById("order-total");
     var tot_string = 'Total: $' + total;
     Total.innerHTML = tot_string;
 
 
-  }
+    // var tax_h = document.getElementById('tax');
+    // tax_h.innerHTML = Number((getTax()).toFixed(2));
+    // let total = Number((parseFloat(getTax()) + parseFloat(getTotal())).toFixed(2));
+    // var total_h = document.getElementById('total')
+    // total_h.innerHTML = total;
+
+
+}
 
 
 
+  // clear all arrays and reset the order table 
+function ClearOrder() {
 
-  
-  // clear all arrays
-  function cancelOrder() {
+    console.log('clearing table');
+    var clTable = document.getElementById('CustomerOrderTable');
+    for(var i = 0; i < order_rows; i++) {
+        console.log(order_rows);
+        console.log(typeof(clTable));
+        clTable.deleteRow(1);
+    }
 
+    //clearTable.innerHTML = "";
+
+    order_rows = 0;
     order_items = [];
-    order_name = []
+    order_name = [];
     order_quantity = [];
     order_prices = [];
 
-    console.log('clearing table');
-    var clearTable = document.getElementById("CustomerOrderTable");
-    clearTable.innerHTML = "";
-
     //reset price and tax
+    var Tax = document.getElementById("order-tax");
+    var tax_string = 'Tax: $';
+    Tax.innerHTML = tax_string;
+
+    var Total = document.getElementById("order-total");
+    var tot_string = 'Total: $';
+    Total.innerHTML = tot_string;
+
     
 
-  }
+}
 
 
 // order_prices[]
@@ -610,7 +493,7 @@ button.addEventListener('click', function(e) {
     .then(function(response) {
       if(response.ok) {
         console.log('Click was recorded');
-        cancelOrder();
+        ClearOrder();
         return;
       }
       throw new Error('Request failed.');
@@ -622,12 +505,3 @@ button.addEventListener('click', function(e) {
 
 
 
-
-
-
-
-
-// Add Items, Remove Items
-// Total Order, view price
-// Cancel Order
-// Submit order
