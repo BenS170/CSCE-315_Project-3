@@ -81,10 +81,15 @@ app.get('/auth/google/callback',
 
   
 
-
+/**
+ * Adds a menu item to the order summary.
+ * @post
+ * @param {Array} order_items - Array of integers that represent the ids of item in the order
+ * @param {Array} order_prices - Array of Floats that contain the price of the items in the order.
+ */
 app.post('/serverSubmit', async (req, res) => {
     console.log("inside server");
-    const { order_items, order_prices } = req.body;
+    const { order_items, order_prices, } = req.body;
 
     // Getting Date Made
     let dateobj = new Date();
@@ -134,6 +139,86 @@ app.post('/serverSubmit', async (req, res) => {
     // Inputing Orders
     for(let i = 0; i<order_items.length; i++){
         await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+        var ingredients = [];
+
+        // removing ingredients
+        await pool
+            .query("SELECT ingredient_list FROM menu_items WHERE menu_id="+order_items[i]+";")
+            .then(query_res => {
+                for (let i = 0; i < query_res.rows[0]["ingredient_list"].length; i++){
+                    var res = query_res.rows[0]["ingredient_list"][i];
+                    if(i!=0){
+                        res = query_res.rows[0]["ingredient_list"][i].slice(1);
+                    }
+                    ingredients.push(res);
+                }
+            }
+        );
+        
+        for(let i = 0; i<ingredients.length; i++){
+            await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
+        }
+    }
+
+    res.status(200).json({ order_items, order_prices});
+});
+
+
+
+app.post('/customerSubmit', async (req, res) => {
+    console.log("inside customer");
+    const { order_items, order_prices, order_quantity } = req.body;
+
+    // Getting Date Made
+    let dateobj = new Date();
+    dateobj.toLocaleString('en-US', { timeZone: 'America/New_York' });
+    var myDate = dateobj.toISOString().split('T')[0];
+    console.log(dateobj.toISOString());
+
+    // Getting Week Day
+    var day = 'X';
+    var day_num = dateobj.getDay();
+    switch(day_num){
+        case 0:
+            day = 'U';
+            break;
+        case 1:
+            day = 'M';
+            break;
+        case 2:
+            day = 'T';
+            break;
+        case 3:
+            day = 'W';
+            break;
+        case 4:
+            day = 'H';
+            break;
+        case 5:
+            day = 'F';
+            break;
+        case 6:
+            day = 'S';
+            break;
+        default:
+            day = 'X';
+            break;
+    }
+  
+    // Getting next Order ID
+    var order_ID = 0;
+    await pool.query('select MAX(order_id) from orders;')
+    .then(query_res => {
+        order_ID = query_res.rows[0].max;
+        order_ID += 1;
+    });
+
+
+    // Inputing Orders
+    for(let i = 0; i<order_items.length; i++){
+        for (let j = 0; j < order_quantity[i];j++){
+            await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+        }
     }
 
     res.status(200).json({ order_items, order_prices});
@@ -545,4 +630,24 @@ app.post('/updateMenuItemInventoryArr', (req,res) => {
     })
 
     res.status(200).json({menu_id, newIngredients});
+});
+
+
+
+
+// get max order id
+app.get('/getMaxID', (req, res) => {
+    //var maxID;
+    menu_items = [];
+    pool
+        .query("SELECT MAX(order_id) FROM orders;")
+        .then(query_res => {
+            for (let i = 0; i < query_res.rowCount; i++){
+                menu_items.push(query_res.rows[i]);
+            }
+            data = { result : menu_items };
+            console.log("Query done");
+            res.json(data);
+        }
+    );
 });
