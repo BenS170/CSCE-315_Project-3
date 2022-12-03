@@ -533,14 +533,52 @@ submitDates.addEventListener('click', function(e) {
     submitDateLogic();
 });
 
+function checkIfValidDates(startDate, endDate){
+    // split() will create an array of { year, month, day }
+    let start = startDate?.split("-");
+    let end = endDate?.split("-");
+
+    // Check the years:
+    if (end[0] > start[0]){
+        return true;
+    }else if (end[0] == start[0]){
+
+        // If the years are equal, check months:
+        if (end[1] > start[1]){
+            return true;
+
+        }else if (end[1] == start[1]){
+
+            // If the years and months are equal, check days:
+            if (end[2] >= start[2]){
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 function submitDateLogic(){
     startDate = getStartDate();
     endDate = getEndDate();
 
+    value = document.getElementById("dateSelectors").value;
+
+    let datesAreValid = true;
+
+    // We do not need to do the check for the excess report since it only takes one date
+    if (value != EXCESS){ datesAreValid = checkIfValidDates(startDate, endDate); }
+
+    if (!datesAreValid){
+        // If the user entered invalid dates, tell them and return
+        alert("Invalid Date Entered. Please Try Again");
+        return;
+    }
+
     document.getElementById("dateSelectors").hidden = true;
     document.getElementById("managerView").hidden = false;
 
-    value = document.getElementById("dateSelectors").value;
     if (value == SALES){
         salesReportLogic(startDate, endDate);
     }else if (value == POPITEMS){
@@ -616,6 +654,15 @@ async function getMenuItemArray(){
             console.log(error);
         }
     );
+
+    for (let i = 0; i < arr.length; i++){
+        let ingList = arr[i].ingredient_list;
+        for (let j = 0; j < ingList.length; j++){
+            if (arr[i].ingredient_list[j].charAt(0) == " "){
+                arr[i].ingredient_list[j] = arr[i].ingredient_list[j].slice(1,arr[i].ingredient_list[j].length);
+            }
+        }
+    }
 
     return arr;
 }
@@ -963,6 +1010,72 @@ async function changeMenuItemInventoryArr(oldName, newName){
             let x = fetchPost("/updateMenuItemInventoryArr", data);
 
         }
+    }
+}
+
+function makeIngredientCheckbox (menuItem, data) {
+    let htmlStr = '<div id="ingredientSelector"><table id="ingredientSelectTable"><tr>';
+    let checked = "";
+
+    for (let i = 0; i < data.result.length; i++){
+        let itemid = data.result[i].itemid;
+        if (menuItem.ingredient_list.includes(itemid)){ 
+            checked = "checked"; 
+        }else{ 
+            checked = ""; 
+        }
+
+        htmlStr = htmlStr + '<td><input type="checkbox" id="' + itemid + '" name="' + itemid + '"' + checked + ' value="yes">';
+        htmlStr = htmlStr + '<label for="' + itemid + '">' + itemid + '</label></td>';
+
+        if ((i%3 == 0 && i != 0) || (i == data.result.length-1)){
+            htmlStr = htmlStr + '</tr>';
+            if (i != data.result.length-1){
+                htmlStr = htmlStr + '<tr>';
+            }
+        }
+    }
+
+    htmlStr = htmlStr + '</table><button id="ingSelectButton" onclick="getSelectedIngredients()">Select Ingredients</button></div>'
+    return htmlStr;
+}
+
+async function populateIngredientCheckbox(){
+    let menuItems = await getMenuItemArray();
+    fetch('/getInv', {method: 'GET'})
+        .then(function(response) {
+            if(response.ok) return response.json();
+            throw new Error('Request failed.');
+        })
+            .then(function(data) {
+            // TODO: Modify HTML using the information received from the database
+            // data contains the array
+            content = document.getElementById("managerView");
+            ingCheckbox = makeIngredientCheckbox(menuItems[0], data);
+            content.innerHTML = ingCheckbox;
+        })
+        .catch(function(error) {
+            console.log(error);
+    });
+}
+
+function getSelectedIngredients(){
+    var table = document.getElementById("ingredientSelectTable");
+    var ingredientArr = [];
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        for (var j = 0, col; col = row.cells[j]; j++) {
+            let checkbox = col.querySelector("input");
+            if (checkbox.checked){
+                ingredientArr.push(checkbox.id);
+            }
+        }  
+    }
+
+    for (let i = 0; i < ingredientArr.length; i++){
+        console.log("Selected Ingredients: " + ingredientArr[i]);
+    }
+    if (ingredientArr.length == 0){
+        console.log("Ingredient select is empty");
     }
 }
 

@@ -245,7 +245,7 @@ table p{
     border: black 5px ridge;
 }
 
-#dateSelectors button{
+#submitDates{
     display:flex;
 
     font-size: x-large;
@@ -256,8 +256,13 @@ table p{
     padding: 2%;
 
     border: black 3px ridge;
+    transition-duration: 0.4s;
 }
 
+#dateSelectors button:hover{
+    background-color: #5B0726;
+    color: white;
+}
 
 
 #itemSold{
@@ -286,4 +291,57 @@ table p{
 #popMenuItems table{
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Ingredient Selector Formatting */
+#ingredientSelectTable{
+    border:none;   
+}
+
+#ingSelectButton{
+    display:block;
+
+    width: 90%;
+
+    padding-top: 3%; 
+    padding-bottom: 3%;
+    
+    margin-left:auto;
+    margin-right: auto;
+    margin-bottom: 1%;
+
+    background-color: white;
+    border-style: ridge;
+    border-radius: 5px;
+
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 100%;
+
+    transition-duration: 0.3s;   
+}
+
+#ingSelectButton:hover{
+    background-color: #5B0726;
+    color:white;
+}
+
+#ingredientSelectTable td{
+    width: fit-content;
+    background-color: white;
+    color: black;
+
+    border-left: black ridge 2px;
+    border-right: black ridge 2px;
+    border-top: black ridge 2px;
+    border-bottom: black ridge 2px;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    transition-duration: 0.3s;
+}
+
+#ingredientSelectTable td:hover{
+    background-color: #5B0726;
+    color:white;
 }

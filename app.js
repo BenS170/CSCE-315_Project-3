@@ -430,7 +430,17 @@ function toSQLArr(str){
     arr = arr.split(",")
     var arrStr = "'{";
     for (let i = 0; i < arr.length; i++){
-        arrStr+= '"' + arr[i] + '"'
+        let str = "";
+        let firstChar = false;
+        for (let j = 0; j < arr[i].length; j++){
+            if (arr[i].charAt(j) == " " && !firstChar){
+                continue;                
+            }
+            firstChar = true;
+            str = str + arr[i].charAt(j);
+        }
+        console.log(str + " vs " + str);
+        arrStr+= '"' + str + '"'
         if (i != arr.length-1){
             arrStr += ", "
         }
