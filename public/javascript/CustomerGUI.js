@@ -275,17 +275,7 @@ function makeDessertTable(data){
   }
   
   
-  
-  // need??
-  // how to implement...
-  
-  // class OrderItem {
-  //     constructor(menu_id, name, price) {
-  //         this.menu_id = menu_id;
-  //         this.name = name;
-  //         this.price = price;
-  //     }
-  // };
+
   
 
   var order_rows = 0;
@@ -317,12 +307,88 @@ function addToOrder(menuId, itemName, itemPrice){
     
     }
 
+    // feedback for when an item has been added to an order
+    const itemConfirmation = alert(itemName + " has been added to your order.");
+
+
+
     for(var i = 0; i < order_items.length; i++) {    
         console.log(order_items[i]);
     }
   
 }
 
+
+function increment(menuId){
+    console.log("increment has been clicked");
+
+    console.log("menuID: " + menuId);
+    console.log("quantity array: " + order_quantity);
+
+    // if(order_items.includes(menuId)) {
+
+    console.log("Items array: " + order_items);
+
+    var men_ind = 0;
+    for(var i = 0; i < order_items.length; i++)
+    {
+        if(order_items[i] == menuId){
+            men_ind = i;
+        }
+    }
+
+    //var men_ind = order_items.indexOf(menuId);
+    console.log("index is: " + men_ind);
+
+    order_quantity[men_ind]++;
+    console.log("updated quantity array: " + order_quantity);
+
+    // have to update properly after incrementing 
+    updateOrderTable();
+    calTotal();
+
+
+}
+
+
+function decrement(menuId, itemName, itemPrice){
+
+    console.log('decrement was clicked');
+
+    var men_ind = 0;
+    for(var i = 0; i < order_items.length; i++)
+    {
+        if(order_items[i] == menuId){
+            men_ind = i;
+        }
+    }
+
+    // if quantity is > 1, decrement quantity by 1
+    if(order_quantity[men_ind] > 1){
+        console.log('in if');
+        order_quantity[men_ind]--;
+    }
+
+    // else if quantity is <= 1, remove id, name, and price from respective arrays
+    else {
+        console.log('in else!');
+
+        order_items.splice(men_ind, 1);
+        order_name.splice(men_ind, 1);
+        order_prices.splice(men_ind, 1);
+
+    }
+
+
+    // have to update properly after decrementing
+    updateOrderTable();
+    calTotal();
+
+}
+
+
+
+  // same as decrement function essentially, can resolve differences later
   // does not work 100%...
 function deleteFromOrder(menuId, itemName, itemPrice){
     console.log('delete from order was clicked');
@@ -385,7 +451,8 @@ function updateOrderTable(){
 
     var OrderTable = document.getElementById("CustomerOrderTable");
     var htmlstring = '<table><tr id = "titleRow">';
-    htmlstring = htmlstring + "<th>Item Name</th>" + "<th>Quantity</th>" + "<th>Price</th></tr>"; 
+    //htmlstring = htmlstring + "<th>Item Name</th>" + "<th>Quantity</th>" + "<th>Price</th></tr>"; 
+    htmlstring = htmlstring + "<th style = border:none;>Item Name</th>" + "<th style = border:none;></th>"+ "<th style = border:none;>Quantity</th>" + "<th style = border:none;></th>"+"<th style = border:none;>Price</th></tr>"; 
 
 
     for(var i = 0; i < order_items.length; i++) {
@@ -396,9 +463,17 @@ function updateOrderTable(){
             order_prices.splice(i,1);
             continue;
         }
-        htmlstring = htmlstring + '<tr><td>' + order_name[i] + '</td>';
-        htmlstring = htmlstring + '<td>' + order_quantity[i] + '</td>';
-        htmlstring = htmlstring + '<td>' + order_prices[i] * order_quantity[i] + '</td></tr>';
+
+        htmlstring = htmlstring + '<td style = "border:none;">' + order_name[i] + '</td>';
+        htmlstring = htmlstring + "<td style = \"border:none;\"><button onclick=\"decrement('"+order_items[i]+"','"+order_name[i]+"','"+order_prices[i]+"')\">-</button></td>"; 
+        htmlstring = htmlstring + '<td value=1 style = "border:none;">' + order_quantity[i] + '</td>';
+        htmlstring = htmlstring + "<td style = \"border:none;\"><button onclick=\"increment('"+order_items[i]+"')\">+</button></td>"; 
+        htmlstring = htmlstring + '<td style = "border:none;">' + order_prices[i] * order_quantity[i] + '</td></tr>';
+
+        // htmlstring = htmlstring + '<tr><td>' + order_name[i] + '</td>';
+        // htmlstring = htmlstring + '<td>' + order_quantity[i] + '</td>';
+        // htmlstring = htmlstring + '<td>' + order_prices[i] * order_quantity[i] + '</td></tr>';
+
        
     }
 
@@ -408,10 +483,9 @@ function updateOrderTable(){
 }
 
 
+
   // total and tax calculations are redundant, can prolly pass in tax to total to make it less code or combine into 1 function
 
-
-  // total price calculation is wrong?
 function calTotal(){
     var tax = 0; 
     var tot_price = 0; // total without tax
