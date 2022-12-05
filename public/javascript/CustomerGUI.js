@@ -25,6 +25,9 @@ function makeEntreeTable(data){
     htmlMenuTable = htmlMenuTable + "</tr>";
   
     for (let i = 0; i < data.result.length; i++){
+        // if (i%4 == 0){
+        //     htmlMenuTable = htmlMenuTable + "</tr><tr>"
+        // }
   
         htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
@@ -272,17 +275,7 @@ function makeDessertTable(data){
   }
   
   
-  
-  // need??
-  // how to implement...
-  
-  // class OrderItem {
-  //     constructor(menu_id, name, price) {
-  //         this.menu_id = menu_id;
-  //         this.name = name;
-  //         this.price = price;
-  //     }
-  // };
+
   
 
   var order_rows = 0;
@@ -314,12 +307,99 @@ function addToOrder(menuId, itemName, itemPrice){
     
     }
 
+    // feedback for when an item has been added to an order
+    const itemConfirmation = alert(itemName + " has been added to your order.");
+
+
+
     for(var i = 0; i < order_items.length; i++) {    
         console.log(order_items[i]);
     }
   
 }
 
+
+function increment(menuId){
+    console.log("increment has been clicked");
+
+    console.log("menuID: " + menuId);
+    console.log("quantity array: " + order_quantity);
+
+    // if(order_items.includes(menuId)) {
+
+    console.log("Items array: " + order_items);
+
+    var men_ind = 0;
+    for(var i = 0; i < order_items.length; i++)
+    {
+        if(order_items[i] == menuId){
+            men_ind = i;
+        }
+    }
+
+    //var men_ind = order_items.indexOf(menuId);
+    console.log("index is: " + men_ind);
+
+    order_quantity[men_ind]++;
+    console.log("updated quantity array: " + order_quantity);
+
+    // have to update properly after incrementing 
+    updateOrderTable();
+    calTotal();
+
+
+}
+
+
+function decrement(menuId){
+
+    console.log('decrement was clicked');
+
+    var men_ind = 0;
+    for(var i = 0; i < order_items.length; i++)
+    {
+        if(order_items[i] == menuId){
+            men_ind = i;
+        }
+    }
+
+    // if quantity is > 1, decrement quantity by 1
+    if(order_quantity[men_ind] > 1){
+        console.log('in if');
+        order_quantity[men_ind]--;
+    }
+
+    // else if quantity is <= 1, remove id, name, and price from respective arrays
+    else {
+        console.log('in else!');
+
+        order_items.splice(men_ind, 1);
+        order_name.splice(men_ind, 1);
+        order_prices.splice(men_ind, 1);
+
+        //order_quantity[men_ind] = 0;
+        order_quantity[men_ind]--;
+        order_quantity.splice(men_ind,1);
+        //^ deletes that index right here...
+        order_rows--;
+
+
+    }
+
+    console.log("items array: " + order_items);
+    console.log("names array: " + order_name);
+    console.log("quantity array: " + order_quantity);
+
+
+    // have to update properly after decrementing
+    updateOrderTable();
+    calTotal();
+
+ }
+
+
+
+  // same as decrement function essentially, can resolve differences later
   // does not work 100%...
 function deleteFromOrder(menuId, itemName, itemPrice){
     console.log('delete from order was clicked');
@@ -354,13 +434,13 @@ function deleteFromOrder(menuId, itemName, itemPrice){
             // order_id.splice(del_id, 1);
             // order_name.splice(del_name, 1);
             // order_price.splice(del_price, 1);
-            order_items.splice(menuId, 1);
-            order_name.splice(itemName, 1);
-            order_prices.splice(itemPrice, 1);
+            order_items.splice(ind, 1);
+            order_name.splice(ind, 1);
+            order_prices.splice(ind, 1);
             // need to replace the 1 quantity value with a 0 now 
             // logic: if quantity is 0, then delete that row from the table...
             // get element by id...?
-            order_quantity.splice(ind, 1, 0);
+            //order_quantity.splice(ind, 1, 0);
         }
 
         console.log('quantity array is:')
@@ -382,13 +462,31 @@ function updateOrderTable(){
 
     var OrderTable = document.getElementById("CustomerOrderTable");
     var htmlstring = '<table><tr id = "titleRow">';
-    htmlstring = htmlstring + "<th>Item Name</th>" + "<th>Quantity</th>" + "<th>Price</th></tr>"; 
+    //htmlstring = htmlstring + "<th>Item Name</th>" + "<th>Quantity</th>" + "<th>Price</th></tr>"; 
+    htmlstring = htmlstring + "<th style = border:none;>Item Name</th>" + "<th style = border:none;></th>"+ "<th style = border:none;>Quantity</th>" + "<th style = border:none;></th>"+"<th style = border:none;>Price</th></tr>"; 
 
+    
 
     for(var i = 0; i < order_items.length; i++) {
-        htmlstring = htmlstring + '<tr><td>' + order_name[i] + '</td>';
-        htmlstring = htmlstring + '<td>' + order_quantity[i] + '</td>';
-        htmlstring = htmlstring + '<td>' + order_prices[i] * order_quantity[i] + '</td></tr>';
+        if (order_quantity[i] == 0){
+            console.log("The index with a value of 0 in the quantity array is: " + i);
+            order_quantity.splice(i,1);
+            order_items.splice(i,1);
+            order_name.splice(i,1);
+            order_prices.splice(i,1);
+            continue;
+        }
+
+        htmlstring = htmlstring + '<td style = "border:none;">' + order_name[i] + '</td>';
+        htmlstring = htmlstring + "<td style = \"border:none;\"><button onclick=\"decrement('"+order_items[i]+"')\">-</button></td>"; 
+        htmlstring = htmlstring + '<td value=1 style = "border:none;">' + order_quantity[i] + '</td>';
+        htmlstring = htmlstring + "<td style = \"border:none;\"><button onclick=\"increment('"+order_items[i]+"')\">+</button></td>"; 
+        htmlstring = htmlstring + '<td style = "border:none;">' + Number(order_prices[i] * order_quantity[i]).toFixed(2) + '</td></tr>';
+
+        // htmlstring = htmlstring + '<tr><td>' + order_name[i] + '</td>';
+        // htmlstring = htmlstring + '<td>' + order_quantity[i] + '</td>';
+        // htmlstring = htmlstring + '<td>' + order_prices[i] * order_quantity[i] + '</td></tr>';
+
        
     }
 
@@ -398,10 +496,9 @@ function updateOrderTable(){
 }
 
 
+
   // total and tax calculations are redundant, can prolly pass in tax to total to make it less code or combine into 1 function
 
-
-  // total price calculation is wrong?
 function calTotal(){
     var tax = 0; 
     var tot_price = 0; // total without tax
@@ -459,6 +556,9 @@ function ClearOrder() {
     order_quantity = [];
     order_prices = [];
 
+    console.log("After clearing: " + order_quantity);
+    console.log("After clearing: " + order_items);
+
     //reset price and tax
     var Tax = document.getElementById("order-tax");
     var tax_string = 'Tax: $';
@@ -468,9 +568,13 @@ function ClearOrder() {
     var tot_string = 'Total: $';
     Total.innerHTML = tot_string;
 
-    
 
 }
+
+
+
+
+
 
 
 // order_prices[]
@@ -480,28 +584,62 @@ function ClearOrder() {
 
 const button = document.getElementById("SubmitButton");
 button.addEventListener('click', function(e) {
-  console.log('Server submit was clicked');
-  const data = {order_items, order_prices};
 
-  fetch('/serverSubmit', {
-        method: 'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    .then(function(response) {
-      if(response.ok) {
-        console.log('Click was recorded');
-        ClearOrder();
-        return;
-      }
-      throw new Error('Request failed.');
-    })
-    .catch(function(error) {
-      console.log(error);
-    });
+    if(order_items.length > 0) {
+        submitOrderLogic();
+    }
+
+    else {
+        const emptyOrder = alert("Cannot sumbit an empty order!");
+    }
+
+
 });
 
 
-
+function submitOrderLogic() {
+    console.log('Server submit was clicked');
+    const data = {order_items, order_prices, order_quantity};
+  
+    fetch('/customerSubmit', {
+          method: 'POST',
+          headers:{
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then(function(response) {
+        if(response.ok) {
+          console.log('Click was recorded');
+          ClearOrder();
+  
+          console.log("here");
+          // can change to confirm order first then alert with order #
+          var maxID;
+          fetch('/getMaxID', {method: 'GET'})
+          .then(function(response) {
+              if(response.ok) return response.json();
+              throw new Error('Request failed.');
+          })
+              .then(function(data) {
+                  console.log(data.result);
+                  maxID = data.result.max;   
+                  const subConfirmation = alert("Thank you for your order!\n" + "Your Order ID is " + maxID); 
+  
+          })
+          .catch(function(error) {
+              console.log(error);
+          });
+  
+          
+  
+          return;
+        }
+        throw new Error('Request failed.');
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  
+  
+}

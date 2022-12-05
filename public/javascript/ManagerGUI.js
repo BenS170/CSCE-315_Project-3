@@ -1,3 +1,12 @@
+/**
+ * Adds a menu item to the order summary.
+ * @constructor
+ * @param {Number} itemid - The id of the item in the database.
+ * @param {string} name - name of the item.
+ * @param {Number} qty - current qty of the item
+ * @param {Float} price - The set price of the item in the database
+ */
+
 function makeMenuTable(data){    
     htmlMenuTable = '<div id="tableAndUpdateButton"> <table id="menuTable"> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
@@ -163,19 +172,19 @@ addMenuItemButton.addEventListener('click', function(e) {
                 alert("add menu item was canceled");
             } else {
                 const menuIngNum = prompt("How many ingredients is in the new item");
-                // const commas = 0;
-                // if (menuIngredients.length() > 0){
-                //     commas = 1;
-                //     for(var i = 0; i < menuIngredients.length(); i++){
-                //         if(i == ","){
-                //             commas++;
-                //         }
+                // // const commas = 0;
+                // // if (menuIngredients.length() > 0){
+                // //     commas = 1;
+                // //     for(var i = 0; i < menuIngredients.length(); i++){
+                // //         if(i == ","){
+                // //             commas++;
+                // //         }
     
-                //     }
+                   // }
 
                 // }
 
-                //menuIngNum = toString(commas);
+              //  menuIngNum = toString(commas);
                 
                 
                 if (menuIngNum == null || menuIngNum == "" || menuIngNum == "0"){
