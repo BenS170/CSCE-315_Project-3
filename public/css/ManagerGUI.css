@@ -302,12 +302,10 @@ table p{
 
 /* Ingredient Selector Formatting */
 .ingredientSelector{
-    display:flex;
-    flex-direction: column;
     align-items: center;
 }
 
-#ingredientSelectTable{
+.ingredientSelectTable{
     border:none;   
     max-height: 300px;
     overflow-y: scroll;
