@@ -1358,5 +1358,6 @@ async function updatePicture(){
         const data = {menu_id, item_name, image_url};
         console.log(data);
         x = await fetchPost('/updatePicture', data);
+        
     }
 }
