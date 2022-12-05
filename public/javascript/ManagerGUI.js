@@ -1131,6 +1131,10 @@ function excessReport(data){
 
 // A drop down would be cool to select the Units, but that can come in later
 
+/**
+ * Iterates through the inventory table that the manager modified and will update the table appropriately
+ * @author Octavio Almanza
+ */
 function updateInvFunction(){
     // Revert back to english:
     var invTable = document.getElementById("inventoryTable");
@@ -1161,6 +1165,12 @@ function updateInvFunction(){
     }
 }
 
+/**
+ * The function will change the ingredient list of every menu item that contains the oldName of an inventory item to reflect the newName of the inventory item.
+ * @author Octavio Almanza
+ * @param {String} oldName The old name of a inventory item. Stored when the user clicks on "View Inventory"
+ * @param {String} newName The new modified name of the inventory item. Can be obtained by checking the text value in HTML
+ */
 async function changeMenuItemInventoryArr(oldName, newName){
     let menuItems = await getMenuItemArray();
     for (let i = 0; i < menuItems.length; i++){
@@ -1187,6 +1197,14 @@ async function changeMenuItemInventoryArr(oldName, newName){
 }
 
 /******************** INGREDIENT CHECKBOX STUFF ***************************** */
+
+/**
+ * Creates an HTML table that enables the selection of all of the inventory items available. The table will have the current ingredients of the menuItem argument checked and reflect their respective quantity
+ * @author Octavio Almanza
+ * @param {Array} menuItem An array that stores the properties of a specific menu item
+ * @param {Array} data A multidimmensional array obtained from the "/getInv" GET function. Stores all of the inventory items
+ * @returns {String} An HTML table in the form of a string.
+ */
 function makeIngredientCheckbox (menuItem, data) {
     let htmlStr = '<div id="ingredientSelector"><table class="ingredientSelectTable" id="ingredientSelectTable' + menuItem.menu_id + '">';
 
@@ -1222,6 +1240,11 @@ function makeIngredientCheckbox (menuItem, data) {
     return htmlStr;
 }
 
+/**
+ * Displays the ingredient checkbox for a specific menu item to enable the manager to modify the ingredients.
+ * @author Octavio Almanza
+ * @param {Number} menuID 
+ */
 async function populateIngredientCheckbox(menuID){
     let menuItems = await getMenuItemArray();
     fetch('/getInv', {method: 'GET'})
@@ -1241,6 +1264,11 @@ async function populateIngredientCheckbox(menuID){
     });
 }
 
+/**
+ * Will check the ingredient selector of the menu item with the corresponding menu id and update the ingredients locally.
+ * @author Octavio Almanza
+ * @param {Number} menuID 
+ */
 function getSelectedIngredients(menuID){
     var table = document.getElementById("ingredientSelectTable"+menuID);
     var ingredientArr = [];
@@ -1264,16 +1292,20 @@ function getSelectedIngredients(menuID){
     };
     content = document.getElementById("ingredientsFor" + menuID);
     content.innerHTML = '<div id="ingredientsFor' + menuID + '">' + prettyArrayStr(ingredientArr) + '<button class="editIngButtons" id="editMenu'+ menuID +'" onclick="populateIngredientCheckbox('+ menuID + ')">Edit</button></div>'
-
 }
 
 /********************** GOOGLE **********************/
 
+/**
+ * Initializes the Google Translate API to enable the manager to change languages
+ */
 function googleTranslateElementInit(){
     new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
 
-// Initialize and add the map
+/**
+ * Initializes the Google Maps API to enable the manager to view the location of Rev's American Grill
+ */
 function initMap() {
     // The location of Rev's
     const revs = { lat: 30.612674885055362, lng: -96.3407095157521 };
