@@ -294,7 +294,7 @@ app.get('/getEntree', (req, res) => {
     menu_items = [];
     pool
         // SQL query is not 100% CORRECT, should display type but does not...
-        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'entree';")
+        .query("SELECT menu_id, image_url, item_name, item_price, type FROM menu_items WHERE type = 'entree';")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
@@ -311,7 +311,7 @@ app.get('/getSide', (req, res) => {
     menu_items = [];
     pool
         // SQL query is not 100% CORRECT, should display type but does not...
-        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'side';")
+        .query("SELECT menu_id, image_url, item_name, item_price, type FROM menu_items WHERE type = 'side';")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
@@ -627,15 +627,13 @@ app.post('/updateMenuItemInventoryArr', (req,res) => {
 
 // get max order id
 app.get('/getMaxID', (req, res) => {
-    //var maxID;
-    menu_items = [];
+    var maxID;
     pool
         .query("SELECT MAX(order_id) FROM orders;")
         .then(query_res => {
-            for (let i = 0; i < query_res.rowCount; i++){
-                menu_items.push(query_res.rows[i]);
-            }
-            data = { result : menu_items };
+            maxID = query_res.rows[0];
+            console.log("MAX id is " + maxID); 
+            data = { result : maxID };
             console.log("Query done");
             res.json(data);
         }
