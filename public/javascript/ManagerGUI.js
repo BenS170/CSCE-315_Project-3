@@ -1,10 +1,8 @@
 /**
- * Adds a menu item to the order summary.
- * @constructor
- * @param {Number} itemid - The id of the item in the database.
- * @param {string} name - name of the item.
- * @param {Number} qty - current qty of the item
- * @param {Float} price - The set price of the item in the database
+ * Creates an HTML table from the information passed in from data. 
+ * @author Octavio Almanza
+ * @param {Array} data - An array that contains information about all the menu items stored in the database. 
+ * @returns {String} a string containing the HTML for a table with rows of menu items and their respective information
  */
 
 function makeMenuTable(data){    
@@ -30,7 +28,11 @@ function makeMenuTable(data){
         htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].item_name + "</td>";
         htmlMenuTable = htmlMenuTable + '<td>$<p contenteditable="true">' + data.result[i].item_price + "</p></td>";
         htmlMenuTable = htmlMenuTable + '<td hidden="true">' + data.result[i].num_ingredients + "</td>";
+<<<<<<< HEAD
         htmlMenuTable = htmlMenuTable + '<td><p>' + prettyArrayStr(data.result[i].ingredient_list) + '</p><button class="editButton" value='+ i + ' onclick="edit">Edit</button></td>';
+=======
+        htmlMenuTable = htmlMenuTable + '<td><div id="ingredientsFor' + data.result[i].menu_id + '">' + prettyArrayStr(data.result[i].ingredient_list) + '<button class="editIngButtons" id="editMenu'+ data.result[i].menu_id +'" onclick="populateIngredientCheckbox('+ data.result[i].menu_id + ')">Edit</button></div></td>';
+>>>>>>> a434dfcdb5898973fc2e3f4ac458be589526fade
         htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].type + "</td>";
         htmlMenuTable = htmlMenuTable + "</tr>";
     }
@@ -38,7 +40,11 @@ function makeMenuTable(data){
     return htmlMenuTable;
 }
 
-/* Triggered when the updateTable button is pressed */
+/**
+ * Resets the language back to English. Utilized to prevent conflicts with SQL database and the existing ingredients. Triggered when the updateTable button is pressed.
+ * @author Octavio Almanza
+ */
+
 function revertToEnglish(){
     var selectField = document.querySelector("#google_translate_element select").selected;
     console.log(selectField);
@@ -58,6 +64,14 @@ function revertToEnglish(){
         }
     }
 }
+
+/**
+ * Finds the appropriate POST function and calls it with the provided data. Returns the results of the POST function.
+ * @author Octavio Almanza
+ * @param {String} functionName - the name of the POST function in app.js that you want to call
+ * @param {Array} data - the information to be passed into the POST function in the JSON format
+ * @returns {JSON} the results obtained from the POST function in the JSON format
+ */
 
 function fetchPost(functionName, data){
     var returnMe = "";
@@ -82,11 +96,33 @@ function fetchPost(functionName, data){
     return returnMe;
 }
 
+function ingredientSelectorsOpen(maxID){
+    for (let i = 1; i < maxID; i++){
+        ingredientSelectorX = document.getElementById("editMenu" + i);
+        if (ingredientSelectorX == null){
+            alert("Please finish selecting all ingredients before updating table");
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Reads all the information updated by the manager using the application and updates the SQL menu item table to reflect the specified changes
+ * @author Octavio Almanza
+ */
 async function updateTableFunction(){
+
+    var menuTable = document.getElementById("menuTable");
+
+    // If the user is still selecting ingredients, make sure that they are done selecting them!
+    if (ingredientSelectorsOpen(menuTable.rows.length)){
+        return;
+    }
+
     // Revert back to english:
     revertToEnglish();
 
-    var menuTable = document.getElementById("menuTable");
     for (let i = 1, row; row = menuTable.rows[i]; i++){
         // iterating through rows. Starting at row 1 bc 0 is headers
         menu_id = -1;
@@ -111,6 +147,12 @@ async function updateTableFunction(){
     }
 }
 
+/**
+ * A function that will read in an array and returns a string containing all of the elements of the array separated by ", "
+ * @author Octavio Almanza
+ * @param {Array} array - an array whose elements will be stringified
+ * @returns {String} a string containing all of the array elements separated by the characters ", "
+ */
 function prettyArrayStr(array){
     arrayStr = "";
     for (let i = 0; i < array.length; i++){
@@ -123,6 +165,10 @@ function prettyArrayStr(array){
     return arrayStr;
 }
 
+/**
+ * an object representing the "View Menu" button in the Manager GUI. The associated event listener function will trigger when clicked, and it will query the database to get the most up-to-date version of the menu and display it in the managerView HTML div.
+ * @type {HTML}
+ */
 const viewMenuButton = document.getElementById("viewMenuButton");
 
 viewMenuButton.addEventListener('click', function(e) {
@@ -352,9 +398,24 @@ deleteMenuItemButton.addEventListener('click', function(e) {
 });
 
 let modified = false;
+
+/**
+ * Stores the inventory items from the database at the beginning of the session.
+ * @type {Array}
+ */
 let originalInvItems = [];
+
+/**
+ * Stores the inventory items from the database the last time "View Inventory" was pressed.
+ * @type {Array}
+ */
 let oldInvItems = [];
 
+/**
+ * A function that will create a string containing HTML code to display a table of inventory items
+ * @param {Array} data an array that contains information about all the inventory items in the database. 
+ * @returns {String} a string containing the HTML representation of a table containing the inventory items and their corresponding values
+ */
 function makeInventoryTable(data){
     oldInvItems = [];
     htmlMenuTable = '<div id="tableAndUpdateButton">';
@@ -391,6 +452,10 @@ function makeInventoryTable(data){
     return htmlMenuTable;
 }
 
+/**
+ * an object representing the "View Inventory" button in the Manager GUI. The associated event listener function will trigger when clicked, and it will query the database to get the most up-to-date version of the inventory and display it in the managerView HTML div.
+ * @type {HTML}
+ */
 const viewInventoryButton = document.getElementById("viewInventoryButton");
 
 viewInventoryButton.addEventListener('click', function(e) {
@@ -536,6 +601,11 @@ POPITEMS = 2;
 EXCESS = 3;
 RESTOCK = 4;
 
+/**
+ * @author Octavio Almanza
+ * Will check the values currently stored in the datePanel1 div in the Manager GUI and return a string representing their value in a date format
+ * @returns {String} a string of the form "YYYY-MM-DD"
+ */
 function getStartDate(){
     month = document.getElementById("startMonth");
     day = document.getElementById("startDay");
@@ -543,6 +613,11 @@ function getStartDate(){
     return year.options[year.selectedIndex].text + "-" + month.value + "-" + day.options[day.selectedIndex].text;
 }
 
+/**
+ * @author Octavio Almanza
+ * Will check the values currently stored in the datePanel2 div in the Manager GUI and return a string representing their value in a date format
+ * @returns {String} a string of the form "YYYY-MM-DD"
+ */
 function getEndDate(){
     month = document.getElementById("endMonth");
     day = document.getElementById("endDay");
@@ -551,7 +626,10 @@ function getEndDate(){
 }
 
 //Sales Report - Given a time window, display the sales by item from the order history
-
+/**
+ * An object that represents the "Sales Report" button in the Manager GUI. Its correponding event listener will be triggered when the button is clicked. It will hide the current content visible to the manager and display the date selector panel.
+ * @type {HTML}
+ */
 const createSalesReport = document.getElementById("salesReportButton");
 createSalesReport.addEventListener('click', function(e) {
     console.log('Sales Report Button was clicked');
@@ -561,6 +639,10 @@ createSalesReport.addEventListener('click', function(e) {
     document.getElementById("dateSelectors").value = SALES;
 });
 
+/**
+ * An object that represents the "Submit Dates" button in the Manager GUI. Its correponding event listener will be triggered when the button is clicked. 
+ * @type {HTML}
+ */
 const submitDates = document.getElementById("submitDates");
 submitDates.addEventListener('click', function(e) {
     // IMPORTANT: Check if the "Submit Dates" button was clicked 
@@ -568,14 +650,63 @@ submitDates.addEventListener('click', function(e) {
     submitDateLogic();
 });
 
+/**
+ * Will compare two strings of dates and return true if start date is a prior date to end date
+ * @author Octavio Almanza
+ * @param {String} startDate a string of the form YYYY-MM-DD 
+ * @param {String} endDate a string of the form YYYY-MM-DD
+ * @returns {boolean} Will return true if endDate is a date after or the same date as startDate. Will return false otherwise.
+ */
+function checkIfValidDates(startDate, endDate){
+    // split() will create an array of { year, month, day }
+    let start = startDate?.split("-");
+    let end = endDate?.split("-");
+
+    // Check the years:
+    if (end[0] > start[0]){
+        return true;
+    }else if (end[0] == start[0]){
+
+        // If the years are equal, check months:
+        if (end[1] > start[1]){
+            return true;
+
+        }else if (end[1] == start[1]){
+
+            // If the years and months are equal, check days:
+            if (end[2] >= start[2]){
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+/**
+ * A function that reads in the values of datePanel1 and datePanel2, and will call a specific function based on the dateSelector div's value.
+ * @author Octavio Almanza
+ */
 function submitDateLogic(){
     startDate = getStartDate();
     endDate = getEndDate();
 
+    value = document.getElementById("dateSelectors").value;
+
+    let datesAreValid = true;
+
+    // We do not need to do the check for the excess report since it only takes one date
+    if (value != EXCESS){ datesAreValid = checkIfValidDates(startDate, endDate); }
+
+    if (!datesAreValid){
+        // If the user entered invalid dates, tell them and return
+        alert("Invalid Date Entered. Please Try Again");
+        return;
+    }
+
     document.getElementById("dateSelectors").hidden = true;
     document.getElementById("managerView").hidden = false;
 
-    value = document.getElementById("dateSelectors").value;
     if (value == SALES){
         salesReportLogic(startDate, endDate);
     }else if (value == POPITEMS){
@@ -587,8 +718,15 @@ function submitDateLogic(){
     }
 }
 
+/**
+ * Will return an HTML string representing the Sales Report output 
+ * @author Octavio Almanza
+ * @param {Array} data a two dimmensional array containing menu items, their sales, and profit over the given interval
+ * @returns {String} a string containing a title and a table with the columns "Item Name", "Sales", and "Profit" headings 
+ */
+
 function salesReport(data){
-    salesTable = '<p id = "salesReportTitle">Sales Report</p><table><tbody><tr>';
+    salesTable = '<div id="salesReport"><p id = "salesReportTitle">Sales Report</p><table><tbody><tr>';
     salesTable = salesTable + "<th>Item Name</th>";
     salesTable = salesTable + "<th>Sales</th>";
     salesTable = salesTable + "<th>Profit</th>";
@@ -600,13 +738,20 @@ function salesReport(data){
         salesTable = salesTable + '<tr id = "itemSold" style="background-color:' + currColor + '">';
         salesTable = salesTable + "<td>" + data.result[i].item_name + "</td>";
         salesTable = salesTable + "<td>" + data.result[i].sales + "</td>";
-        salesTable = salesTable + "<td>" + data.result[i].profit + "</td>";
+        salesTable = salesTable + "<td>$" + data.result[i].profit + "</td>";
         salesTable = salesTable + "</tr>"
     }
     
-    salesTable = salesTable + '</tbody></table>'
+    salesTable = salesTable + '</tbody></table></div>'
     return salesTable;
 }
+
+/**
+ * The function responsible for displaying the Sales Report in the Manager GUI.
+ * @author Octavio Almanza
+ * @param {String} startDate A String variable that stores a date in the form "YYYY-MM-DD"
+ * @param {String} endDate A String variable that stores a date in the form "YYYY-MM-DD"
+ */
 
 function salesReportLogic(startDate, endDate){
     // SALES QUERY:
@@ -635,6 +780,10 @@ function salesReportLogic(startDate, endDate){
     }
 );}
 
+/**
+ * A function that creates a two dimmensional array containing every menu item in the database and its respective values.
+ * @returns A two dimmensional array containing
+ */
 async function getMenuItemArray(){
     arr = new Array();
     await fetch('/getMenu', {method: 'GET'})
@@ -652,9 +801,25 @@ async function getMenuItemArray(){
         }
     );
 
+    for (let i = 0; i < arr.length; i++){
+        let ingList = arr[i].ingredient_list;
+        for (let j = 0; j < ingList.length; j++){
+            if (arr[i].ingredient_list[j].charAt(0) == " "){
+                arr[i].ingredient_list[j] = arr[i].ingredient_list[j].slice(1,arr[i].ingredient_list[j].length);
+            }
+        }
+    }
+
     return arr;
 }
 
+/**
+ * A function that will return all of the orders between two dates.
+ * @author Octavio Almanza
+ * @param {String} startDate A String variable that stores a date in the form "YYYY-MM-DD"
+ * @param {String} endDate A String variable that stores a date in the form "YYYY-MM-DD"
+ * @returns A two dimmensional array containing all orders within the given time interval
+ */
 async function getOrdersBetweenDates(startDate, endDate){
     orders = new Array();
 
@@ -699,6 +864,10 @@ async function getOrdersBetweenDates(startDate, endDate){
 }
 
 /********************************   POPULAR MENU ITEMS   ************************************************/
+/**
+ * An object representing the "Popular Menu Item Report" button in the Manager GUI
+ * @type {HTML}
+ */
 const createPopMenuItemReport = document.getElementById("popMenuItemButton");
 createPopMenuItemReport.addEventListener('click', function(e){
     document.getElementById("dateSelectors").value = POPITEMS;
@@ -707,6 +876,12 @@ createPopMenuItemReport.addEventListener('click', function(e){
     document.getElementById("managerView").hidden = true;
 });
 
+/**
+ * Will take an array representing an order
+ * @author Octavio Almanza
+ * @param {Array} curr_order 
+ * @returns {Array} An array containing all of the unique menu items in an order
+ */
 function removeDuplicateItems(curr_order){
     uniqueItems = Array();
     for (let i = 0; i < curr_order?.['item'].length; i++){
@@ -717,6 +892,13 @@ function removeDuplicateItems(curr_order){
     return uniqueItems;
 }
 
+/**
+ * Creates a two dimmensional array of type Number and size maxItem by maxItem with all values set to 0. The function returns the return value of updateHashMap(...)
+ * @author Octavio Almanza
+ * @param {Array} orders A two dimmensional array of orders
+ * @param {Number} maxItem The current greatest Menu ID
+ * @returns a populated hash map where each index represents a combination of items and each element corresponds to the number of that combination sold.
+ */
 function makeEmptyArr(orders, maxItem){
     arr = Array(maxItem);
 
@@ -727,6 +909,13 @@ function makeEmptyArr(orders, maxItem){
     return updateHashMap(orders, arr, maxItem);
 }
 
+/**
+ * Populate a hash map to reflect the quantity of each possible combination of items sold.
+ * @author Octavio Almanza
+ * @param {Array} orders An array of orders
+ * @param {Array} hashMap A two dimmensional array with all values set to 0
+ * @returns a populated hash map where each index represents a combination of items and each element corresponds to the number of that combination sold.
+ */
 async function updateHashMap(orders, hashMap){
     for (let i = 0; i < orders?.length; i++){
         items = await removeDuplicateItems(orders[i]);
@@ -743,6 +932,13 @@ async function updateHashMap(orders, hashMap){
     return hashMap;
 }
 
+/**
+ * @author Octavio Almanza
+ * @param {String} startDate a string of the form YYYY-MM-DD 
+ * @param {String} endDate a string of the form YYYY-MM-DD 
+ * @param {Array} menuItemsAndQtyArr An array where each element contains two menu item names and the quantity that combination sold
+ * @param {Number} maxItems The greatest ID currently in the menu items table
+ */
 function displayPopItems(startDate, endDate, menuItemsAndQtyArr, maxItems){
     htmlStr = '<div id="popMenuItems"><p>Popular Item Pairs from ' + startDate + ' to ' + endDate + '</p>';
     htmlStr = htmlStr + '<table><tr id = "titleRow">';
@@ -760,6 +956,13 @@ function displayPopItems(startDate, endDate, menuItemsAndQtyArr, maxItems){
     cont.innerHTML = htmlStr;
 }
 
+/**
+ * @author Octavio Almanza
+ * @param {Array} hashMap A two dimmensional array that keeps track of the number of menu items
+ * @param {Array} menuItems An array containing an element for each menu item and each element contains a menu item's respective information
+ * @returns An array where each element contains two menu item names and the quantity that combination sold
+
+ */
 function makeArrayOfMenuItemsAndQty(hashMap, menuItems){
     let menuItemsAndQtyArr = Array();
     for (let i = 0; i < hashMap.length; i++){
@@ -773,6 +976,12 @@ function makeArrayOfMenuItemsAndQty(hashMap, menuItems){
     return menuItemsAndQtyArr;
 }
 
+/**
+ * @author Octavio Almanza
+ * @param {Array} item1 An array where the first two elements are Strings representing two menu item names and a Number representing the quantity that combination sold
+ * @param {Array} item2 An array where the first two elements are Strings representing two menu item names and a Number representing the quantity that combination sold
+ * @returns Returns -1 if item1 has a greater value at index 2 than item2. Returns 1 if item2 has a greater value at index 2 than item1. Returns 0 otherwise.
+ */
 function compareQtySold( item1, item2 ){
     if (item1[2] > item2[2]){
         return -1;
@@ -783,6 +992,12 @@ function compareQtySold( item1, item2 ){
     return 0;
 }
 
+/**
+ * Contains the logic corresponding to displaying the popular menu item report in the Manager View
+ * @author Octavio Almanza
+ * @param {String} startDate A string of the form YYYY-MM-DD 
+ * @param {String} endDate A string of the form YYYY-MM-DD 
+ */
 async function popReportLogic(startDate, endDate){
     menuItems = await getMenuItemArray();
     orders = await getOrdersBetweenDates(startDate, endDate);
@@ -946,6 +1161,10 @@ function excessReport(data){
 
 // A drop down would be cool to select the Units, but that can come in later
 
+/**
+ * Iterates through the inventory table that the manager modified and will update the table appropriately
+ * @author Octavio Almanza
+ */
 function updateInvFunction(){
     // Revert back to english:
     var invTable = document.getElementById("inventoryTable");
@@ -976,6 +1195,12 @@ function updateInvFunction(){
     }
 }
 
+/**
+ * The function will change the ingredient list of every menu item that contains the oldName of an inventory item to reflect the newName of the inventory item.
+ * @author Octavio Almanza
+ * @param {String} oldName The old name of a inventory item. Stored when the user clicks on "View Inventory"
+ * @param {String} newName The new modified name of the inventory item. Can be obtained by checking the text value in HTML
+ */
 async function changeMenuItemInventoryArr(oldName, newName){
     let menuItems = await getMenuItemArray();
     for (let i = 0; i < menuItems.length; i++){
@@ -1001,13 +1226,116 @@ async function changeMenuItemInventoryArr(oldName, newName){
     }
 }
 
+/******************** INGREDIENT CHECKBOX STUFF ***************************** */
+
+/**
+ * Creates an HTML table that enables the selection of all of the inventory items available. The table will have the current ingredients of the menuItem argument checked and reflect their respective quantity
+ * @author Octavio Almanza
+ * @param {Array} menuItem An array that stores the properties of a specific menu item
+ * @param {Array} data A multidimmensional array obtained from the "/getInv" GET function. Stores all of the inventory items
+ * @returns {String} An HTML table in the form of a string.
+ */
+function makeIngredientCheckbox (menuItem, data) {
+    let htmlStr = '<div id="ingredientSelector"><table class="ingredientSelectTable" id="ingredientSelectTable' + menuItem.menu_id + '">';
+
+    for (let i = 0; i < data.result.length; i++){
+        let itemid = data.result[i].itemid;
+        let count = 0;
+        let checked = "";
+
+        if (i%2 == 0){
+            htmlStr = htmlStr + "<tr>";
+        }
+
+        if (menuItem.ingredient_list.includes(itemid)){ 
+            console.log(checked);
+            checked = "checked";
+            for (let j = 0; j < menuItem.ingredient_list?.length; j++){
+                if (menuItem.ingredient_list[j] == itemid){
+                    count++;
+                }
+            }
+        }
+
+        htmlStr = htmlStr + '<td><input type="checkbox" id="' + itemid + '" name="' + itemid + '"' + checked + ' value="yes">';
+        htmlStr = htmlStr + '<label for="' + itemid + '">' + itemid + '</label>';
+        htmlStr = htmlStr + '<input type="number" min="1" class="numInput" value="' + count + '"id="' + itemid+ 'Qty"></input></td>';
+
+        if (i%2 == 1 || i == data.result.length){
+            htmlStr = htmlStr + "</tr>";
+        }
+    }
+
+    htmlStr = htmlStr + '</table><button id="ingSelectButton" onclick="getSelectedIngredients(' + menuItem.menu_id + ')">Select Ingredients</button></div>'
+    return htmlStr;
+}
+
+/**
+ * Displays the ingredient checkbox for a specific menu item to enable the manager to modify the ingredients.
+ * @author Octavio Almanza
+ * @param {Number} menuID 
+ */
+async function populateIngredientCheckbox(menuID){
+    let menuItems = await getMenuItemArray();
+    fetch('/getInv', {method: 'GET'})
+        .then(function(response) {
+            if(response.ok) return response.json();
+            throw new Error('Request failed.');
+        })
+            .then(function(data) {
+            // TODO: Modify HTML using the information received from the database
+            // data contains the array
+            content = document.getElementById("ingredientsFor" + menuID);
+            ingCheckbox = makeIngredientCheckbox(menuItems[menuID-1], data);
+            content.innerHTML = ingCheckbox;
+        })
+        .catch(function(error) {
+            console.log(error);
+    });
+}
+
+/**
+ * Will check the ingredient selector of the menu item with the corresponding menu id and update the ingredients locally.
+ * @author Octavio Almanza
+ * @param {Number} menuID 
+ */
+function getSelectedIngredients(menuID){
+    var table = document.getElementById("ingredientSelectTable"+menuID);
+    var ingredientArr = [];
+    for (var i = 0, row; row = table.rows[i]; i++) {
+        for (var j = 0, col; col = row.cells[j]; j++) {
+
+            let checkbox = col.querySelector("input");
+            let value = document.getElementById(checkbox.id+"Qty").value;
+
+            if (checkbox.checked){
+                for (let k = 0; k < value; k++){
+                    ingredientArr.push(checkbox.id);
+                }
+            }
+        }  
+    }
+
+    console.log("Selected Ingredients: " + ingredientArr);
+    if (ingredientArr.length == 0){
+        console.log("Ingredient select is empty");
+    };
+    content = document.getElementById("ingredientsFor" + menuID);
+    content.innerHTML = '<div id="ingredientsFor' + menuID + '">' + prettyArrayStr(ingredientArr) + '<button class="editIngButtons" id="editMenu'+ menuID +'" onclick="populateIngredientCheckbox('+ menuID + ')">Edit</button></div>'
+}
+
 /********************** GOOGLE **********************/
 
+/**
+ * Initializes the Google Translate API to enable the manager to change languages
+ */
 function googleTranslateElementInit(){
     new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
 
-// Initialize and add the map
+/**
+ * Initializes the Google Maps API to enable the manager to view the location of Rev's American Grill
+ */
 function initMap() {
     // The location of Rev's
     const revs = { lat: 30.612674885055362, lng: -96.3407095157521 };

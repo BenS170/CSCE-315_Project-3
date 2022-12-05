@@ -515,7 +515,18 @@ function toSQLArr(str){
     arr = arr.split(",")
     var arrStr = "'{";
     for (let i = 0; i < arr.length; i++){
-        arrStr+= '"' + arr[i] + '"'
+        let str = "";
+        let firstChar = false;
+        for (let j = 0; j < arr[i].length; j++){
+            if (arr[i].charAt(j) == " " && !firstChar){
+                continue;                
+            }
+            firstChar = true;
+            str = str + arr[i].charAt(j);
+        }
+        // The last item in the ingredient list will have "Edit" due to the edit button. 
+        // We have to remove it! before it goes back to the database
+        arrStr+= '"' + str.replaceAll("Edit","") + '"'
         if (i != arr.length-1){
             arrStr += ", "
         }
