@@ -214,10 +214,32 @@ app.post('/customerSubmit', async (req, res) => {
     });
 
 
+
     // Inputing Orders
     for(let i = 0; i<order_items.length; i++){
         for (let j = 0; j < order_quantity[i];j++){
             await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+            
+            var ingredients = [];
+
+            // deducting ingredients from inventory
+            await pool
+                .query("SELECT ingredient_list FROM menu_items WHERE menu_id="+order_items[i]+";")
+                .then(query_res => {
+                    for (let i = 0; i < query_res.rows[0]["ingredient_list"].length; i++){
+                        var res = query_res.rows[0]["ingredient_list"][i];
+                        /*if(i!=0){
+                            res = query_res.rows[0]["ingredient_list"][i].slice(1);
+                        }*/
+                        ingredients.push(res);
+                    }
+                }
+            );
+    
+            for(let i = 0; i<ingredients.length; i++){
+                await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
+            }
+
         }
     }
 
