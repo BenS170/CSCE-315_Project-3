@@ -524,8 +524,9 @@ function toSQLArr(str){
             firstChar = true;
             str = str + arr[i].charAt(j);
         }
-        console.log(str + " vs " + str);
-        arrStr+= '"' + str + '"'
+        // The last item in the ingredient list will have "Edit" due to the edit button. 
+        // We have to remove it! before it goes back to the database
+        arrStr+= '"' + str.replaceAll("Edit","") + '"'
         if (i != arr.length-1){
             arrStr += ", "
         }

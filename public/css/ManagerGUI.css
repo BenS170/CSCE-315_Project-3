@@ -15,6 +15,7 @@ body{
   }
 
 #revImg{
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
     display:block;
 
     max-width: fit-content;
@@ -26,7 +27,7 @@ body{
 }
 
 #revImg:hover{
-    border:200%;
+    border:large ridge goldenrod;
 }
 
 #google_translate_element{
@@ -39,6 +40,7 @@ body{
 }
 
 .subMenus{
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
     display: flex;
     flex-direction: column;
 
@@ -76,6 +78,8 @@ body{
 
 .menuSection button{
     /*Centering the buttons in the column:*/
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+
     display:block;
 
     width: 90%;
@@ -124,6 +128,7 @@ body{
 }
 
 .headers p{
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
     margin-top: 1%;
     margin-bottom: 1%;
 
@@ -144,6 +149,8 @@ body{
 }
 
 .contentContainer{
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+
     display:flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -159,6 +166,8 @@ body{
 }
 
 table{
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+
     display:flex;
     align-self: center;
     width: fit-content;
@@ -190,9 +199,7 @@ table th{
 }
 
 table td{
-    padding:auto;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    padding:1%;
 }
 
 table p{
@@ -294,21 +301,28 @@ table p{
 }
 
 /* Ingredient Selector Formatting */
+.ingredientSelector{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #ingredientSelectTable{
     border:none;   
+    max-height: 300px;
+    overflow-y: scroll;
 }
 
 #ingSelectButton{
-    display:block;
-
+    text-align: center;
     width: 90%;
 
     padding-top: 3%; 
     padding-bottom: 3%;
     
-    margin-left:auto;
-    margin-right: auto;
     margin-bottom: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
 
     background-color: white;
     border-style: ridge;
@@ -326,7 +340,7 @@ table p{
     color:white;
 }
 
-#ingredientSelectTable td{
+.ingredientSelectTable td{
     width: fit-content;
     background-color: white;
     color: black;
@@ -341,7 +355,48 @@ table p{
     transition-duration: 0.3s;
 }
 
-#ingredientSelectTable td:hover{
+.ingredientSelectTable td:hover{
     background-color: #5B0726;
     color:white;
+}
+
+.ingredientSelectTable td label{
+    width:75%;
+}
+
+.ingredientSelectTable td .numInput{
+    width:20%;
+    margin-left: 5%;
+}
+
+.editIngButtons{
+    display:block;
+
+    width: fit-content;
+
+    padding-top: 1%; 
+    padding-bottom: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+        
+    background-color: white;
+    border-style: ridge;
+    border-radius: 5px;
+
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 100%;
+
+    transition-duration: 0.3s;   
+}
+
+.editIngButtons:hover{
+    background-color: #5B0726;
+    color:white;
+}
+
+/* GOOGLE MAPS */
+#map{
+    margin-left: auto;
+    margin-right: auto;
 }
