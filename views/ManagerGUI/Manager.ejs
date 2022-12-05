@@ -16,11 +16,12 @@
             
             <div class="subMenus">
 
-                <img src="https://i.ibb.co/1b4NdSg/revsLogo.png" alt="Rev's Logo" id="revImg">
+                <img src="https://i.ibb.co/1b4NdSg/revsLogo.png" alt="Rev's Logo" id="revImg" onclick="goHome()">
                 <div id="google_translate_element"></div>
 
                 <div class="menuSection">
                     <h1>Menu</h1>
+
                     <button id="viewMenuButton">View Menu</button>
                     <button id="addMenuItemButton">Add Menu Item</button>
                     <button id="updateMenuItemButton">Update Menu</button>
@@ -120,6 +121,11 @@
                         </div>
 
                         <button id="submitDates">Submit dates</button>
+                    </div>
+
+                    <div id="ingredientSelect" hidden>
+                        <div>Select Ingredients:</div>
+                        <label for="accept"> <input type="checkbox" id="accept" name="accept" value="yes">  Accept </label>
                     </div>
                 </div>
             </div>

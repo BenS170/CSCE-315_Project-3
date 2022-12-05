@@ -316,7 +316,7 @@ app.get('/getEntree', (req, res) => {
     menu_items = [];
     pool
         // SQL query is not 100% CORRECT, should display type but does not...
-        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'entree';")
+        .query("SELECT menu_id, image_url, item_name, item_price, type FROM menu_items WHERE type = 'entree';")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
@@ -333,7 +333,7 @@ app.get('/getSide', (req, res) => {
     menu_items = [];
     pool
         // SQL query is not 100% CORRECT, should display type but does not...
-        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'side';")
+        .query("SELECT menu_id, image_url, item_name, item_price, type FROM menu_items WHERE type = 'side';")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
@@ -537,7 +537,18 @@ function toSQLArr(str){
     arr = arr.split(",")
     var arrStr = "'{";
     for (let i = 0; i < arr.length; i++){
-        arrStr+= '"' + arr[i] + '"'
+        let str = "";
+        let firstChar = false;
+        for (let j = 0; j < arr[i].length; j++){
+            if (arr[i].charAt(j) == " " && !firstChar){
+                continue;                
+            }
+            firstChar = true;
+            str = str + arr[i].charAt(j);
+        }
+        // The last item in the ingredient list will have "Edit" due to the edit button. 
+        // We have to remove it! before it goes back to the database
+        arrStr+= '"' + str.replaceAll("Edit","") + '"'
         if (i != arr.length-1){
             arrStr += ", "
         }
