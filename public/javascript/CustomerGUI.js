@@ -133,6 +133,7 @@ function makeSideTable(data){
 function makeDrinkTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
     htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
@@ -143,6 +144,7 @@ function makeDrinkTable(data){
   
         htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + "$" +  data.result[i].item_price + "</td>";
         htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
@@ -189,6 +191,7 @@ function makeDrinkTable(data){
 function makeDessertTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
     htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
@@ -198,6 +201,7 @@ function makeDessertTable(data){
   
         htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
         htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';

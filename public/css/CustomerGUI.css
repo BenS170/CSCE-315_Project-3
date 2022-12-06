@@ -60,6 +60,14 @@ margin-bottom: 35%;
   text-decoration: underline;
 }
 
+.menuButtons:focus{
+  background-color: white;
+  color:#5B0726;
+}
+.orderButton:focus{
+  text-decoration: underline;
+}
+
 .addToOrder{
   color:white;
   background-color: #5B0726;
@@ -71,6 +79,9 @@ margin-bottom: 35%;
 .addToOrder:hover{
  text-decoration: underline;
 }
+.addToOrder:focus{
+  text-decoration: underline;
+ }
 
 .deleteFromOrder{
   color:white;
@@ -83,6 +94,9 @@ margin-bottom: 35%;
 .deleteFromOrder:hover{
  text-decoration: underline;
 }
+.deleteFromOrder:focus{
+  text-decoration: underline;
+ }
 
 .logo{
 margin: 0;
@@ -159,6 +173,14 @@ th, td {
   padding: 0px 10px;
 }
 
+.submit:focus {
+  background-color: #5B0726;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0px 10px;
+}
+
 .cancel{
   background-color: white;
   color: #5B0726;
@@ -176,8 +198,16 @@ th, td {
 }
 
 .cancel:hover {
-  background-color: #5B0726;
-  color: white;
+  background-color: white;
+  color: #5B0726;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0px 10px;
+}
+
+.cancel:focus {
+  background-color: white;
+  color: #5B0726;
   font-weight: bold;
   cursor: pointer;
   padding: 0px 10px;

@@ -1,4 +1,4 @@
-const { query } = require('express');
+const { query, json } = require('express');
 const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
@@ -326,7 +326,7 @@ app.get('/getDrink', (req, res) => {
     menu_items = [];
     pool
         // SQL query is not 100% CORRECT, should display type but does not...
-        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'drink';")
+        .query("SELECT menu_id, image_url, item_name, item_price, type FROM menu_items WHERE type = 'drink';")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
@@ -344,7 +344,7 @@ app.get('/getDessert', (req, res) => {
     menu_items = [];
     pool
         // SQL query is not 100% CORRECT, should display type but does not...
-        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'dessert';")
+        .query("SELECT menu_id, image_url, item_name, item_price, type FROM menu_items WHERE type = 'dessert';")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
@@ -513,7 +513,18 @@ function toSQLArr(str){
     arr = arr.split(",")
     var arrStr = "'{";
     for (let i = 0; i < arr.length; i++){
-        arrStr+= '"' + arr[i] + '"'
+        let str = "";
+        let firstChar = false;
+        for (let j = 0; j < arr[i].length; j++){
+            if (arr[i].charAt(j) == " " && !firstChar){
+                continue;                
+            }
+            firstChar = true;
+            str = str + arr[i].charAt(j);
+        }
+        // The last item in the ingredient list will have "Edit" due to the edit button. 
+        // We have to remove it! before it goes back to the database
+        arrStr+= '"' + str.replaceAll("Edit","") + '"'
         if (i != arr.length-1){
             arrStr += ", "
         }
@@ -637,3 +648,60 @@ app.get('/getMaxID', (req, res) => {
         }
     );
 });
+
+app.post('/deleteInventoryItem', (req, res) => {
+    console.log("inside update Menu item");
+    const { inventoryID } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "DELETE FROM inventory WHERE itemid= '" + inventoryID + "';";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ inventoryID });
+});
+
+app.post('/updateMenuIngredients', (req, res) => {
+    console.log("inside update Menu item");
+    const { menuID,menuIngredients,menuIngNum } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "UPDATE menu_items SET ingredient_list= '" + menuIngredients +"', num_ingredients = '"+ menuIngNum + "' WHERE menu_id= '" + menuID +"';";
+    console.log(queryString);
+     pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ menuID,menuIngredients,menuIngNum });
+});
+
+
+app.post('/updatePicture', (req, res) => {
+    console.log("inside update picture");
+    const {menu_id, item_name, image_url} = req.body;
+    console.log(req.body);
+
+    var url = image_url.replace("$","")
+
+    const queryString = "UPDATE menu_items SET image_url= '" + url + "' WHERE menu_id= '" + menu_id + "';";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+
+    })
+
+    res.status(200).json({menu_id, item_name, image_url});
+})
