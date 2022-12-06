@@ -6,10 +6,12 @@
         <style>
         * {box-sizing: border-box}
         </style>
+        <title>Customer</title>
     </head>
 
     <body>
         <div id="google_translate_element" style="margin-left:32%;"></div>
+        <button type="button" hidden = true id = "View Order" class = "orderButton">VIEW MY ORDER</button>
         <div class="sidenav">
             <a href="/"><img class = "logo" src="https://media-cdn.grubhub.com/image/upload/d_search:browse-images:default.jpg/w_100,q_80,fl_lossy,dpr_2.0,c_fit,f_auto,h_100/fw6zczftwhbxmpx7g7u3" style="left:45%;"></a>
             <button id = "ViewOrder" class = "orderButton">View Order</button>
@@ -17,13 +19,10 @@
             <button id = "Sides" class = "menuButtons">SIDES</button>
             <button id = "Drinks" class = "menuButtons">DRINKS</button>
             <button id = "Desserts" class = "menuButtons">DESSERTS</button>
-            
         </div>
         <div id="CustomerView">
             <p style ="text-align:center; font-family:Arial; font-weight:bold; color:#5B0726; font-size:475%;">Welcome, Customer</p>
-        </div> 
-        <!--The div element for the map -->
-        <div id="map"></div>
+        </div>
         <div hidden = "true" id = "order-summary">
             <h1>Order Summary</h1>
             

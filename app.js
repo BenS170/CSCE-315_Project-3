@@ -1,4 +1,4 @@
-const { query } = require('express');
+const { query, json } = require('express');
 const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
@@ -138,7 +138,6 @@ app.post('/serverSubmit', async (req, res) => {
 
     // Inputing Orders
     for(let i = 0; i<order_items.length; i++){
-        await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
         var ingredients = [];
 
         // removing ingredients
@@ -147,17 +146,38 @@ app.post('/serverSubmit', async (req, res) => {
             .then(query_res => {
                 for (let i = 0; i < query_res.rows[0]["ingredient_list"].length; i++){
                     var res = query_res.rows[0]["ingredient_list"][i];
-                    /*if(i!=0){
-                        res = query_res.rows[0]["ingredient_list"][i].slice(1);
-                    }*/
                     ingredients.push(res);
                 }
             }
         );
         
+        //checking for available inventory
+        var out_of_inventory = false;
+
         for(let i = 0; i<ingredients.length; i++){
-            await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
+            await pool
+                .query("SELECT quantity, serving_size FROM inventory WHERE itemid='"+ingredients[i]+"';")
+                .then(query_res => {
+                    var quantity = query_res.rows[0]["quantity"];
+                    var serving_size = query_res.rows[0]["serving_size"];
+                    console.log(quantity);
+                    console.log(serving_size);
+                    if(quantity-serving_size < 0){
+                        out_of_inventory = true;
+                    }
+                });
         }
+
+
+        if(!out_of_inventory){
+            for(let i = 0; i<ingredients.length; i++){
+                console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
+                await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
+            }
+            await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+        }
+
+
     }
 
     res.status(200).json({ order_items, order_prices});
@@ -371,7 +391,7 @@ app.get('/getDrink', (req, res) => {
     menu_items = [];
     pool
         // SQL query is not 100% CORRECT, should display type but does not...
-        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'drink';")
+        .query("SELECT menu_id, image_url, item_name, item_price, type FROM menu_items WHERE type = 'drink';")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
@@ -389,7 +409,7 @@ app.get('/getDessert', (req, res) => {
     menu_items = [];
     pool
         // SQL query is not 100% CORRECT, should display type but does not...
-        .query("SELECT menu_id, item_name, item_price, type FROM menu_items WHERE type = 'dessert';")
+        .query("SELECT menu_id, image_url, item_name, item_price, type FROM menu_items WHERE type = 'dessert';")
         .then(query_res => {
             for (let i = 0; i < query_res.rowCount; i++){
                 menu_items.push(query_res.rows[i]);
@@ -692,3 +712,60 @@ app.get('/getMaxID', (req, res) => {
         }
     );
 });
+
+app.post('/deleteInventoryItem', (req, res) => {
+    console.log("inside update Menu item");
+    const { inventoryID } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "DELETE FROM inventory WHERE itemid= '" + inventoryID + "';";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ inventoryID });
+});
+
+app.post('/updateMenuIngredients', (req, res) => {
+    console.log("inside update Menu item");
+    const { menuID,menuIngredients,menuIngNum } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "UPDATE menu_items SET ingredient_list= '" + menuIngredients +"', num_ingredients = '"+ menuIngNum + "' WHERE menu_id= '" + menuID +"';";
+    console.log(queryString);
+     pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ menuID,menuIngredients,menuIngNum });
+});
+
+
+app.post('/updatePicture', (req, res) => {
+    console.log("inside update picture");
+    const {menu_id, item_name, image_url} = req.body;
+    console.log(req.body);
+
+    var url = image_url.replace("$","")
+
+    const queryString = "UPDATE menu_items SET image_url= '" + url + "' WHERE menu_id= '" + menu_id + "';";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+
+    })
+
+    res.status(200).json({menu_id, item_name, image_url});
+})

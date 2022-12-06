@@ -3,7 +3,7 @@ body{
   padding: 2rem 2rem;
   text-align: center;
   height: 800px;
-  background-color: maroon;
+  background-color: #5B0726;
 }
 
 .items{
@@ -16,12 +16,12 @@ body{
 
 .entrees{
     width: 100%;
-    border: 5px solid gold;
-    border-radius: 50px;
     height: 45%;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: gray;
+    border: ridge goldenrod 5px;
+    background-color: lightgrey;
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
 }
 
 .entrees button{
@@ -31,23 +31,42 @@ body{
     width: 25%;
     background-color: #FF7276;
     margin: 2px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: "Times New Roman", Times, serif;
     font-size: 100%;
+    transition: 0.3s;
 }
 
 .entrees button:hover{
     background-color: rgb(188, 45, 45);
+    color: white;
+    height: 30%;
+    width: 35%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.entrees button:focus{
+    background-color: rgb(188, 45, 45);
+    color: white;
+    height: 30%;
+    width: 35%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.entrees button:active{
+    font-size: 90%;
 }
 
 .entrees h1{
     font-weight: bold;
-    font-size: 120%;
+    font-size: 140%;
     font-family: 'Oswald';
     color: maroon;
 }
 
 .sides-drinks{
-    height: 15%;
+    height: 20%;
     margin-top: 2%;
 }
 
@@ -60,18 +79,37 @@ body{
 
 .sides button{
     vertical-align: top;
-    border: 5px solid black;
-    height: 100%;
+    border: 5px inset yellow;
+    height: 75%;
     width: 40%;
-    background-color: lightgray;
+    background-color: white;
     margin: 2px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: "Times New Roman", Times, serif;
     font-size: 110%;
     border-radius: 20px;
+    transition: 0.3s;
 }
 
 .sides button:hover{
-    background-color: gray;
+    background-color: darkgoldenrod;
+    color: white;
+    height: 80%;
+    width: 50%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.sides button:focus{
+    background-color: darkgoldenrod;
+    color: white;
+    height: 80%;
+    width: 50%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.sides button:active{
+    font-size: 100%;
 }
 
 .drinks{
@@ -83,19 +121,36 @@ body{
 
 .open-drinks{
     vertical-align: top;
-    border: 5px solid black;
-    height: 100%;
-    width: 60%;
+    border: 5px inset lightblue;
+    height: 80%;
+    width: 50%;
     background-color: white;
     margin: 2px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 160%;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 140%;
     border-radius: 20px;
     color: maroon;
+    transition: 0.3s;
 }
 
 .open-drinks:hover{
-    background-color: gray;
+    background-color: rgb(143, 48, 48);
+    color: white;
+    height: 85%;
+    width: 65%;
+    font-weight: bold;
+}
+
+.open-drinks:focus{
+    background-color: rgb(143, 48, 48);
+    color: white;
+    height: 85%;
+    width: 65%;
+    font-weight: bold;
+}
+
+.open-drinks:active{
+    font-size: 120%;
 }
 
 #drink-menu{
@@ -112,62 +167,91 @@ body{
 
 #drink-menu button{
     vertical-align: top;
-    border: 5px solid black;
-    height: 100%;
+    border: 5px groove goldenrod;
     width: 40%;
-    background-color: lightgray;
+    background-color: maroon;
     margin: 2px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: "Times New Roman", Times, serif;
     font-size: 110%;
-    border-radius: 20px;
+    height: 50px;
+    color: white;
+    transition: 0.3s;
 }
 
 #drink-menu button:hover{
     background-color: gray;
+    font-weight: bold;
 }
 
-.close-drinks{
+#drink-menu button:focus{
+    background-color: gray;
+    font-weight: bold;
+}
+
+#drink-menu button:active{
+    font-size: 90%;
+}
+
+#close-drinks{
     vertical-align: top;
     border: 5px solid black;
-    height: 100%;
     width: 40%;
-    background-color: rgb(216, 0, 0);
     margin: 2px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: "Times New Roman", Times, serif;
     font-size: 90%;
-    color: black
+    color: white;
+    background-color: red;
 }
 
 .desserts{
     margin-top: 10px;
     width: 100%;
-    border-radius: 50px;
-    height: 30%;
+    border-radius: 20px;
+    height: 35%;
     padding-top: 10px;
     padding-bottom: 10px;
-    border: 5px solid black;
-    border-radius: 20px;
-    background-color: gold;
+    border: ridge whitesmoke 5px;
+    background-color: goldenrod;
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
 }
 
 .desserts button{
     border: 2px solid black;
-    height: 35%;
+    height: 30%;
     width: 25%;
     background-color: maroon;
     margin: 2px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-family: "Times New Roman", Times, serif;
     font-size: 100%;
     color: white;
+    transition: 0.3s;
 }
 
 .desserts button:hover{
-    background-color: lightgray;
+    background-color: white;
+    color: maroon;
+    height: 40%;
+    width: 35%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.desserts button:focus{
+    background-color: white;
+    color: maroon;
+    height: 40%;
+    width: 35%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.desserts button:active{
+    font-size: 90%;
 }
 
 .desserts h1{
     font-weight: bold;
-    font-size: 120%;
+    font-size: 140%;
     font-family: 'Oswald';
     color: black;
 }
@@ -187,13 +271,13 @@ body{
 }
 
 .order{
-    border: 6px solid black;
+    border: 5px double black;
+    padding: 5px;
     height: 50%;
     width: 100%;
     margin-top: -10%;
     overflow: auto;
     background-color: white;
-    border-radius: 10px;
 }
 
 .order table{
@@ -202,10 +286,10 @@ body{
 }
 
 .total{
+    padding: 5px;
     width: 100%;
     height: 20%;
     border: 4px solid black;
-    border-radius: 10px;
     margin-top: 5px;
     background-color: white;
 }
@@ -232,7 +316,7 @@ hr{
 }
 
 .checkout{
-    height: 7%;
+    height: 20%;
     width: 100%;
     padding-top: 5px;
     margin-top: 5px;
@@ -243,10 +327,27 @@ hr{
     border-radius: 30px;
     background-color: lightgray;
     width: 40%;
+    transition: 0.3s;
 }
 
 .cancel:hover{
     background-color: gray;
+    width: 50%;
+    height: 40%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.cancel:focus{
+    background-color: gray;
+    width: 50%;
+    height: 40%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.cancel:active{
+    font-size: 100%;
 }
 
 .submit{
@@ -254,8 +355,68 @@ hr{
     border-radius: 30px;
     background-color: lightgreen;
     width: 40%;
+    height: 30%;
+    transition: 0.3s;
 }
 
 .submit:hover{
     background-color: rgb(93, 195, 93);
+    width: 50%;
+    height: 40%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.submit:focus{
+    background-color: rgb(93, 195, 93);
+    width: 50%;
+    height: 40%;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.submit:active{
+    font-size: 100%;
+}
+
+#increment{
+    background-color: white;
+    border-radius: 50px;
+    color: maroon;
+    transition: 0.3s;
+}
+
+#increment:hover{
+    background: maroon;
+    color: white;
+}
+
+#increment:focus{
+    background: maroon;
+    color: white;
+}
+
+#increment:active{
+    font-size: 50%;
+}
+
+#decrement{
+    background-color: white;
+    border-radius: 50px;
+    color: maroon;
+    transition: 0.3s;
+}
+
+#decrement:hover{
+    background: maroon;
+    color: white;
+}
+
+#decrement:focus{
+    background: maroon;
+    color: white;
+}
+
+#decrement:active{
+    font-size: 50%;
 }
