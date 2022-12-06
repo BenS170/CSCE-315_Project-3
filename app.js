@@ -147,15 +147,13 @@ app.post('/serverSubmit', async (req, res) => {
             .then(query_res => {
                 for (let i = 0; i < query_res.rows[0]["ingredient_list"].length; i++){
                     var res = query_res.rows[0]["ingredient_list"][i];
-                    if(i!=0){
-                        res = query_res.rows[0]["ingredient_list"][i].slice(1);
-                    }
                     ingredients.push(res);
                 }
             }
         );
         
         for(let i = 0; i<ingredients.length; i++){
+            console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
             await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
         }
     }

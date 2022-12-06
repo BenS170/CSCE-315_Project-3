@@ -25,6 +25,7 @@ function addToOrder(itemid, name, qty, price){
 
     var inc = document.createElement('input');
     inc.type = "button";
+    inc.id = "increment";
     inc.value = "+";
     inc.onclick = function(){
         incQty(itemid, price);
@@ -32,6 +33,7 @@ function addToOrder(itemid, name, qty, price){
 
     var dec = document.createElement('input');
     dec.type = "button";
+    dec.id = "decrement";
     dec.value = "-";
     dec.onclick = function(){
         decQty(itemid, price);
