@@ -23,10 +23,10 @@
             <p style ="text-align:center; font-family:Arial; font-weight:bold; color:#5B0726; font-size:475%;">Welcome, Customer</p>
         </div>
         <div hidden = "true" id = "order-summary">
-            <h1>Order Summary</h1>
+            <h1>ORDER SUMMARY</h1>
             
             <div id="CustomerOrder">
-                <table id="CustomerOrderTable" style="margin-left:2.5%;">
+                <table id="CustomerOrderTable" style="margin-left:2.5%; border:none;">
                     <!-- <tr>
                         <th> ITEM </th>
                         <th> </th>
@@ -38,18 +38,15 @@
             </div>
 
             <!-- </div> style="float:center; margin-left:5%;"> -->
-    
-            <div id = "order-tax">
-              
+
+            <div id = "tax-and-total" style = "margin-top:3.5%;"></div>
+                <div id = "order-tax" style="float:center;"></div>
+                <div id = "order-total" style="float:center;">
             </div>
     
-            <div id = "order-total">
-              
-            </div>
-    
-            <div id = "order-buttons">
-              <button id = "SubmitButton" style="color:white; background-color:#5B0726; border-color:#5B0726;">SUBMIT ORDER</button>
-              <button id = "CancelButton" style="color:white; background-color:#5B0726; border-color:#5B0726;">CANCEL ORDER</button>
+            <div id = "order-buttons" style = "margin-top:1.5%; margin-bottom:2%;">
+              <button id = "SubmitButton" class = "submit" style = "margin-right:4.5%;">PLACE ORDER</button>
+              <button id = "CancelButton" class = "cancel">CANCEL ORDER</button>
             </div>
     
           </div>

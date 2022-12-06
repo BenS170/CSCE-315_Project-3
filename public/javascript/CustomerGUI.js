@@ -23,17 +23,17 @@ function makeEntreeTable(data){
             htmlStr += '<tr>'
         }
 
-        htmlStr += '<td><div>'
+        htmlStr += '<td style = "height:50%;"><div>'
 
         var itemName = data.result[i].item_name;
         htmlStr += '<h2>' + itemName + '</h2>';
 
-        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:220px;height:185px;'>";
         htmlStr += itemImg;
 
         var itemPrice = data.result[i].item_price;
-        htmlStr += '<h2>' + "$" + itemPrice + '</h2>';
-
+        htmlStr += '<h2>' + "$" + Number(itemPrice).toFixed(2) + '</h2>';
+        
         var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
         htmlStr += orderButton;
 
@@ -101,7 +101,7 @@ function makeSideTable(data){
         htmlStr += itemImg;
 
         var itemPrice = data.result[i].item_price;
-        htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+        htmlStr += '<h2>' + "$" + Number(itemPrice).toFixed(2) + '</h2>';
 
         var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
         htmlStr += orderButton;
@@ -163,12 +163,18 @@ function makeDrinkTable(data){
     
             var itemName = data.result[i].item_name;
             htmlStr += '<h2>' + itemName + '</h2>';
-    
-            var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+            
+            var itemImg = "";
+            if(itemName == 'Bottled Diet Coke' || itemName == 'Bottled Coke'){
+                itemImg = "<img src = '"+data.result[i].image_url+"' style='width:75px;height:140px;'>";
+            }
+            else{
+                itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+            }
             htmlStr += itemImg;
     
             var itemPrice = data.result[i].item_price;
-            htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+            htmlStr += '<h2>' + "$" + Number(itemPrice).toFixed(2) + '</h2>';
     
             var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
             htmlStr += orderButton;
@@ -237,7 +243,7 @@ function makeDessertTable(data){
             htmlStr += itemImg;
     
             var itemPrice = data.result[i].item_price;
-            htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+            htmlStr += '<h2>' + "$" + Number(itemPrice).toFixed(2) + '</h2>';
     
             var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
             htmlStr += orderButton;
@@ -528,9 +534,9 @@ function updateOrderTable(){
         }
 
         htmlstring = htmlstring + '<td style = "border:none;">' + order_name[i] + '</td>';
-        htmlstring = htmlstring + "<td style = \"border:none;\"><button onclick=\"decrement('"+order_items[i]+"')\">-</button></td>"; 
+        htmlstring = htmlstring + "<td style = \"border:none;\"><button class = 'increment-and-decrement-qty' onclick=\"decrement('"+order_items[i]+"')\">-</button></td>"; 
         htmlstring = htmlstring + '<td value=1 style = "border:none;">' + order_quantity[i] + '</td>';
-        htmlstring = htmlstring + "<td style = \"border:none;\"><button onclick=\"increment('"+order_items[i]+"')\">+</button></td>"; 
+        htmlstring = htmlstring + "<td style = \"border:none;\"><button class = 'increment-and-decrement-qty' onclick=\"increment('"+order_items[i]+"')\">+</button></td>"; 
         htmlstring = htmlstring + '<td style = "border:none;">' + Number(order_prices[i] * order_quantity[i]).toFixed(2) + '</td></tr>';
 
         // htmlstring = htmlstring + '<tr><td>' + order_name[i] + '</td>';
@@ -640,7 +646,7 @@ button.addEventListener('click', function(e) {
     }
 
     else {
-        const emptyOrder = alert("Cannot sumbit an empty order!");
+        const emptyOrder = alert("Cannot place an empty order!");
     }
 
 
