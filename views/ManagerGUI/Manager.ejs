@@ -20,23 +20,23 @@
                 <div id="google_translate_element"></div>
 
                 <div class="menuSection">
-                    <h1>Menu</h1>
+                    <h2>Menu</h2>
 
-                    <button id="viewMenuButton">View Menu</button>
+                    <button id="viewMenuButton">Edit Menu</button>
                     <button id="addMenuItemButton">Add Menu Item</button>
                     <button id="updateMenuItemButton">Update Menu</button>
                     <button id="deleteMenuItemButton">Delete Menu Item</button>
                 </div>
 
                 <div class="menuSection">
-                    <h1>Inventory</h1>
-                    <button id="viewInventoryButton">View Inventory</button>
+                    <h2>Inventory</h2>
+                    <button id="viewInventoryButton">Edit Inventory</button>
                     <button id="orderInventoryButton">Order Inventory</button>
                     <button id="addInventoryItemButton">Add Inventory Item</button>
                 </div>
 
                 <div class="menuSection">
-                    <h1>Reports</h1>
+                    <h2>Reports</h2>
                     <button id="salesReportButton">Sales Report</button>
                     <button id="popMenuItemButton">Popular Menu Item Report</button>
                     <button id="excessReportButton">Excess Report</button>
@@ -47,21 +47,22 @@
             <div class="mainContent">
 
                 <div class="headers">
-                    <p>Welcome, Manager
-                    <a href="/"><button>Log Out</button> </a>
-                    </p>
+                    <p>Welcome, Manager</p>
+                    <a href="/" id="logoutButtonContainer"><button id="logoutButton">Log-Out</button> </a>
                 </div>
                 
                 <div class="contentContainer">
 
                     <div class="content" id="managerView">
-                        <p>Welcome, Manager</p>
+                        <p id="welcomeManager">Welcome, Manager</p>
                         <!--The div element for the map -->
                         <div id="map"></div>
                     </div>
 
                     <!-- The date selectors for any Manager Function that requires a date range-->
                     <div id="dateSelectors" hidden value="0">
+                        <h3 id="reportType">Sales Report</h3>
+                        <p id="instructStartDate">Please enter the start date:</p>
                         <div id="datePanel1">
                             <select id="startMonth">
                                 <option value="1">January</option>
@@ -91,6 +92,7 @@
                         </div>
                         
                         <div id="hideMe">
+                            <p>Please enter the end date:</p>
                             <div id="datePanel2">
                                 <select id="endMonth">
                                     <option value="1">January</option>
