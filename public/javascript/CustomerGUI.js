@@ -195,27 +195,6 @@ function makeDrinkTable(data){
                 htmlStr += '</tr>'
             }
         }
-
-        htmlStr += '<td><div>'
-
-        var itemName = data.result[i].item_name;
-        htmlStr += '<h2>' + itemName + '</h2>';
-
-        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
-        htmlStr += itemImg;
-
-        var itemPrice = data.result[i].item_price;
-        htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
-
-        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
-        htmlStr += orderButton;
-
-        htmlStr += '</div></td>';
-
-        if (i%3 == 2 || i == data.result.length-1){
-            htmlStr += '</tr>'
-        }
-    }
     
         htmlStr += '</table>';
     
@@ -285,27 +264,6 @@ function makeDessertTable(data){
             if (i == data.result.length-1){
                 htmlStr += '</tr>'
             }
-        }
-
-        htmlStr += '<td style="width:50%"><div>'
-
-        var itemName = data.result[i].item_name;
-        htmlStr += '<h2>' + itemName + '</h2>';
-
-        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
-        htmlStr += itemImg;
-
-        var itemPrice = data.result[i].item_price;
-        htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
-
-        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
-        htmlStr += orderButton;
-
-        htmlStr += '</div></td>';
-
-        if (i == data.result.length-1){
-            htmlStr += '</tr>'
-        }
     }
     
         htmlStr += '</table>';

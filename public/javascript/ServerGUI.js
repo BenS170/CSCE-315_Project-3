@@ -254,6 +254,7 @@ function populateGUI(menu_items){
         var sides = document.getElementById('sides');
         var desserts = document.getElementById('desserts');
         var drinks = document.getElementById('drink-menu');
+        console.log(menu_items[i].type);
         switch(menu_items[i].type){
             case "entree":
                 var button = "<button onclick=\"addToOrder("+menu_items[i].menu_id+", '"+menu_items[i].item_name+"', '1', '"+menu_items[i].item_price+"')\"> "+menu_items[i].item_name+" </button>";

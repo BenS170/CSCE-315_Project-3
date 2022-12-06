@@ -265,9 +265,11 @@ body{
 }
 
 .logo{
-    width: 60%;
-    height: 35%;
+    width: 50%;
+    height: 15%;
     margin-top: -15%;
+    margin-bottom: 17%;
+    border: 3px ridge goldenrod;
 }
 
 .order{
