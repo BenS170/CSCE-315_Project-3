@@ -11,16 +11,19 @@
     <body>
         <div id="google_translate_element" style="margin-left:32%;"></div>
         <div class="sidenav">
-            <img class = "logo" src="https://media-cdn.grubhub.com/image/upload/d_search:browse-images:default.jpg/w_100,q_80,fl_lossy,dpr_2.0,c_fit,f_auto,h_100/fw6zczftwhbxmpx7g7u3" style="left:45%;">
+            <a href="/"><img class = "logo" src="https://media-cdn.grubhub.com/image/upload/d_search:browse-images:default.jpg/w_100,q_80,fl_lossy,dpr_2.0,c_fit,f_auto,h_100/fw6zczftwhbxmpx7g7u3" style="left:45%;"></a>
+            <button id = "ViewOrder" class = "orderButton">View Order</button>
             <button id = "Entrees" class = "menuButtons">ENTREES</button>
             <button id = "Sides" class = "menuButtons">SIDES</button>
             <button id = "Drinks" class = "menuButtons">DRINKS</button>
             <button id = "Desserts" class = "menuButtons">DESSERTS</button>
-            <button id = "View Order" class = "orderButton">View Order</button>
+            
         </div>
         <div id="CustomerView">
             <p style ="text-align:center; font-family:Arial; font-weight:bold; color:#5B0726; font-size:475%;">Welcome, Customer</p>
         </div> 
+        <!--The div element for the map -->
+        <div id="map"></div>
         <div hidden = "true" id = "order-summary">
             <h1>Order Summary</h1>
             
@@ -52,8 +55,8 @@
             </div>
     
           </div>
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyClF9f4G213q3k_eWnxvTXiGAEvJhEI2gg&callback=initMap&v=weekly" defer></script>
+          <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>    
+          <script src="javascript/CustomerGUI.js"></script>
     </body>
-    <script src="javascript/CustomerGUI.js"></script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    
 </html>

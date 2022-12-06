@@ -1,5 +1,4 @@
 
-
 // // SQL Queries - To display type of menu item and corresponding price:
 
 // // For Entrees: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'entree';
@@ -15,25 +14,31 @@
 // Cancel Order
 // Submit order
 
+/**
+ * Creates an HTML table of entrees given data read in from SQL database
+ * @author Anoop Braich
+ * @param {Array} data - this array contains information about menu items stored in the database
+ * @returns {String} - a string containing the HTML for a table with rows of menu items and their respective information
+ */
 function makeEntreeTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+    //htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
     htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
+    //htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
     htmlMenuTable = htmlMenuTable + "</tr>";
   
     for (let i = 0; i < data.result.length; i++){
   
         htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+        //htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
         htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
+        //htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
         htmlMenuTable = htmlMenuTable + "</tr>";
     }
     htmlMenuTable = htmlMenuTable + "</table>";
@@ -74,23 +79,23 @@ function makeEntreeTable(data){
   
 function makeSideTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+    //htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
     htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
+    //htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
     htmlMenuTable = htmlMenuTable + "</tr>";
   
     for (let i = 0; i < data.result.length; i++){
   
         htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+        //htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
         htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
+        //htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
         htmlMenuTable = htmlMenuTable + "</tr>";
     }
     htmlMenuTable = htmlMenuTable + "</table>";
@@ -132,21 +137,21 @@ function makeSideTable(data){
   
 function makeDrinkTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+    //htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
     htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
+    //htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
     htmlMenuTable = htmlMenuTable + "</tr>";
   
     for (let i = 0; i < data.result.length; i++){
   
         htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+        //htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + "$" +  data.result[i].item_price + "</td>";
         htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
+        //htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
         htmlMenuTable = htmlMenuTable + "</tr>";
     }
     htmlMenuTable = htmlMenuTable + "</table>";
@@ -188,20 +193,20 @@ function makeDrinkTable(data){
   
 function makeDessertTable(data){
     htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+    //htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
     htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
+    //htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
   
     for (let i = 0; i < data.result.length; i++){
   
         htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+        //htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
         htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
         htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
+        //htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
         htmlMenuTable = htmlMenuTable + "</tr>";
     }
     htmlMenuTable = htmlMenuTable + "</table>";
@@ -644,3 +649,26 @@ function submitOrderLogic() {
   
   
 }
+
+
+
+/**
+ * Initializes the Google Maps API to enable the manager to view the location of Rev's American Grill
+ */
+ function initMap() {
+    // The location of Rev's
+    const revs = { lat: 30.612674885055362, lng: -96.3407095157521 };
+    // The map, centered at Uluru
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: revs,
+    });
+    // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+        position: revs,
+        map: map,
+    });
+}
+  
+  window.initMap = initMap;
+
