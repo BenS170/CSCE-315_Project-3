@@ -358,10 +358,18 @@ app.get('/getDessert', (req, res) => {
     );
 });
 
-app.post('/addMenuItem', (req, res) => {
+app.post('/addMenuItem', async (req, res) => {
     console.log("inside add Menu item");
-    const { menuID, menuName,menuPrice,menuIngredients, menuIngNum, menuType } = req.body;
+    const { menuName,menuPrice,menuIngredients, menuIngNum, menuType } = req.body;
     console.log(req.body);
+
+     // Getting next Order ID
+     var menuID = 0;
+     await pool.query('select MAX(menu_id) from menu_items;')
+     .then(query_res => {
+         menuID = query_res.rows[0].max;
+         menuID += 1;
+     });
   
     console.log("before the query");
     // Database Code here
