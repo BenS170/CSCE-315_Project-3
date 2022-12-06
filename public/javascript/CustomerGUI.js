@@ -16,28 +16,38 @@
 // Submit order
 
 function makeEntreeTable(data){
-    htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
-    htmlMenuTable = htmlMenuTable + "</tr>";
-  
+   var htmlStr = '<table id="entreeTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
-  
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + "</tr>";
+
+        if (i%3 == 0){
+            htmlStr += '<tr>'
+        }
+
+        htmlStr += '<td><div>'
+
+        var itemName = data.result[i].item_name;
+        htmlStr += '<h2>' + itemName + '</h2>';
+
+        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        htmlStr += itemImg;
+
+        var itemPrice = data.result[i].item_price;
+        htmlStr += '<h2>' + "$" + itemPrice + '</h2>';
+
+        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+        htmlStr += orderButton;
+
+        htmlStr += '</div></td>';
+
+        if (i%3 == 2 || i == data.result.length-1){
+            htmlStr += '</tr>'
+        }
     }
-    htmlMenuTable = htmlMenuTable + "</table>";
-    return htmlMenuTable;
+
+    htmlStr += '</table>';
+
+    return htmlStr;
+
 }
   
   
@@ -48,6 +58,8 @@ function makeEntreeTable(data){
 
       CustomerView = document.getElementById("CustomerView");
       CustomerView.hidden = false;
+
+      OrderButton.hidden = false;
   
       CustOrdTable = document.getElementById("order-summary")
       CustOrdTable.hidden = true;
@@ -73,28 +85,37 @@ function makeEntreeTable(data){
   
   
 function makeSideTable(data){
-    htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
-    htmlMenuTable = htmlMenuTable + "</tr>";
-  
+    var htmlStr = '<table id="sideTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
-  
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + "</tr>";
+
+        if (i%3 == 0){
+            htmlStr += '<tr>'
+        }
+
+        htmlStr += '<td><div>'
+
+        var itemName = data.result[i].item_name;
+        htmlStr += '<h2>' + itemName + '</h2>';
+
+        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        htmlStr += itemImg;
+
+        var itemPrice = data.result[i].item_price;
+        htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+
+        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+        htmlStr += orderButton;
+
+        htmlStr += '</div></td>';
+
+        if (i == data.result.length-1){
+            htmlStr += '</tr>'
+        }
     }
-    htmlMenuTable = htmlMenuTable + "</table>";
-    return htmlMenuTable;
+
+    htmlStr += '</table>';
+
+    return htmlStr;
 }
   
   
@@ -105,6 +126,8 @@ function makeSideTable(data){
 
       CustomerView = document.getElementById("CustomerView");
       CustomerView.hidden = false;
+
+      OrderButton.hidden = false;
   
       CustOrdTable = document.getElementById("order-summary")
       CustOrdTable.hidden = true;
@@ -127,32 +150,39 @@ function makeSideTable(data){
       });
   });
   
-  
-  
-  
+
 function makeDrinkTable(data){
-    htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
-    htmlMenuTable = htmlMenuTable + "</tr>";
-  
+    var htmlStr = '<table id="entreeTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
-  
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "$" +  data.result[i].item_price + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + "</tr>";
-    }
-    htmlMenuTable = htmlMenuTable + "</table>";
-    return htmlMenuTable;
+    
+            if (i%3 == 0){
+                htmlStr += '<tr>'
+            }
+    
+            htmlStr += '<td><div>'
+    
+            var itemName = data.result[i].item_name;
+            htmlStr += '<h2>' + itemName + '</h2>';
+    
+            var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+            htmlStr += itemImg;
+    
+            var itemPrice = data.result[i].item_price;
+            htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+    
+            var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+            htmlStr += orderButton;
+    
+            htmlStr += '</div></td>';
+    
+            if (i%3 == 2 || i == data.result.length-1){
+                htmlStr += '</tr>'
+            }
+        }
+    
+        htmlStr += '</table>';
+    
+        return htmlStr;
 }
   
   
@@ -163,6 +193,8 @@ function makeDrinkTable(data){
 
       CustomerView = document.getElementById("CustomerView");
       CustomerView.hidden = false;
+
+      OrderButton.hidden = false;
   
       CustOrdTable = document.getElementById("order-summary")
       CustOrdTable.hidden = true;
@@ -189,29 +221,38 @@ function makeDrinkTable(data){
   
   
 function makeDessertTable(data){
-    htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
-  
+    var htmlStr = '<table id="entreeTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
-  
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + "</tr>";
-    }
-    htmlMenuTable = htmlMenuTable + "</table>";
-    return htmlMenuTable;
+    
+            if (i%2 == 0){
+                htmlStr += '<tr>'
+            }
+    
+            htmlStr += '<td style="width:50%"><div>'
+    
+            var itemName = data.result[i].item_name;
+            htmlStr += '<h2>' + itemName + '</h2>';
+    
+            var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+            htmlStr += itemImg;
+    
+            var itemPrice = data.result[i].item_price;
+            htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+    
+            var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+            htmlStr += orderButton;
+    
+            htmlStr += '</div></td>';
+    
+            if (i == data.result.length-1){
+                htmlStr += '</tr>'
+            }
+        }
+    
+        htmlStr += '</table>';
+    
+        return htmlStr;
 }
-  
   
   const viewDessertsButton = document.getElementById("Desserts");
   
@@ -220,6 +261,9 @@ function makeDessertTable(data){
 
       CustomerView = document.getElementById("CustomerView");
       CustomerView.hidden = false;
+
+      OrderButton.hidden = false;
+      
   
       CustOrdTable = document.getElementById("order-summary")
       CustOrdTable.hidden = true;
@@ -250,6 +294,7 @@ function makeDessertTable(data){
 
     CustomerView = document.getElementById("CustomerView");
     CustomerView.hidden = true;
+    OrderButton.hidden = true;
 
     CustOrdTable = document.getElementById("order-summary")
     CustOrdTable.hidden = false;
@@ -468,7 +513,7 @@ function updateOrderTable(){
     var OrderTable = document.getElementById("CustomerOrderTable");
     var htmlstring = '<table><tr id = "titleRow">';
     //htmlstring = htmlstring + "<th>Item Name</th>" + "<th>Quantity</th>" + "<th>Price</th></tr>"; 
-    htmlstring = htmlstring + "<th style = border:none;>Item Name</th>" + "<th style = border:none;></th>"+ "<th style = border:none;>Quantity</th>" + "<th style = border:none;></th>"+"<th style = border:none;>Price</th></tr>"; 
+    htmlstring = htmlstring + "<th style = border:none;>Item Name</th>" + "<th style = border:none;></th>"+ "<th style = border:none;>Quantity</th>" + "<th style = border:none;></th>"+"<th style = border:none;>Price</th>" + "</tr>"; 
 
     
 
