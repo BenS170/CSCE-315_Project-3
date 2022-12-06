@@ -10,6 +10,7 @@ var order_prices = [];
  * @param {string} name - name of the item.
  * @param {Number} qty - current qty of the item
  * @param {Float} price - The set price of the item in the database
+ * @author Ben Spence
  */
 function addToOrder(itemid, name, qty, price){
 
@@ -69,6 +70,7 @@ function addToOrder(itemid, name, qty, price){
  * @function
  * @param {Number} itemid - The id of the item in the database.
  * @param {Float} price - The set price of the item in the database
+ * @author Ben Spence
  */
 function incQty(itemid, price){
     order_items.push(itemid);
@@ -106,6 +108,7 @@ function incQty(itemid, price){
  * @function
  * @param {Number} itemid - The id of the item in the database.
  * @param {Float} price - The set price of the item in the database
+ * @author Ben Spence
  */
 function decQty(itemid, price){
     order_items.splice(order_items.indexOf(itemid), 1);
@@ -144,6 +147,7 @@ function decQty(itemid, price){
  * Clears everything in the order summary by removing every item in both the HTML
  * and the Nodejs variables.
  * @function
+ * @author Ben Spence
  */
 function clearOrder(){
     var table = document.getElementById('orderTable');
@@ -165,6 +169,7 @@ function clearOrder(){
 /**
  * Returns the total price of all items in the order summary.
  * @function
+ * @author Ben Spence
  */
 function getTotal(){
     let total = 0;
@@ -177,6 +182,7 @@ function getTotal(){
 /**
  * Returns the sales tax of the total items in the order summary.
  * @function
+ * @author Ben Spence
  */
 function getTax(){
     let tax = parseFloat(getTotal());
@@ -215,6 +221,7 @@ button.addEventListener('click', function(e) {
  * Google Tranlate API element that allows for changing languages in
  * the website.
  * @function
+ * @author Ben Spence
  */
 function googleTranslateElementInit(){
     new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
@@ -239,6 +246,7 @@ fetch('/getMenu', {method: 'GET'})
  * entrees, sides, drinks, and desserts.
  * @function
  * @param {Array} menu_items - Array of all itemids currently in the order summary.
+ * @author Ben Spence
  */
 function populateGUI(menu_items){
     for(var i = 0; i<menu_items.length; i++){

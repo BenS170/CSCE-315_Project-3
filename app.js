@@ -138,7 +138,6 @@ app.post('/serverSubmit', async (req, res) => {
 
     // Inputing Orders
     for(let i = 0; i<order_items.length; i++){
-        await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
         var ingredients = [];
 
         // removing ingredients
@@ -152,10 +151,33 @@ app.post('/serverSubmit', async (req, res) => {
             }
         );
         
+        //checking for available inventory
+        var out_of_inventory = false;
+
         for(let i = 0; i<ingredients.length; i++){
-            console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
-            await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
+            await pool
+                .query("SELECT quantity, serving_size FROM inventory WHERE itemid='"+ingredients[i]+"';")
+                .then(query_res => {
+                    var quantity = query_res.rows[0]["quantity"];
+                    var serving_size = query_res.rows[0]["serving_size"];
+                    console.log(quantity);
+                    console.log(serving_size);
+                    if(quantity-serving_size < 0){
+                        out_of_inventory = true;
+                    }
+                });
         }
+
+
+        if(!out_of_inventory){
+            for(let i = 0; i<ingredients.length; i++){
+                console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
+                await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
+            }
+            await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+        }
+
+
     }
 
     res.status(200).json({ order_items, order_prices});
