@@ -1,5 +1,4 @@
 
-
 // // SQL Queries - To display type of menu item and corresponding price:
 
 // // For Entrees: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'entree';
@@ -15,86 +14,116 @@
 // Cancel Order
 // Submit order
 
+/**
+ * Creates an HTML table of entrees given data read in from SQL database
+ * @author Anoop Braich
+ * @param {Array} data - this array contains information about menu items stored in the database
+ * @returns {String} - a string containing the HTML for a table with rows of menu items and their respective information
+ */
 function makeEntreeTable(data){
-    htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
-    htmlMenuTable = htmlMenuTable + "</tr>";
+    var htmlStr = '<table id="entreeTable" style="border:none";>';
   
     for (let i = 0; i < data.result.length; i++){
-  
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + "</tr>";
-    }
-    htmlMenuTable = htmlMenuTable + "</table>";
-    return htmlMenuTable;
-}
-  
-  
-  const viewEntreesButton = document.getElementById("Entrees");
-  
-  viewEntreesButton.addEventListener('click', function(e) {
-      console.log('view entrees was clicked');
 
-      CustomerView = document.getElementById("CustomerView");
-      CustomerView.hidden = false;
+        if (i%3 == 0){
+            htmlStr += '<tr>'
+        }
+
+        htmlStr += '<td><div>'
+
+        var itemName = data.result[i].item_name;
+        htmlStr += '<h2>' + itemName + '</h2>';
+
+        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        htmlStr += itemImg;
+
+        var itemPrice = data.result[i].item_price;
+        htmlStr += '<h2>' + "$" + itemPrice + '</h2>';
+
+        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+        htmlStr += orderButton;
+
+        htmlStr += '</div></td>';
+
+        if (i%3 == 2 || i == data.result.length-1){
+            htmlStr += '</tr>'
+        }
+    }
+
+    htmlStr += '</table>';
+
+    return htmlStr;
+
+}
+
+    /**
+     * an object representing the viewMenuButton in the Manager GUI. The associated event listener function will trigger when clicked. DESCRIPTION OF EVENT LISTENER FUNCTION
+     * @type {HTML}
+     */
+    const viewEntreesButton = document.getElementById("Entrees");
   
-      CustOrdTable = document.getElementById("order-summary")
-      CustOrdTable.hidden = true;
-    
-      fetch('/getEntree', {method: 'GET'})
-          .then(function(response) {
-              if(response.ok) return response.json();
-              throw new Error('Request failed.');
-          })
-              .then(function(data) {
-              // TODO: Modify HTML using the information received from the database
-              content = document.getElementById("CustomerView");
-              htmlMenuTable = makeEntreeTable(data);
-              content.innerHTML = htmlMenuTable;
-  
-              console.log(data.result);
-          })
-          .catch(function(error) {
-              console.log(error);
-      });
+    viewEntreesButton.addEventListener('click', function(e) {
+        console.log('view entrees was clicked');
+
+        CustomerView = document.getElementById("CustomerView");
+        CustomerView.hidden = false;
+
+        CustOrdTable = document.getElementById("order-summary")
+        CustOrdTable.hidden = true;
+
+        fetch('/getEntree', {method: 'GET'})
+            .then(function(response) {
+                if(response.ok) return response.json();
+                throw new Error('Request failed.');
+            })
+                .then(function(data) {
+                // TODO: Modify HTML using the information received from the database
+                content = document.getElementById("CustomerView");
+                htmlMenuTable = makeEntreeTable(data);
+                content.innerHTML = htmlMenuTable;
+
+                console.log(data.result);
+            })
+            .catch(function(error) {
+                console.log(error);
+        });
   });
   
   
   
 function makeSideTable(data){
-    htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
-    htmlMenuTable = htmlMenuTable + "</tr>";
-  
+
+    var htmlStr = '<table id="sideTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
-  
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + "</tr>";
+
+        if (i%3 == 0){
+            htmlStr += '<tr>'
+        }
+
+        htmlStr += '<td><div>'
+
+        var itemName = data.result[i].item_name;
+        htmlStr += '<h2>' + itemName + '</h2>';
+
+        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        htmlStr += itemImg;
+
+        var itemPrice = data.result[i].item_price;
+        htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+
+        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+        htmlStr += orderButton;
+
+        htmlStr += '</div></td>';
+
+        if (i == data.result.length-1){
+            htmlStr += '</tr>'
+        }
     }
-    htmlMenuTable = htmlMenuTable + "</table>";
-    return htmlMenuTable;
+
+    htmlStr += '</table>';
+
+    return htmlStr;
 }
   
   
@@ -105,6 +134,8 @@ function makeSideTable(data){
 
       CustomerView = document.getElementById("CustomerView");
       CustomerView.hidden = false;
+
+      OrderButton.hidden = false;
   
       CustOrdTable = document.getElementById("order-summary")
       CustOrdTable.hidden = true;
@@ -127,32 +158,41 @@ function makeSideTable(data){
       });
   });
   
-  
-  
-  
+
 function makeDrinkTable(data){
-    htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
-    htmlMenuTable = htmlMenuTable + "</tr>";
   
+    var htmlStr = '<table id="entreeTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
-  
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "$" +  data.result[i].item_price + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + "</tr>";
+
+    
+        if (i%3 == 0){
+            htmlStr += '<tr>'
+        }
+
+        htmlStr += '<td><div>'
+
+        var itemName = data.result[i].item_name;
+        htmlStr += '<h2>' + itemName + '</h2>';
+
+        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        htmlStr += itemImg;
+
+        var itemPrice = data.result[i].item_price;
+        htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+
+        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+        htmlStr += orderButton;
+
+        htmlStr += '</div></td>';
+
+        if (i%3 == 2 || i == data.result.length-1){
+            htmlStr += '</tr>'
+        }
     }
-    htmlMenuTable = htmlMenuTable + "</table>";
-    return htmlMenuTable;
+    
+        htmlStr += '</table>';
+    
+        return htmlStr;
 }
   
   
@@ -163,6 +203,8 @@ function makeDrinkTable(data){
 
       CustomerView = document.getElementById("CustomerView");
       CustomerView.hidden = false;
+
+      OrderButton.hidden = false;
   
       CustOrdTable = document.getElementById("order-summary")
       CustOrdTable.hidden = true;
@@ -189,29 +231,39 @@ function makeDrinkTable(data){
   
   
 function makeDessertTable(data){
-    htmlMenuTable = '<table> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
-  
+
+    var htmlStr = '<table id="entreeTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
   
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
-        htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
-        htmlMenuTable = htmlMenuTable + "</tr>";
+        if (i%2 == 0){
+            htmlStr += '<tr>'
+        }
+
+        htmlStr += '<td style="width:50%"><div>'
+
+        var itemName = data.result[i].item_name;
+        htmlStr += '<h2>' + itemName + '</h2>';
+
+        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        htmlStr += itemImg;
+
+        var itemPrice = data.result[i].item_price;
+        htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+
+        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+        htmlStr += orderButton;
+
+        htmlStr += '</div></td>';
+
+        if (i == data.result.length-1){
+            htmlStr += '</tr>'
+        }
     }
-    htmlMenuTable = htmlMenuTable + "</table>";
-    return htmlMenuTable;
+    
+        htmlStr += '</table>';
+    
+        return htmlStr;
 }
-  
   
   const viewDessertsButton = document.getElementById("Desserts");
   
@@ -220,6 +272,9 @@ function makeDessertTable(data){
 
       CustomerView = document.getElementById("CustomerView");
       CustomerView.hidden = false;
+
+      OrderButton.hidden = false;
+      
   
       CustOrdTable = document.getElementById("order-summary")
       CustOrdTable.hidden = true;
@@ -250,6 +305,7 @@ function makeDessertTable(data){
 
     CustomerView = document.getElementById("CustomerView");
     CustomerView.hidden = true;
+    OrderButton.hidden = true;
 
     CustOrdTable = document.getElementById("order-summary")
     CustOrdTable.hidden = false;
@@ -282,7 +338,11 @@ function makeDessertTable(data){
   
 
   
-
+  /** for the global variables
+ * Represents the approximate value of pi
+ * @type {Double}
+ */
+//var globalVar = 3.14;
   var order_rows = 0;
   var order_items = [];
   var order_name = [];
@@ -400,7 +460,7 @@ function decrement(menuId){
     updateOrderTable();
     calTotal();
 
- }
+}
 
 
 
@@ -468,7 +528,7 @@ function updateOrderTable(){
     var OrderTable = document.getElementById("CustomerOrderTable");
     var htmlstring = '<table><tr id = "titleRow">';
     //htmlstring = htmlstring + "<th>Item Name</th>" + "<th>Quantity</th>" + "<th>Price</th></tr>"; 
-    htmlstring = htmlstring + "<th style = border:none;>Item Name</th>" + "<th style = border:none;></th>"+ "<th style = border:none;>Quantity</th>" + "<th style = border:none;></th>"+"<th style = border:none;>Price</th></tr>"; 
+    htmlstring = htmlstring + "<th style = border:none;>Item Name</th>" + "<th style = border:none;></th>"+ "<th style = border:none;>Quantity</th>" + "<th style = border:none;></th>"+"<th style = border:none;>Price</th>" + "</tr>"; 
 
     
 
@@ -648,3 +708,25 @@ function submitOrderLogic() {
   
   
 }
+
+
+
+/**
+ * Initializes the Google Maps API to enable the manager to view the location of Rev's American Grill
+ */
+ function initMap() {
+    // The location of Rev's
+    const revs = { lat: 30.612674885055362, lng: -96.3407095157521 };
+    // The map, centered at Uluru
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: revs,
+    });
+    // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+        position: revs,
+        map: map,
+    });
+}
+  
+    window.initMap = initMap;

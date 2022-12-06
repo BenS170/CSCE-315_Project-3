@@ -12,7 +12,7 @@
 
 .menuButtons {
 background-color: #5B0726;
-border-color: white;
+border-color: black;
 color: white;
 width: 75%;
 text-align: center;
@@ -22,42 +22,45 @@ font-size: 150%;
 cursor: pointer;
 margin: 0;
 position: relative;
-top: 12%;
+top: 10%;
 left: 45%;
 -ms-transform: translate(-50%, -50%);
 transform: translate(-50%, -50%);
 margin: 3%;
 padding: 5%; 
 margin-bottom: 15%;
+box-shadow: 2px 2px 4px black;
 }
 
 .orderButton{
-background-color: #5B0726;
-border: none;
-color: white;
-width: 75%;
+background-color: white;
+border-color: #5B0726;
+border-width: 5px;
+font-weight: bold;
+color: #5B0726;
+width: 15%;
+padding: 1.5%; 
+height: 5%;
 text-align: center;
-text-decoration: none;
-display: block;
-font-size: 165%;
+font-size: 95%;
+margin-top:2.5%;
+margin-left: 35%;
 cursor: pointer;
-margin: 0;
-position: relative;
-top: 12%;
-left: 45%;
--ms-transform: translate(-50%, -50%);
-transform: translate(-50%, -50%);
-margin: 3%;
-padding: 5%; 
-margin-bottom: 35%;
+box-shadow: 2px 2px 4px black;
 }
 
 .menuButtons:hover{
   background-color: white;
   color:#5B0726;
 }
+.menuButtons:focus{
+  background-color: white;
+  color:#5B0726;
+  font-weight:bold;
+}
 .orderButton:hover{
-  text-decoration: underline;
+  background-color: #5B0726;
+  color: white;
 }
 
 .menuButtons:focus{
@@ -75,9 +78,11 @@ margin-bottom: 35%;
   height: 45px;
   width: 175px;
   cursor: pointer;
+  box-shadow: 2px 2px 4px black;
 }
 .addToOrder:hover{
- text-decoration: underline;
+  color:#5B0726;
+  background-color: white;
 }
 .addToOrder:focus{
   text-decoration: underline;
@@ -88,7 +93,7 @@ margin-bottom: 35%;
   background-color: #5B0726;
   border-color:#5B0726;
   height: 45px;
-  width: 175px;
+  width: 150px;
   cursor: pointer;
 }
 .deleteFromOrder:hover{
@@ -102,17 +107,32 @@ margin-bottom: 35%;
 margin: 0;
 position: relative;
 top: 10%;
-left: 45%;
--ms-transform: translate(-50%, -50%);
+left: 20%;
 transform: translate(-50%, -50%);
-margin: 3%;
-padding: 5%;
+margin: 2%;
+padding: 3%;
 width: 90%;
 margin-bottom: -50%;
+border: 1px goldenrod;
 }
+
+/* .logo:hover {
+  background-color: white;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0px 10px;
+} */
 
 #CustomerView{
   margin-left: 35%; /* Same as the width of the sidenav */
+}
+
+#menuItems {
+  text-align: center;
+  font-family: Arial;
+  color: #5B0726;
+  margin-left: 35%;
 }
 
 table, td, th {  
@@ -161,8 +181,8 @@ th, td {
   position:fixed;
   bottom:10px;
   right:60px;
-  height: 50px;
-  width: 200px;
+  height: 70px;
+  width: 240px;
 }
 
 .submit:hover {
@@ -212,3 +232,17 @@ th, td {
   cursor: pointer;
   padding: 0px 10px;
 }
+
+/* GOOGLE MAPS */
+#map{
+  height: 400px;
+  /* The height is 400 pixels */
+  width: 800px;
+  /* The width is the width of the web page */
+  border: goldenrod ridge 3px;
+  box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+  left: 575px;
+
+
+}
+
