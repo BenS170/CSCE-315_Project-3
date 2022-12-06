@@ -12,7 +12,7 @@ body{
     /* The height is 400 pixels */
     width: 800px;
     /* The width is the width of the web page */
-  }
+}
 
 #revImg{
     box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
