@@ -1,5 +1,4 @@
 
-
 // // SQL Queries - To display type of menu item and corresponding price:
 
 // // For Entrees: SELECT menu_id, item_name, item_price FROM menu_items WHERE type = 'entree';
@@ -15,8 +14,15 @@
 // Cancel Order
 // Submit order
 
+/**
+ * Creates an HTML table of entrees given data read in from SQL database
+ * @author Anoop Braich
+ * @param {Array} data - this array contains information about menu items stored in the database
+ * @returns {String} - a string containing the HTML for a table with rows of menu items and their respective information
+ */
 function makeEntreeTable(data){
-   var htmlStr = '<table id="entreeTable" style="border:none";>';
+    var htmlStr = '<table id="entreeTable" style="border:none";>';
+  
     for (let i = 0; i < data.result.length; i++){
 
         if (i%3 == 0){
@@ -49,42 +55,44 @@ function makeEntreeTable(data){
     return htmlStr;
 
 }
-  
-  
-  const viewEntreesButton = document.getElementById("Entrees");
-  
-  viewEntreesButton.addEventListener('click', function(e) {
-      console.log('view entrees was clicked');
 
-      CustomerView = document.getElementById("CustomerView");
-      CustomerView.hidden = false;
+    /**
+     * an object representing the viewMenuButton in the Manager GUI. The associated event listener function will trigger when clicked. DESCRIPTION OF EVENT LISTENER FUNCTION
+     * @type {HTML}
+     */
+    const viewEntreesButton = document.getElementById("Entrees");
+  
+    viewEntreesButton.addEventListener('click', function(e) {
+        console.log('view entrees was clicked');
 
-      OrderButton.hidden = false;
-  
-      CustOrdTable = document.getElementById("order-summary")
-      CustOrdTable.hidden = true;
-    
-      fetch('/getEntree', {method: 'GET'})
-          .then(function(response) {
-              if(response.ok) return response.json();
-              throw new Error('Request failed.');
-          })
-              .then(function(data) {
-              // TODO: Modify HTML using the information received from the database
-              content = document.getElementById("CustomerView");
-              htmlMenuTable = makeEntreeTable(data);
-              content.innerHTML = htmlMenuTable;
-  
-              console.log(data.result);
-          })
-          .catch(function(error) {
-              console.log(error);
-      });
+        CustomerView = document.getElementById("CustomerView");
+        CustomerView.hidden = false;
+
+        CustOrdTable = document.getElementById("order-summary")
+        CustOrdTable.hidden = true;
+
+        fetch('/getEntree', {method: 'GET'})
+            .then(function(response) {
+                if(response.ok) return response.json();
+                throw new Error('Request failed.');
+            })
+                .then(function(data) {
+                // TODO: Modify HTML using the information received from the database
+                content = document.getElementById("CustomerView");
+                htmlMenuTable = makeEntreeTable(data);
+                content.innerHTML = htmlMenuTable;
+
+                console.log(data.result);
+            })
+            .catch(function(error) {
+                console.log(error);
+        });
   });
   
   
   
 function makeSideTable(data){
+
     var htmlStr = '<table id="sideTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
 
@@ -152,8 +160,10 @@ function makeSideTable(data){
   
 
 function makeDrinkTable(data){
+  
     var htmlStr = '<table id="entreeTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
+
     
             if (i%3 == 0){
                 htmlStr += '<tr>'
@@ -185,6 +195,27 @@ function makeDrinkTable(data){
                 htmlStr += '</tr>'
             }
         }
+
+        htmlStr += '<td><div>'
+
+        var itemName = data.result[i].item_name;
+        htmlStr += '<h2>' + itemName + '</h2>';
+
+        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        htmlStr += itemImg;
+
+        var itemPrice = data.result[i].item_price;
+        htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+
+        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+        htmlStr += orderButton;
+
+        htmlStr += '</div></td>';
+
+        if (i%3 == 2 || i == data.result.length-1){
+            htmlStr += '</tr>'
+        }
+    }
     
         htmlStr += '</table>';
     
@@ -227,6 +258,7 @@ function makeDrinkTable(data){
   
   
 function makeDessertTable(data){
+
     var htmlStr = '<table id="entreeTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
     
@@ -254,6 +286,27 @@ function makeDessertTable(data){
                 htmlStr += '</tr>'
             }
         }
+
+        htmlStr += '<td style="width:50%"><div>'
+
+        var itemName = data.result[i].item_name;
+        htmlStr += '<h2>' + itemName + '</h2>';
+
+        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        htmlStr += itemImg;
+
+        var itemPrice = data.result[i].item_price;
+        htmlStr += '<h2>' +"$" + itemPrice + '</h2>';
+
+        var orderButton = '<button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button>';
+        htmlStr += orderButton;
+
+        htmlStr += '</div></td>';
+
+        if (i == data.result.length-1){
+            htmlStr += '</tr>'
+        }
+    }
     
         htmlStr += '</table>';
     
@@ -333,7 +386,11 @@ function makeDessertTable(data){
   
 
   
-
+  /** for the global variables
+ * Represents the approximate value of pi
+ * @type {Double}
+ */
+//var globalVar = 3.14;
   var order_rows = 0;
   var order_items = [];
   var order_name = [];
@@ -451,7 +508,7 @@ function decrement(menuId){
     updateOrderTable();
     calTotal();
 
- }
+}
 
 
 
@@ -699,3 +756,25 @@ function submitOrderLogic() {
   
   
 }
+
+
+
+/**
+ * Initializes the Google Maps API to enable the manager to view the location of Rev's American Grill
+ */
+ function initMap() {
+    // The location of Rev's
+    const revs = { lat: 30.612674885055362, lng: -96.3407095157521 };
+    // The map, centered at Uluru
+    const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: revs,
+    });
+    // The marker, positioned at Uluru
+    const marker = new google.maps.Marker({
+        position: revs,
+        map: map,
+    });
+}
+  
+    window.initMap = initMap;

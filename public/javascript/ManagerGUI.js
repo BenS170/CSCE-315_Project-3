@@ -197,10 +197,7 @@ const addMenuItemButton = document.getElementById("addMenuItemButton");
 
 addMenuItemButton.addEventListener('click', function(e) {
   console.log('add menu was clicked');
-  const menuID = prompt("What is the menu ID?", "23");
-  if(menuID == null || menuID == ""){
-    alert("add menu item was canceled");
-  } else{
+  
     const menuName = prompt("What is the name of the item?", "bacon");
     if (menuName == null || menuName == ""){
         alert("add menu item was canceled");
@@ -224,8 +221,8 @@ addMenuItemButton.addEventListener('click', function(e) {
                         alert("add menu item was canceled");
                     } else{
 
-                        if (confirm(" are you sure you want to make an item with these values? (id, name, price, ingredients, type" + menuID + ", " + menuName + ", " + menuPrice + ", " + menuIngredients, ", " + menuType)){
-                            const data = {menuID, menuName,menuPrice, menuIngredients, menuIngNum, menuType};
+                        if (confirm(" are you sure you want to make an item with these values? (name, price, ingredients, type): " + menuName + ", " + menuPrice + ", " + menuIngredients, ", " + menuType)){
+                            const data = {menuName,menuPrice, menuIngredients, menuIngNum, menuType};
   
                             fetch('/addMenuItem', {
                               method: 'POST',
@@ -253,7 +250,7 @@ addMenuItemButton.addEventListener('click', function(e) {
             }
 
         }
-    }
+    
 });
 
 
@@ -385,7 +382,6 @@ orderInventoryButton.addEventListener('click', function(e) {
     console.log('order inventory was clicked');
   
     const inventoryIDPrompt = prompt("What is the inventory ID?", "i.e. bacon");
-    prompt()
     if (inventoryIDPrompt == NULL || inventoryIDPrompt == ""){
       alert("Order Inventory was cancelled")
     }else{
@@ -397,23 +393,25 @@ orderInventoryButton.addEventListener('click', function(e) {
           const inventoryID = inventoryIDPrompt.toLowerCase();
   
           const data = {inventoryID, inventoryQuantity};
-          fetch('/orderInventoryItem', {
-              method: 'POST',
-              headers:{
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-          })
-          .then(function(response) {
-            if(response.ok) {
-              console.log('Click was recorded');
-              return;
-            }
-            throw new Error('Request failed.');
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+          if(confirm("Are you sure you want to order " + inventoryQuantity + " of " + inventoryIDPrompt + "?")){
+            fetch('/orderInventoryItem', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response) {
+              if(response.ok) {
+                console.log('Click was recorded');
+                return;
+              }
+              throw new Error('Request failed.');
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+          }
       }
      }
   
@@ -429,27 +427,27 @@ orderInventoryButton.addEventListener('click', function(e) {
   addInventoryItemButton.addEventListener('click', function(e) {
     console.log('add inventory was clicked');
     const inventoryID = prompt("What is the inventory ID?", "i.e. bacon");
-    if (inventoryID == ""){
+    if (inventoryID == "" || inventoryID == NULL){
       alert("Add inventory was canceled")
     } else{
       const inventoryStockprice = prompt("What is the stockprice of this item?", "23");
-      if (inventoryID == ""){
+      if (inventoryStockprice == "" || inventoryStockprice == NULL){
           alert("Add inventory was canceled")
       } else{  
           const inventoryUnits = prompt("What is the units of the item?", "Gallons");
-          if (inventoryID == ""){
+          if (inventoryUnits == "" || inventoryUnits == NULL){
               alert("Add inventory was canceled")
           } else{
               const inventoryQuantity = prompt("How much of the item do you have?", "0");
-              if (inventoryID == ""){
+              if (inventoryQuantity == "" || inventoryQuantity == NULL){
                   alert("Add inventory was canceled")
               } else{
                   const inventoryServingSize = prompt("What is the serving size for this item?",".25");
-                  if (inventoryID == ""){
+                  if (inventoryServingSize == "" || inventoryServingSize == NULL){
                       alert("Add inventory was canceled")
                   } else{
                       const inventoryNeeded = prompt("How much of the item is needed?","400");
-                      if (inventoryID == ""){
+                      if (inventoryNeeded == "" || inventoryNeeded == NULL){
                           alert("Add inventory was canceled")
                       } else{
                               

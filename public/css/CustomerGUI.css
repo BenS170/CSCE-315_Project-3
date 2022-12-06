@@ -114,15 +114,22 @@ box-shadow: 2px 2px 4px black;
 margin: 0;
 position: relative;
 top: 10%;
-left: 45%;
--ms-transform: translate(-50%, -50%);
+left: 20%;
 transform: translate(-50%, -50%);
-margin: 3%;
-padding: 5%;
+margin: 2%;
+padding: 3%;
 width: 90%;
 margin-bottom: -50%;
 border: 1px goldenrod;
 }
+
+/* .logo:hover {
+  background-color: white;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0px 10px;
+} */
 
 #CustomerView{
   margin-left: 35%; /* Same as the width of the sidenav */
@@ -208,4 +215,16 @@ th, td {
   cursor:pointer;
 }
 
+/* GOOGLE MAPS */
+#map{
+  height: 400px;
+  /* The height is 400 pixels */
+  width: 800px;
+  /* The width is the width of the web page */
+  border: goldenrod ridge 3px;
+  box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+  left: 575px;
+
+
+}
 

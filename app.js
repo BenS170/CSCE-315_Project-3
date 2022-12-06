@@ -138,7 +138,6 @@ app.post('/serverSubmit', async (req, res) => {
 
     // Inputing Orders
     for(let i = 0; i<order_items.length; i++){
-        await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
         var ingredients = [];
 
         // removing ingredients
@@ -152,10 +151,33 @@ app.post('/serverSubmit', async (req, res) => {
             }
         );
         
+        //checking for available inventory
+        var out_of_inventory = false;
+
         for(let i = 0; i<ingredients.length; i++){
-            console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
-            await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
+            await pool
+                .query("SELECT quantity, serving_size FROM inventory WHERE itemid='"+ingredients[i]+"';")
+                .then(query_res => {
+                    var quantity = query_res.rows[0]["quantity"];
+                    var serving_size = query_res.rows[0]["serving_size"];
+                    console.log(quantity);
+                    console.log(serving_size);
+                    if(quantity-serving_size < 0){
+                        out_of_inventory = true;
+                    }
+                });
         }
+
+
+        if(!out_of_inventory){
+            for(let i = 0; i<ingredients.length; i++){
+                console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
+                await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
+            }
+            await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+        }
+
+
     }
 
     res.status(200).json({ order_items, order_prices});
@@ -212,10 +234,53 @@ app.post('/customerSubmit', async (req, res) => {
     });
 
 
+
     // Inputing Orders
     for(let i = 0; i<order_items.length; i++){
         for (let j = 0; j < order_quantity[i];j++){
-            await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+            
+            var ingredients = [];
+
+            // deducting ingredients from inventory
+            await pool
+                .query("SELECT ingredient_list FROM menu_items WHERE menu_id="+order_items[i]+";")
+                .then(query_res => {
+                    for (let i = 0; i < query_res.rows[0]["ingredient_list"].length; i++){
+                        var res = query_res.rows[0]["ingredient_list"][i];
+                        /*if(i!=0){
+                            res = query_res.rows[0]["ingredient_list"][i].slice(1);
+                        }*/
+                        ingredients.push(res);
+                    }
+                }
+            );
+    
+            //checking for available inventory
+            var out_of_inventory = false;
+
+            for(let i = 0; i<ingredients.length; i++){
+                await pool
+                    .query("SELECT quantity, serving_size FROM inventory WHERE itemid='"+ingredients[i]+"';")
+                    .then(query_res => {
+                        var quantity = query_res.rows[0]["quantity"];
+                        var serving_size = query_res.rows[0]["serving_size"];
+                        console.log(quantity);
+                        console.log(serving_size);
+                        if(quantity-serving_size < 0){
+                            out_of_inventory = true;
+                        }
+                    });
+            }
+
+
+            if(!out_of_inventory){
+                for(let i = 0; i<ingredients.length; i++){
+                    console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
+                    await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
+                }
+                await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
+            }
+
         }
     }
 
@@ -356,10 +421,18 @@ app.get('/getDessert', (req, res) => {
     );
 });
 
-app.post('/addMenuItem', (req, res) => {
+app.post('/addMenuItem', async (req, res) => {
     console.log("inside add Menu item");
-    const { menuID, menuName,menuPrice,menuIngredients, menuIngNum, menuType } = req.body;
+    const { menuName,menuPrice,menuIngredients, menuIngNum, menuType } = req.body;
     console.log(req.body);
+
+     // Getting next Order ID
+     var menuID = 0;
+     await pool.query('select MAX(menu_id) from menu_items;')
+     .then(query_res => {
+         menuID = query_res.rows[0].max;
+         menuID += 1;
+     });
   
     console.log("before the query");
     // Database Code here
@@ -630,7 +703,6 @@ app.post('/updateMenuItemInventoryArr', (req,res) => {
 
     res.status(200).json({menu_id, newIngredients});
 });
-
 
 
 
