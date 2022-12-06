@@ -152,6 +152,7 @@ function makeSideTable(data){
   
 
 function makeDrinkTable(data){
+<<<<<<< HEAD
     var htmlStr = '<table id="entreeTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
     
@@ -183,6 +184,30 @@ function makeDrinkTable(data){
         htmlStr += '</table>';
     
         return htmlStr;
+=======
+    htmlMenuTable = '<table> <tr id = "titleRow">';
+    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
+    htmlMenuTable = htmlMenuTable + "</tr>";
+  
+    for (let i = 0; i < data.result.length; i++){
+  
+        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
+        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
+        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
+        htmlMenuTable = htmlMenuTable + "<td>" + "$" +  data.result[i].item_price + "</td>";
+        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
+        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
+        htmlMenuTable = htmlMenuTable + "</tr>";
+    }
+    htmlMenuTable = htmlMenuTable + "</table>";
+    return htmlMenuTable;
+>>>>>>> c66383defdc21d3dda1a7431f54237a11bd5e5a5
 }
   
   
@@ -221,6 +246,7 @@ function makeDrinkTable(data){
   
   
 function makeDessertTable(data){
+<<<<<<< HEAD
 
     var htmlStr = '<table id="entreeTable" style="border:none";>';
     for (let i = 0; i < data.result.length; i++){
@@ -253,6 +279,29 @@ function makeDessertTable(data){
         htmlStr += '</table>';
     
         return htmlStr;
+=======
+    htmlMenuTable = '<table> <tr id = "titleRow">';
+    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Item Picture</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Add To Order</th>";
+    htmlMenuTable = htmlMenuTable + "<th>Delete From Order</th>";
+  
+    for (let i = 0; i < data.result.length; i++){
+  
+        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem">';
+        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].menu_id + "</td>";
+        htmlMenuTable = htmlMenuTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
+        htmlMenuTable = htmlMenuTable + "<td>" + data.result[i].item_name + "</td>";
+        htmlMenuTable = htmlMenuTable + "<td>" + "$" + data.result[i].item_price + "</td>";
+        htmlMenuTable = htmlMenuTable + '<td><button class = "addToOrder" onclick = "addToOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">ADD TO ORDER</button></td>';
+        htmlMenuTable = htmlMenuTable + '<td><button class = "deleteFromOrder" onclick = "deleteFromOrder('+data.result[i].menu_id+",'"+data.result[i].item_name+"',"+data.result[i].item_price+')">DELETE FROM ORDER</button></td>';
+        htmlMenuTable = htmlMenuTable + "</tr>";
+    }
+    htmlMenuTable = htmlMenuTable + "</table>";
+    return htmlMenuTable;
+>>>>>>> c66383defdc21d3dda1a7431f54237a11bd5e5a5
 }
   
   const viewDessertsButton = document.getElementById("Desserts");

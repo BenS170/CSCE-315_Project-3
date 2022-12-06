@@ -1,4 +1,4 @@
-const { query } = require('express');
+const { query, json } = require('express');
 const express = require('express');
 const { Pool } = require('pg');
 const dotenv = require('dotenv').config();
@@ -147,15 +147,13 @@ app.post('/serverSubmit', async (req, res) => {
             .then(query_res => {
                 for (let i = 0; i < query_res.rows[0]["ingredient_list"].length; i++){
                     var res = query_res.rows[0]["ingredient_list"][i];
-                    if(i!=0){
-                        res = query_res.rows[0]["ingredient_list"][i].slice(1);
-                    }
                     ingredients.push(res);
                 }
             }
         );
         
         for(let i = 0; i<ingredients.length; i++){
+            console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
             await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
         }
     }
@@ -515,7 +513,18 @@ function toSQLArr(str){
     arr = arr.split(",")
     var arrStr = "'{";
     for (let i = 0; i < arr.length; i++){
-        arrStr+= '"' + arr[i] + '"'
+        let str = "";
+        let firstChar = false;
+        for (let j = 0; j < arr[i].length; j++){
+            if (arr[i].charAt(j) == " " && !firstChar){
+                continue;                
+            }
+            firstChar = true;
+            str = str + arr[i].charAt(j);
+        }
+        // The last item in the ingredient list will have "Edit" due to the edit button. 
+        // We have to remove it! before it goes back to the database
+        arrStr+= '"' + str.replaceAll("Edit","") + '"'
         if (i != arr.length-1){
             arrStr += ", "
         }
@@ -639,3 +648,60 @@ app.get('/getMaxID', (req, res) => {
         }
     );
 });
+
+app.post('/deleteInventoryItem', (req, res) => {
+    console.log("inside update Menu item");
+    const { inventoryID } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "DELETE FROM inventory WHERE itemid= '" + inventoryID + "';";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ inventoryID });
+});
+
+app.post('/updateMenuIngredients', (req, res) => {
+    console.log("inside update Menu item");
+    const { menuID,menuIngredients,menuIngNum } = req.body;
+    console.log(req.body);
+  
+    // Database Code here
+    const queryString = "UPDATE menu_items SET ingredient_list= '" + menuIngredients +"', num_ingredients = '"+ menuIngNum + "' WHERE menu_id= '" + menuID +"';";
+    console.log(queryString);
+     pool
+        .query(queryString)
+        .then(query_res => {
+        // for (let i = 0; i < query_res.rowCount; i++){
+        //     console.log(query_res.rows[i]);
+        // }
+    })
+
+    res.status(200).json({ menuID,menuIngredients,menuIngNum });
+});
+
+
+app.post('/updatePicture', (req, res) => {
+    console.log("inside update picture");
+    const {menu_id, item_name, image_url} = req.body;
+    console.log(req.body);
+
+    var url = image_url.replace("$","")
+
+    const queryString = "UPDATE menu_items SET image_url= '" + url + "' WHERE menu_id= '" + menu_id + "';";
+    console.log(queryString);
+    pool
+        .query(queryString)
+        .then(query_res => {
+
+    })
+
+    res.status(200).json({menu_id, item_name, image_url});
+})

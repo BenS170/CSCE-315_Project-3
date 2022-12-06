@@ -5,7 +5,7 @@ var order_prices = [];
 
 /**
  * Adds a menu item to the order summary.
- * @constructor
+ * @function
  * @param {Number} itemid - The id of the item in the database.
  * @param {string} name - name of the item.
  * @param {Number} qty - current qty of the item
@@ -25,6 +25,7 @@ function addToOrder(itemid, name, qty, price){
 
     var inc = document.createElement('input');
     inc.type = "button";
+    inc.id = "increment";
     inc.value = "+";
     inc.onclick = function(){
         incQty(itemid, price);
@@ -32,6 +33,7 @@ function addToOrder(itemid, name, qty, price){
 
     var dec = document.createElement('input');
     dec.type = "button";
+    dec.id = "decrement";
     dec.value = "-";
     dec.onclick = function(){
         decQty(itemid, price);
@@ -61,6 +63,13 @@ function addToOrder(itemid, name, qty, price){
 
 }
 
+/**
+ * Increments the item that corresponds with itemid in the order by 1.
+ * It also increases the price by adding the price associated with the itemid.
+ * @function
+ * @param {Number} itemid - The id of the item in the database.
+ * @param {Float} price - The set price of the item in the database
+ */
 function incQty(itemid, price){
     order_items.push(itemid);
     order_prices.push(price);
@@ -90,6 +99,14 @@ function incQty(itemid, price){
     
 }
 
+/**
+ * Decrements the item that corresponds with itemid in the order by 1.
+ * If quantity = 0, removes the item from the order summary.
+ * It also decreases the price by adding the price associated with the itemid.
+ * @function
+ * @param {Number} itemid - The id of the item in the database.
+ * @param {Float} price - The set price of the item in the database
+ */
 function decQty(itemid, price){
     order_items.splice(order_items.indexOf(itemid), 1);
     order_prices.splice(order_prices.indexOf(price), 1);
@@ -123,6 +140,11 @@ function decQty(itemid, price){
     
 }
 
+/**
+ * Clears everything in the order summary by removing every item in both the HTML
+ * and the Nodejs variables.
+ * @function
+ */
 function clearOrder(){
     var table = document.getElementById('orderTable');
     for(let i = 0; i<order_rows; i++){
@@ -140,6 +162,10 @@ function clearOrder(){
     total_h.innerHTML = total;
 }
 
+/**
+ * Returns the total price of all items in the order summary.
+ * @function
+ */
 function getTotal(){
     let total = 0;
     for(let i = 0; i<order_prices.length; i++){
@@ -148,6 +174,10 @@ function getTotal(){
     return total;
 }
 
+/**
+ * Returns the sales tax of the total items in the order summary.
+ * @function
+ */
 function getTax(){
     let tax = parseFloat(getTotal());
     tax = tax * .0825;
@@ -181,6 +211,11 @@ button.addEventListener('click', function(e) {
     });
 });
 
+/**
+ * Google Tranlate API element that allows for changing languages in
+ * the website.
+ * @function
+ */
 function googleTranslateElementInit(){
     new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
 }
@@ -199,6 +234,12 @@ fetch('/getMenu', {method: 'GET'})
         console.log(error);
 });
 
+/**
+ * Populates the GUI with all menu items currently listed in the database includuing
+ * entrees, sides, drinks, and desserts.
+ * @function
+ * @param {Array} menu_items - Array of all itemids currently in the order summary.
+ */
 function populateGUI(menu_items){
     for(var i = 0; i<menu_items.length; i++){
         var entrees = document.getElementById('entrees');
@@ -226,10 +267,18 @@ function populateGUI(menu_items){
     }
 }
 
+/**
+ * Opens the drinks menu in GUI
+ * @function
+ */
 function openDrinks() {
   document.getElementById("drink-menu").style.display = "block";
 }
 
+/**
+ * Closes the drinks menu in GUI
+ * @function
+ */
 function closeDrinks() {
   document.getElementById("drink-menu").style.display = "none";
 }

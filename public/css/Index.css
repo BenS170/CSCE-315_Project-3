@@ -3,6 +3,8 @@ body{
 }
 
 #indexContent{
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+
     border: ridge goldenrod 5px;
     background-color: lightgrey;
 
@@ -15,8 +17,13 @@ body{
 }
 
 #indexContent img{
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+
     width:30%;
     margin-left: 35%;
+
+    border: medium ridge goldenrod;
+    border-radius: 5px;
 }
 
 .allButtons{
@@ -38,6 +45,7 @@ body{
 }
 
 .linkButton button{
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
     width:100%;
     padding-top: 5%;
     padding-bottom: 5%;
