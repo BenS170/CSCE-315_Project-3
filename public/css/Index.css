@@ -54,7 +54,7 @@ body{
     font-weight: bold;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-transform: uppercase;
-    transition-duration: 0.3s;
+    transition: 0.3s;
 }
 
 .linkButton button:hover{

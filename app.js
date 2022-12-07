@@ -146,6 +146,7 @@ app.post('/serverSubmit', async (req, res) => {
             .then(query_res => {
                 for (let i = 0; i < query_res.rows[0]["ingredient_list"].length; i++){
                     var res = query_res.rows[0]["ingredient_list"][i];
+                    console.log("|" + res + "|");
                     ingredients.push(res);
                 }
             }
@@ -158,6 +159,7 @@ app.post('/serverSubmit', async (req, res) => {
             await pool
                 .query("SELECT quantity, serving_size FROM inventory WHERE itemid='"+ingredients[i]+"';")
                 .then(query_res => {
+                    console.log(query_res);
                     var quantity = query_res.rows[0]["quantity"];
                     var serving_size = query_res.rows[0]["serving_size"];
                     console.log(quantity);
