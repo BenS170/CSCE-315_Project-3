@@ -1,3 +1,4 @@
+/** @module CustomerFunctions */
 
 // // SQL Queries - To display type of menu item and corresponding price:
 
