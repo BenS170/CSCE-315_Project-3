@@ -1,3 +1,12 @@
+h2{
+  width:fit-content;
+  white-space:nowrap;
+  text-align:center;
+
+  margin-left:auto;
+  margin-right: auto;
+}
+
 .sidenav {
   height: 100%;
   width: 30%;
@@ -23,7 +32,7 @@ cursor: pointer;
 margin: 0;
 position: relative;
 top: 10%;
-left: 45%;
+left: 46%;
 -ms-transform: translate(-50%, -50%);
 transform: translate(-50%, -50%);
 margin: 3%;
@@ -31,6 +40,20 @@ padding: 5%;
 margin-bottom: 15%;
 box-shadow: 2px 2px 4px black;
 }
+.menuButtons:hover{
+  width: 90%;
+  left: 47%;
+  font-size: 230%;
+}
+.menuButtons:focus{
+  width: 90%;
+  left: 47%;
+  font-size: 230%;
+  color:#5B0726;
+  background-color:white;
+  
+}
+
 
 .orderButton{
 background-color: white;
@@ -48,27 +71,12 @@ margin-left: 35%;
 cursor: pointer;
 box-shadow: 2px 2px 4px black;
 }
-
-.menuButtons:hover{
-  background-color: white;
-  color:#5B0726;
-}
-.menuButtons:focus{
-  background-color: white;
-  color:#5B0726;
-  font-weight:bold;
-}
 .orderButton:hover{
   background-color: #5B0726;
   color: white;
-}
-
-.menuButtons:focus{
-  background-color: white;
-  color:#5B0726;
-}
-.orderButton:focus{
-  text-decoration: underline;
+  width: 23%;
+  height: 8%;
+  font-size: 120%;
 }
 
 .addToOrder{
@@ -81,12 +89,11 @@ box-shadow: 2px 2px 4px black;
   box-shadow: 2px 2px 4px black;
 }
 .addToOrder:hover{
-  color:#5B0726;
-  background-color: white;
+  height: 68px;
+  width: 203px;
+  font-size: 120%;
 }
-.addToOrder:focus{
-  text-decoration: underline;
- }
+
 
 .deleteFromOrder{
   color:white;
@@ -149,15 +156,17 @@ table {
   align-self: center;
   float: center;
   width: 95%;
+  text-align:center;
 }
 
 th, td {
   padding: 20px;
+  text-align:center;
 }
 
 #order-summary {
   margin-left: 35%;
-  margin-top: 5%;
+  margin-top: 3%;
   font-family: Arial;
   color: #5B0726;
   float: center;
@@ -165,72 +174,45 @@ th, td {
   width: 60%;
   text-align:center;
   border-color: #5B0726;
-  border-style:double;
-  border-width: 5px;
+  border-style: solid;
 }
 
 .submit{
-  background-color: white;
-  color: #5B0726;
-  border: 2.5px solid #5B0726;
-  font-size: 20px;
-  font-weight: bold;
-  font-family: verdana;
-  text-align: center;
-  text-decoration: none;
-  position:fixed;
-  bottom:10px;
-  right:60px;
-  height: 70px;
-  width: 240px;
+  color:white; 
+  background-color:#5B0726; 
+  border-color:#5B0726;
+  height:50px;
+  width:150px;
+  cursor:pointer;
 }
-
 .submit:hover {
-  background-color: #5B0726;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0px 10px;
-}
-
-.submit:focus {
-  background-color: #5B0726;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0px 10px;
-}
+  height:70px;
+  width:170px; 
+  font-size:105%;
+} 
 
 .cancel{
-  background-color: white;
-  color: #5B0726;
-  border: 2.5px solid #5B0726;
-  font-size: 20px;
-  font-weight: bold;
-  font-family: verdana;
-  text-align: center;
-  text-decoration: none;
-  position:fixed;
-  bottom:10px;
-  right:300px;
-  height: 50px;
-  width: 200px;
+  color:white; 
+  background-color:#5B0726; 
+  border-color:#5B0726;
+  height:50px;
+  width:150px;
+  cursor:pointer;
 }
-
 .cancel:hover {
-  background-color: white;
-  color: #5B0726;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0px 10px;
+  height:70px;
+  width:170px; 
+  font-size:105%;
 }
 
-.cancel:focus {
-  background-color: white;
-  color: #5B0726;
-  font-weight: bold;
-  cursor: pointer;
-  padding: 0px 10px;
+.increment-and-decrement-qty{
+  color:white; 
+  background-color:#5B0726; 
+  border:none;
+  height:30px;
+  width:30px;
+  font-size:20px;
+  cursor:pointer;
 }
 
 /* GOOGLE MAPS */
