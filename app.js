@@ -425,7 +425,7 @@ app.get('/getDessert', (req, res) => {
 
 app.post('/addMenuItem', async (req, res) => {
     console.log("inside add Menu item");
-    const { menuName,menuPrice,menuIngredients, menuIngNum, menuType } = req.body;
+    const { lowerName,menuPrice,menuIngredients, menuIngNum, menuType } = req.body;
     console.log(req.body);
 
      // Getting next Order ID
@@ -438,7 +438,7 @@ app.post('/addMenuItem', async (req, res) => {
   
     console.log("before the query");
     // Database Code here
-    const queryString = "INSERT INTO menu_items ( menu_id , item_name , item_price , num_ingredients, ingredient_list, type ) VALUES( " + menuID + ", '" + menuName + "', " + menuPrice + ", " + menuIngNum + ", '" + menuIngredients + "', '" + menuType + "');";
+    const queryString = "INSERT INTO menu_items ( menu_id , item_name , item_price , num_ingredients, ingredient_list, type ) VALUES( " + menuID + ", '" + lowerName + "', " + menuPrice + ", " + menuIngNum + ", '" + menuIngredients + "', '" + menuType + "');";
     console.log(queryString);
     pool
         .query(queryString)
@@ -449,7 +449,7 @@ app.post('/addMenuItem', async (req, res) => {
         console.log("item added");
     })
 
-    res.status(200).json({ menuID, menuName,menuPrice,menuIngredients, menuIngNum, menuType });
+    res.status(200).json({ menuID, lowerName, menuPrice, menuIngredients, menuIngNum, menuType });
 });
 
 app.post('/updateMenuPriceItem', (req, res) => {
@@ -550,12 +550,12 @@ app.post('/getOrdersBetweenDates', (req, res) => {
 
 app.post('/addInventoryItem', (req, res) => {
     console.log("inside add inveneotry item");
-    const { inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded } = req.body;
+    const { newInventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded } = req.body;
     console.log(req.body);
   
     console.log("before the query");
     // Database Code here
-    const queryString = "INSERT INTO inventory ( itemid , stockprice , unit , quantity, serving_size, quantity_needed ) VALUES( '" + inventoryID + "', " + inventoryStockprice + ", '" + inventoryUnits + "', " + inventoryQuantity + ", " + inventoryServingSize + ", " + inventoryNeeded + ");";
+    const queryString = "INSERT INTO inventory ( itemid , stockprice , unit , quantity, serving_size, quantity_needed ) VALUES( '" + newInventoryID + "', " + inventoryStockprice + ", '" + inventoryUnits + "', " + inventoryQuantity + ", " + inventoryServingSize + ", " + inventoryNeeded + ");";
     console.log(queryString);
     pool
         .query(queryString)
@@ -563,7 +563,7 @@ app.post('/addInventoryItem', (req, res) => {
             console.log("item added");
     })
 
-    res.status(200).json({ inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded });
+    res.status(200).json({ newInventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded });
 });
 
 app.post('/orderInventoryItem', async (req, res) => {

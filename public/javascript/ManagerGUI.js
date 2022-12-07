@@ -259,6 +259,7 @@ addMenuItemButton.addEventListener('click', function(e) {
     if (menuName == null || menuName == ""){
         alert("add menu item was canceled");
     } else {
+        const lowerName = menuName.toLowerCase();
         const menuPrice = prompt("What is the new price", "2.90");
         if (menuPrice == null || menuPrice == ""){
             alert("add menu item was canceled");
@@ -279,7 +280,7 @@ addMenuItemButton.addEventListener('click', function(e) {
                     } else{
 
                         if (confirm(" are you sure you want to make an item with these values? (name, price, ingredients, type): " + menuName + ", " + menuPrice + ", " + menuIngredients, ", " + menuType)){
-                            const data = {menuName,menuPrice, menuIngredients, menuIngNum, menuType};
+                            const data = {lowerName,menuPrice, menuIngredients, menuIngNum, menuType};
   
                             fetch('/addMenuItem', {
                               method: 'POST',
@@ -500,6 +501,7 @@ orderInventoryButton.addEventListener('click', function(e) {
     if (inventoryID == "" || inventoryID == null){
       alert("Add inventory was canceled");
     } else{
+        const newInventoryID = inventoryID.toLowerCase();
       const inventoryStockprice = prompt("What is the stockprice of this item?", "23");
       if (inventoryStockprice == "" || inventoryStockprice == null){
           alert("Add inventory was canceled");
@@ -527,8 +529,8 @@ orderInventoryButton.addEventListener('click', function(e) {
                         alert("Add inventory was canceled");
                     } else{
 
-                        if(confirm("Are you sure you want to make (id, stockprice, units, quantity, serving size, needed): ("+inventoryID+", " + inventoryStockprice + ", " + inventoryStockprice + ", "+ inventoryQuantity + ", "+inventoryServingSize+", "+inventoryNeeded + ")")){
-                            const data = {inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded};
+                        if(confirm("Are you sure you want to make (id, stockprice, units, quantity, serving size, needed): ("+newInventoryID+", " + inventoryStockprice + ", " + inventoryStockprice + ", "+ inventoryQuantity + ", "+inventoryServingSize+", "+inventoryNeeded + ")")){
+                            const data = {newInventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded};
         
                             fetch('/addInventoryItem', {
                                 method: 'POST',
