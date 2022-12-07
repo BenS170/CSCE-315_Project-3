@@ -1,60 +1,66 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ManagerGUI.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ManagerGUI.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Creates an HTML table from the information passed in from data. 
  * @author Octavio Almanza
  * @param {Array} data - An array that contains information about all the menu items stored in the database. 
  * @returns {String} a string containing the HTML for a table with rows of menu items and their respective information
  */
 
- function makeMenuTable(data){    
-    htmlMenuTable = '<div id="tableAndUpdateButton"> <table id="menuTable"> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Price</th>";
-    //htmlMenuTable = htmlMenuTable + "<th>No. Ingredients</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Ingredients List</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Item Type</th>";
-    htmlMenuTable = htmlMenuTable + "</tr>";
+function makeMenuTable(data){    
+    htmlMenuTable = '&lt;div id="tableAndUpdateButton"> &lt;table id="menuTable"> &lt;tr id = "titleRow">';
+    htmlMenuTable = htmlMenuTable + "&lt;th>Menu ID&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;th>Item Name&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;th>Item Price&lt;/th>";
+    //htmlMenuTable = htmlMenuTable + "&lt;th>No. Ingredients&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;th>Ingredients List&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;th>Item Type&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;/tr>";
 
     currColor = "grey";
-    for (let i = 0; i < data.result.length; i++){
+    for (let i = 0; i &lt; data.result.length; i++){
         if (i%2){
             currColor = "lightgray";
         }else{
             currColor = "white";
         }
 
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem" style="background-color:' + currColor + '">';
-        htmlMenuTable = htmlMenuTable + '<td>'+ data.result[i].menu_id + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].item_name + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td>$<p contenteditable="true">' + data.result[i].item_price + "</p></td>";
-        htmlMenuTable = htmlMenuTable + '<td hidden="true">' + data.result[i].num_ingredients + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td><div id="ingredientsFor' + data.result[i].menu_id + '">' + prettyArrayStr(data.result[i].ingredient_list) + '<button class="editIngButtons" id="editMenu'+ data.result[i].menu_id +'" onclick="populateIngredientCheckbox('+ data.result[i].menu_id + ')">Edit</button></div></td>';
-
-        var typeSelect = '<td><select id="typeSelect' + data.result[i].menu_id + '">';
-
-        var isEntree = "";
-        var isDrink = "";
-        var isDessert = ""; 
-        var isSide = "";
-
-        if (data.result[i].type.toLowerCase() == 'entree'){ isEntree = "selected"; }
-        else if (data.result[i].type.toLowerCase() == 'drink'){ isDrink = "selected"; }
-        else if (data.result[i].type.toLowerCase() == 'side'){ isSide = "selected"; }
-        else { isDessert = "selected"; }
-
-        typeSelect += '<option value=entre ' + isEntree + ' >Entree</option>';
-        typeSelect += '<option value=dessert ' + isDessert + '>Dessert</option>';
-        typeSelect += '<option value=side ' + isSide + '>Side</option>';
-        typeSelect += '<option value=drink ' + isDrink + ' >Drink</option>';
-        typeSelect += '</select></td>';
-        
-        htmlMenuTable += typeSelect;
-
-        //htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].type + "</td>";
-        
-        htmlMenuTable = htmlMenuTable + "</tr>";
+        htmlMenuTable = htmlMenuTable + '&lt;tr id = "menuItem" style="background-color:' + currColor + '">';
+        htmlMenuTable = htmlMenuTable + '&lt;td>'+ data.result[i].menu_id + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + '&lt;td contenteditable="true">' + data.result[i].item_name + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + '&lt;td>$&lt;p contenteditable="true">' + data.result[i].item_price + "&lt;/p>&lt;/td>";
+        htmlMenuTable = htmlMenuTable + '&lt;td hidden="true">' + data.result[i].num_ingredients + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + '&lt;td>&lt;div id="ingredientsFor' + data.result[i].menu_id + '">' + prettyArrayStr(data.result[i].ingredient_list) + '&lt;button class="editIngButtons" id="editMenu'+ data.result[i].menu_id +'" onclick="populateIngredientCheckbox('+ data.result[i].menu_id + ')">Edit&lt;/button>&lt;/div>&lt;/td>';
+        htmlMenuTable = htmlMenuTable + '&lt;td contenteditable="true">' + data.result[i].type + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + "&lt;/tr>";
     }
-    htmlMenuTable = htmlMenuTable + '</table><button id="updateTable" onClick="updateTableFunction()">Update Table</button></div>';
+    htmlMenuTable = htmlMenuTable + '&lt;/table>&lt;button id="updateTable" onClick="updateTableFunction()">Update Table&lt;/button>&lt;/div>';
     return htmlMenuTable;
 }
 
@@ -65,6 +71,7 @@
 
 function revertToEnglish(){
     var selectField = document.querySelector("#google_translate_element select").selected;
+    console.log(selectField);
 
     var iframe = document.getElementsByClassName('goog-te-banner-frame')[0];
     if(!iframe) return selectField;
@@ -72,7 +79,7 @@ function revertToEnglish(){
     var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
     var restore_el = innerDoc.getElementsByTagName("button");
 
-    for(var i = 0; i < restore_el.length; i++){
+    for(var i = 0; i &lt; restore_el.length; i++){
         if(restore_el[i].id.indexOf("restore") >= 0) {
             restore_el[i].click();
             var close_el = innerDoc.getElementsByClassName("goog-close-link");
@@ -80,8 +87,6 @@ function revertToEnglish(){
             return selectField;
         }
     }
-
-    return true;
 }
 
 /**
@@ -105,6 +110,7 @@ function fetchPost(functionName, data){
             return;
         }else{ throw new Error('Request failed.'); }
     }).then(function(data){
+        console.log(data.result);
         returnMe = data.result;
         return data.result;
     }).catch(function(error) {
@@ -114,13 +120,8 @@ function fetchPost(functionName, data){
     return returnMe;
 }
 
-/**
- * Checks if there are currently any ingredient selectors currently open in the Manager View.
- * @param {Number} maxID The highest ID of a menu item in the table. 
- * @returns {Boolean} True if there is one or more ingredient selector open. False otherwise.
- */
 function ingredientSelectorsOpen(maxID){
-    for (let i = 1; i < maxID; i++){
+    for (let i = 1; i &lt; maxID; i++){
         ingredientSelectorX = document.getElementById("editMenu" + i);
         if (ingredientSelectorX == null){
             alert("Please finish selecting all ingredients before updating table");
@@ -144,9 +145,7 @@ async function updateTableFunction(){
     }
 
     // Revert back to english:
-    let x = await revertToEnglish();
-
-    console.log(x);
+    revertToEnglish();
 
     for (let i = 1, row; row = menuTable.rows[i]; i++){
         // iterating through rows. Starting at row 1 bc 0 is headers
@@ -157,34 +156,12 @@ async function updateTableFunction(){
         ingredient_list = "";
         type = "";
         for (let j = 0, col; col = row.cells[j]; j++){
-            if (j == 0){ 
-                menu_id = col.textContent; 
-            }
-            else if (j == 1){ 
-                item_name = col.textContent; 
-            }
-            else if (j == 2){ 
-                item_price = col.textContent;
-                var priceNoSign = item_price.replace("$", ""); 
-                if (parseFloat(priceNoSign) <= 0){
-                    alert("Price is less than or equal to 0 for Menu ID " + menu_id);
-                    return;
-                }else if (parseFloat(priceNoSign) == NaN){
-                    alert("Invalid price for Menu ID: " + menu_id);
-                    return;
-                }
-            }
-            else if (j == 3){ 
-                num_ingredients = col.textContent; 
-            }
-            else if (j == 4){ 
-                ingredient_list = col.textContent; 
-            }
-            else if (j == 5){ 
-                var typeDropDown = document.getElementById("typeSelect" + menu_id);
-                type = typeDropDown.options[typeDropDown.selectedIndex].text.toLowerCase();
-                //type = col.textContent; 
-            }
+            if (j == 0){ menu_id = col.textContent; }
+            else if (j == 1){ item_name = col.textContent; }
+            else if (j == 2){ item_price = col.textContent; }
+            else if (j == 3){ num_ingredients = col.textContent; }
+            else if (j == 4){ ingredient_list = col.textContent; }
+            else if (j == 5){ type = col.textContent; }
             else { break; }
         }
 
@@ -192,7 +169,6 @@ async function updateTableFunction(){
         console.log(data);
         x = await fetchPost('/updateMenuItem', data);
     }
-    alert("The Menu Table has been Updated");
 }
 
 /**
@@ -203,7 +179,7 @@ async function updateTableFunction(){
  */
 function prettyArrayStr(array){
     arrayStr = "";
-    for (let i = 0; i < array.length; i++){
+    for (let i = 0; i &lt; array.length; i++){
         arrayStr = arrayStr + array[i];
         if (i != (array.length-1)){
             arrayStr = arrayStr + ", ";
@@ -245,16 +221,14 @@ viewMenuButton.addEventListener('click', function(e) {
 
 /*************** ADD MENU ITEM **********************/
 
-/**
- * An object representing the "Add Menu Item" button in the Manager GUI. The event listener will ask the user for all the necessary information for a new menu item and updates the database.
- * @type {HTML}
- */
-
 const addMenuItemButton = document.getElementById("addMenuItemButton");
 
 addMenuItemButton.addEventListener('click', function(e) {
   console.log('add menu was clicked');
-  
+  const menuID = prompt("What is the menu ID?", "23");
+  if(menuID == null || menuID == ""){
+    alert("add menu item was canceled");
+  } else{
     const menuName = prompt("What is the name of the item?", "bacon");
     if (menuName == null || menuName == ""){
         alert("add menu item was canceled");
@@ -278,8 +252,8 @@ addMenuItemButton.addEventListener('click', function(e) {
                         alert("add menu item was canceled");
                     } else{
 
-                        if (confirm(" are you sure you want to make an item with these values? (name, price, ingredients, type): " + menuName + ", " + menuPrice + ", " + menuIngredients, ", " + menuType)){
-                            const data = {menuName,menuPrice, menuIngredients, menuIngNum, menuType};
+                        if (confirm(" are you sure you want to make an item with these values? (id, name, price, ingredients, type" + menuID + ", " + menuName + ", " + menuPrice + ", " + menuIngredients, ", " + menuType)){
+                            const data = {menuID, menuName,menuPrice, menuIngredients, menuIngNum, menuType};
   
                             fetch('/addMenuItem', {
                               method: 'POST',
@@ -307,16 +281,12 @@ addMenuItemButton.addEventListener('click', function(e) {
             }
 
         }
-    
+    }
 });
 
 
 
 /*************** DELETE MENU ITEM ***********************/
-/**
- * An object representing the "Delete Menu Item" button in the Manager GUI. The event linstener will ask for what item the user wishes to delete and then remove it from the database.
- * @type {HTML}
- */
 const  deleteMenuItemButton = document.getElementById("deleteMenuItemButton");
 
 deleteMenuItemButton.addEventListener('click', function(e) {
@@ -372,37 +342,37 @@ let oldInvItems = [];
  */
 function makeInventoryTable(data){
     oldInvItems = [];
-    htmlMenuTable = '<div id="tableAndUpdateButton">';
-    htmlMenuTable = htmlMenuTable + '<table id="inventoryTable"> <tr id = "titleRow">';
-    htmlMenuTable = htmlMenuTable + "<th>Item ID</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Stock Price</th>";
-    htmlMenuTable = htmlMenuTable + '<th><div id="unitHeader">Units</div></th>';
-    htmlMenuTable = htmlMenuTable + "<th>Quantity Remaining</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Serving Size</th>";
-    htmlMenuTable = htmlMenuTable + "<th>Quantity Needed</th>";
-    htmlMenuTable = htmlMenuTable + "</tr>";
+    htmlMenuTable = '&lt;div id="tableAndUpdateButton">';
+    htmlMenuTable = htmlMenuTable + '&lt;table id="inventoryTable"> &lt;tr id = "titleRow">';
+    htmlMenuTable = htmlMenuTable + "&lt;th>Item ID&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;th>Stock Price&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;th>Units&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;th>Quantity Remaining&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;th>Serving Size&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;th>Quantity Needed&lt;/th>";
+    htmlMenuTable = htmlMenuTable + "&lt;/tr>";
 
     currColor = "";
-    for (let i = 0; i < data.result.length; i++){
+    for (let i = 0; i &lt; data.result.length; i++){
         let currItem = [];
         if (i%2){ currColor = "lightgray"; }
         else{ currColor = "white"; }
-        htmlMenuTable = htmlMenuTable + '<tr id = "menuItem" style="background-color:' + currColor + '">';
-        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].itemid + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].stockprice + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td contenteditable="true" class="unitCell">' + data.result[i].unit + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].quantity + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].serving_size + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td>' + data.result[i].quantity_needed + "</td>";
-        htmlMenuTable = htmlMenuTable + "</tr>";
+        htmlMenuTable = htmlMenuTable + '&lt;tr id = "menuItem" style="background-color:' + currColor + '">';
+        htmlMenuTable = htmlMenuTable + '&lt;td contenteditable="true">' + data.result[i].itemid + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + '&lt;td contenteditable="true">' + data.result[i].stockprice + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + '&lt;td contenteditable="true">' + data.result[i].unit + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + '&lt;td contenteditable="true">' + data.result[i].quantity + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + '&lt;td contenteditable="true">' + data.result[i].serving_size + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + '&lt;td>' + data.result[i].quantity_needed + "&lt;/td>";
+        htmlMenuTable = htmlMenuTable + "&lt;/tr>";
         
         // We want a sort-of "backup" in the case the manager makes a mistake
         if (!modified){ originalInvItems.push(data.result[i]); }
         oldInvItems.push(data.result[i]);
     }
     modified = true;
-    htmlMenuTable = htmlMenuTable + "</table>";
-    htmlMenuTable = htmlMenuTable + '</table><button id="updateInvTable" onClick="updateInvFunction()">Update Table</button></div>';
+    htmlMenuTable = htmlMenuTable + "&lt;/table>";
+    htmlMenuTable = htmlMenuTable + '&lt;/table>&lt;button id="updateInvTable" onClick="updateInvFunction()">Update Table&lt;/button>&lt;/div>';
     return htmlMenuTable;
 }
 
@@ -439,45 +409,39 @@ viewInventoryButton.addEventListener('click', function(e) {
 
 /********************** ORDER INVENTORY *********************/
 
-/**
- * An object representing the "Order Inventory" button in the Manager GUI.
- * @type {HTML}
- */
-const orderInventoryButton = document.getElementById("orderInventoryButton");
 orderInventoryButton.addEventListener('click', function(e) {
     console.log('order inventory was clicked');
   
     const inventoryIDPrompt = prompt("What is the inventory ID?", "i.e. bacon");
-    if (inventoryIDPrompt == null || inventoryIDPrompt == ""){
-      alert("Order Inventory was cancelled");
+    prompt()
+    if (inventoryIDPrompt == NULL || inventoryIDPrompt == ""){
+      alert("Order Inventory was cancelled")
     }else{
       const inventoryQuantity = prompt("what is the quantity to update to?", "100");
-      if (inventoryQuantity == null || inventoryQuantity == ""){
-          alert("order inventory was cancelled");
+      if (inventoryQuantity == NULL || inventoryQuantity == ""){
+          alert("order inventory was cancelled")
       } else{
   
           const inventoryID = inventoryIDPrompt.toLowerCase();
   
           const data = {inventoryID, inventoryQuantity};
-          if(confirm("Are you sure you want to order " + inventoryQuantity + " of " + inventoryIDPrompt + "?")){
-            fetch('/orderInventoryItem', {
-                method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            .then(function(response) {
-              if(response.ok) {
-                console.log('Click was recorded');
-                return;
-              }
-              throw new Error('Request failed.');
-            })
-            .catch(function(error) {
-              console.log(error);
-            });
-          }
+          fetch('/orderInventoryItem', {
+              method: 'POST',
+              headers:{
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+          })
+          .then(function(response) {
+            if(response.ok) {
+              console.log('Click was recorded');
+              return;
+            }
+            throw new Error('Request failed.');
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
       }
      }
   
@@ -487,77 +451,63 @@ orderInventoryButton.addEventListener('click', function(e) {
 
 
   /************************* ADD INVENTORY ITEM ************************/
-  /**
- * An object representing the "Add Inventory Item" button in the Manager GUI
- * @type {HTML}
- */
 
   const addInventoryItemButton = document.getElementById("addInventoryItemButton");
 
   addInventoryItemButton.addEventListener('click', function(e) {
     console.log('add inventory was clicked');
     const inventoryID = prompt("What is the inventory ID?", "i.e. bacon");
-    if (inventoryID == "" || inventoryID == null){
-      alert("Add inventory was canceled");
+    if (inventoryID == ""){
+      alert("Add inventory was canceled")
     } else{
       const inventoryStockprice = prompt("What is the stockprice of this item?", "23");
-      if (inventoryStockprice == "" || inventoryStockprice == null){
-          alert("Add inventory was canceled");
+      if (inventoryID == ""){
+          alert("Add inventory was canceled")
       } else{  
-        console.log("Inside first else");
-
-        const inventoryUnits = prompt("What is the units of the item?", "Gallons");
-        if (inventoryUnits == "" || inventoryUnits == null){
-            alert("Add inventory was canceled");
-        } else{
-            console.log("Inside 2 else");
-
-            const inventoryQuantity = prompt("How much of the item do you have?", "0");
-            if (inventoryQuantity == "" || inventoryQuantity == null){
-                alert("Add inventory was canceled");
-            } else{
-                console.log("Inside 2 else");
-
-                const inventoryServingSize = prompt("What is the serving size for this item?",".25");
-                if (inventoryServingSize == "" || inventoryServingSize == null){
-                    alert("Add inventory was canceled");
-                } else{
-                    const inventoryNeeded = prompt("How much of the item is needed?","400");
-                    if (inventoryNeeded == "" || inventoryNeeded == null){
-                        alert("Add inventory was canceled");
-                    } else{
-
-                        if(confirm("Are you sure you want to make (id, stockprice, units, quantity, serving size, needed): ("+inventoryID+", " + inventoryStockprice + ", " + inventoryStockprice + ", "+ inventoryQuantity + ", "+inventoryServingSize+", "+inventoryNeeded + ")")){
-                            const data = {inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded};
-        
-                            fetch('/addInventoryItem', {
-                                method: 'POST',
-                                headers:{
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(data)
-                            })
-                            .then(function(response) {
-                                if(response.ok) {
-                                    console.log('Click was recorded');
-                                    return;
-                                }   
-                                throw new Error('Request failed.');
-                            })
-                            .catch(function(error) {
-                            console.log(error);
-                            });
-                        }
-                            
-
-                    }
-                    }
-                }
-            }
-        }
-    }
+          const inventoryUnits = prompt("What is the units of the item?", "Gallons");
+          if (inventoryID == ""){
+              alert("Add inventory was canceled")
+          } else{
+              const inventoryQuantity = prompt("How much of the item do you have?", "0");
+              if (inventoryID == ""){
+                  alert("Add inventory was canceled")
+              } else{
+                  const inventoryServingSize = prompt("What is the serving size for this item?",".25");
+                  if (inventoryID == ""){
+                      alert("Add inventory was canceled")
+                  } else{
+                      const inventoryNeeded = prompt("How much of the item is needed?","400");
+                      if (inventoryID == ""){
+                          alert("Add inventory was canceled")
+                      } else{
+                              
+                          const data = {inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded};
+            
+                          fetch('/addInventoryItem', {
+                              method: 'POST',
+                              headers:{
+                                  'Content-Type': 'application/json'
+                              },
+                              body: JSON.stringify(data)
+                          })
+                          .then(function(response) {
+                              if(response.ok) {
+                                  console.log('Click was recorded');
+                                  return;
+                              }   
+                              throw new Error('Request failed.');
+                          })
+                          .catch(function(error) {
+                          console.log(error);
+                          });
+                          }
+                      }
+                  }
+              }
+          }
+      }
     
-});
+  });
 
 
 // manager reports
@@ -607,10 +557,6 @@ function getEndDate(){
 const createSalesReport = document.getElementById("salesReportButton");
 createSalesReport.addEventListener('click', function(e) {
     console.log('Sales Report Button was clicked');
-    
-    document.getElementById("reportType").innerHTML = "Sales Report";
-    document.getElementById("instructStartDate").innerHTML = "Please Enter the start date:";
-
     document.getElementById("managerView").hidden = true;
     document.getElementById("dateSelectors").hidden = false;
     document.getElementById("hideMe").hidden = false;
@@ -643,12 +589,14 @@ function checkIfValidDates(startDate, endDate){
     // Check the years:
     if (end[0] > start[0]){
         return true;
-    }else if (parseInt(end[0]) == parseInt(start[0])){
+    }else if (end[0] == start[0]){
+
         // If the years are equal, check months:
-        if (parseInt(end[1]) > parseInt(start[1])){
+        if (end[1] > start[1]){
             return true;
 
-        }else if (parseInt(end[1]) == parseInt(start[1])){
+        }else if (end[1] == start[1]){
+
             // If the years and months are equal, check days:
             if (end[2] >= start[2]){
                 return true;
@@ -698,29 +646,27 @@ function submitDateLogic(){
  * Will return an HTML string representing the Sales Report output 
  * @author Octavio Almanza
  * @param {Array} data a two dimmensional array containing menu items, their sales, and profit over the given interval
- * @param {String} startDate a string of the form YYYY-MM-DD
- * @param {String} endDate a string of the form YYYY-MM-DD
  * @returns {String} a string containing a title and a table with the columns "Item Name", "Sales", and "Profit" headings 
  */
 
-function salesReport(data, startDate, endDate){
-    salesTable = '<div id="salesReport" class="reportContainer"><p id = "salesReportTitle" class="reportTitle">Sales Report from ' + startDate + ' to ' + endDate + '</p><table class="reportTable"><tbody><tr>';
-    salesTable = salesTable + "<th>Item Name</th>";
-    salesTable = salesTable + "<th>Sales</th>";
-    salesTable = salesTable + "<th>Profit</th>";
-    salesTable = salesTable + "</tr>";
+function salesReport(data){
+    salesTable = '&lt;div id="salesReport">&lt;p id = "salesReportTitle">Sales Report&lt;/p>&lt;table>&lt;tbody>&lt;tr>';
+    salesTable = salesTable + "&lt;th>Item Name&lt;/th>";
+    salesTable = salesTable + "&lt;th>Sales&lt;/th>";
+    salesTable = salesTable + "&lt;th>Profit&lt;/th>";
+    salesTable = salesTable + "&lt;/tr>";
     let currColor = "";
-    for (let i = 0; i < data.result.length; i++){
+    for (let i = 0; i &lt; data.result.length; i++){
         if (i%2){ currColor = "lightgray"; }
         else{ currColor = "white"; }
-        salesTable = salesTable + '<tr id = "itemSold" style="background-color:' + currColor + '">';
-        salesTable = salesTable + "<td>" + data.result[i].item_name + "</td>";
-        salesTable = salesTable + "<td>" + data.result[i].sales + "</td>";
-        salesTable = salesTable + "<td>$" + data.result[i].profit + "</td>";
-        salesTable = salesTable + "</tr>"
+        salesTable = salesTable + '&lt;tr id = "itemSold" style="background-color:' + currColor + '">';
+        salesTable = salesTable + "&lt;td>" + data.result[i].item_name + "&lt;/td>";
+        salesTable = salesTable + "&lt;td>" + data.result[i].sales + "&lt;/td>";
+        salesTable = salesTable + "&lt;td>$" + data.result[i].profit + "&lt;/td>";
+        salesTable = salesTable + "&lt;/tr>"
     }
     
-    salesTable = salesTable + '</tbody></table></div>'
+    salesTable = salesTable + '&lt;/tbody>&lt;/table>&lt;/div>'
     return salesTable;
 }
 
@@ -748,7 +694,7 @@ function salesReportLogic(startDate, endDate){
     }).then(function(data){
         console.log(data.result);
         
-        htmlSalesRep = salesReport(data, startDate, endDate);
+        htmlSalesRep = salesReport(data);
         console.log(htmlSalesRep);
         content = document.getElementById("managerView");
         content.innerHTML = htmlSalesRep;
@@ -770,7 +716,7 @@ async function getMenuItemArray(){
             throw new Error('Request failed.');
         }).then(function(data) {
             // TODO: Modify HTML using the information received from the database
-            for (var i = 0; i < data.result.length; i++){
+            for (var i = 0; i &lt; data.result.length; i++){
                 arr.push(data.result[i]);
             }
         })
@@ -779,9 +725,9 @@ async function getMenuItemArray(){
         }
     );
 
-    for (let i = 0; i < arr.length; i++){
+    for (let i = 0; i &lt; arr.length; i++){
         let ingList = arr[i].ingredient_list;
-        for (let j = 0; j < ingList.length; j++){
+        for (let j = 0; j &lt; ingList.length; j++){
             if (arr[i].ingredient_list[j].charAt(0) == " "){
                 arr[i].ingredient_list[j] = arr[i].ingredient_list[j].slice(1,arr[i].ingredient_list[j].length);
             }
@@ -816,7 +762,7 @@ async function getOrdersBetweenDates(startDate, endDate){
 
     }).then(function(data){
         orders = new Array();
-        for (let i = 0; i < data.result.length; i++){
+        for (let i = 0; i &lt; data.result.length; i++){
             if (i == 0){
                 orders.push(data.result[i]);
                 items = Array();
@@ -848,9 +794,6 @@ async function getOrdersBetweenDates(startDate, endDate){
  */
 const createPopMenuItemReport = document.getElementById("popMenuItemButton");
 createPopMenuItemReport.addEventListener('click', function(e){
-    document.getElementById("reportType").innerHTML = "Popular Menu Items Report";
-    document.getElementById("instructStartDate").innerHTML = "Please Enter the start date:";
-
     document.getElementById("dateSelectors").value = POPITEMS;
     document.getElementById("dateSelectors").hidden = false;
     document.getElementById("hideMe").hidden = false;
@@ -865,7 +808,7 @@ createPopMenuItemReport.addEventListener('click', function(e){
  */
 function removeDuplicateItems(curr_order){
     uniqueItems = Array();
-    for (let i = 0; i < curr_order?.['item'].length; i++){
+    for (let i = 0; i &lt; curr_order?.['item'].length; i++){
         if (!uniqueItems.includes(curr_order?.['item'][i])){
             uniqueItems.push(curr_order?.['item'][i]);
         }
@@ -883,7 +826,7 @@ function removeDuplicateItems(curr_order){
 function makeEmptyArr(orders, maxItem){
     arr = Array(maxItem);
 
-    for (let i = 0; i < arr.length; i++){
+    for (let i = 0; i &lt; arr.length; i++){
         arr[i] = Array(maxItem).fill(0);
     }
 
@@ -898,10 +841,10 @@ function makeEmptyArr(orders, maxItem){
  * @returns a populated hash map where each index represents a combination of items and each element corresponds to the number of that combination sold.
  */
 async function updateHashMap(orders, hashMap){
-    for (let i = 0; i < orders?.length; i++){
+    for (let i = 0; i &lt; orders?.length; i++){
         items = await removeDuplicateItems(orders[i]);
-        for (let j = 0; j < items?.length; j++){
-            for (let k = j+1; k < items?.length; k++){
+        for (let j = 0; j &lt; items?.length; j++){
+            for (let k = j+1; k &lt; items?.length; k++){
                 let menu_id1 = items[j];
                 let menu_id2 = items[k];
                 try{
@@ -921,18 +864,18 @@ async function updateHashMap(orders, hashMap){
  * @param {Number} maxItems The greatest ID currently in the menu items table
  */
 function displayPopItems(startDate, endDate, menuItemsAndQtyArr, maxItems){
-    htmlStr = '<div id="popMenuItems" class="reportContainer"><p class="reportTitle">Popular Item Pairs from ' + startDate + ' to ' + endDate + '</p>';
-    htmlStr = htmlStr + '<table class="reportTable"><tr id = "titleRow">';
-    htmlStr = htmlStr + '<th>Item 1</th><th>Item 2</th><th>Quantity Sold</th></tr>';
+    htmlStr = '&lt;div id="popMenuItems">&lt;p>Popular Item Pairs from ' + startDate + ' to ' + endDate + '&lt;/p>';
+    htmlStr = htmlStr + '&lt;table>&lt;tr id = "titleRow">';
+    htmlStr = htmlStr + '&lt;th>Item 1&lt;/th>&lt;th>Item 2&lt;/th>&lt;th>Quantity Sold&lt;/th>&lt;/tr>';
     var currColor = "";
-    for (let i = 0; i < Math.min(maxItems, menuItemsAndQtyArr.length); i++){
+    for (let i = 0; i &lt; Math.min(maxItems, menuItemsAndQtyArr.length); i++){
         if (i%2){ currColor = "lightgray"; }
         else{ currColor = "white"; }
-        htmlStr = htmlStr + '<tr id="itemSold" style="background-color:'+currColor+ '"><td>' + menuItemsAndQtyArr[i][0] + '</td>';
-        htmlStr = htmlStr + '<td>' + menuItemsAndQtyArr[i][1] + '</td>';
-        htmlStr = htmlStr + '<td>' + menuItemsAndQtyArr[i][2] + '</td></tr>';
+        htmlStr = htmlStr + '&lt;tr id="itemSold" style="background-color:'+currColor+ '">&lt;td>' + menuItemsAndQtyArr[i][0] + '&lt;/td>';
+        htmlStr = htmlStr + '&lt;td>' + menuItemsAndQtyArr[i][1] + '&lt;/td>';
+        htmlStr = htmlStr + '&lt;td>' + menuItemsAndQtyArr[i][2] + '&lt;/td>&lt;/tr>';
     }
-    htmlStr = htmlStr + '</table></div>';
+    htmlStr = htmlStr + '&lt;/table>&lt;/div>';
     cont = document.getElementById("managerView");
     cont.innerHTML = htmlStr;
 }
@@ -946,8 +889,8 @@ function displayPopItems(startDate, endDate, menuItemsAndQtyArr, maxItems){
  */
 function makeArrayOfMenuItemsAndQty(hashMap, menuItems){
     let menuItemsAndQtyArr = Array();
-    for (let i = 0; i < hashMap.length; i++){
-        for (let j = 0; j < hashMap.length; j++){
+    for (let i = 0; i &lt; hashMap.length; i++){
+        for (let j = 0; j &lt; hashMap.length; j++){
             if (hashMap[i][j] > 0){
                 let menuItemsAndQty = [menuItems[i-1]?.['item_name'], menuItems[j-1]?.['item_name'], hashMap[i][j]];
                 menuItemsAndQtyArr.push(menuItemsAndQty);
@@ -967,7 +910,7 @@ function compareQtySold( item1, item2 ){
     if (item1[2] > item2[2]){
         return -1;
     }
-    if (item1[2] < item2[2]){
+    if (item1[2] &lt; item2[2]){
         return 1;
     }
     return 0;
@@ -997,16 +940,9 @@ async function popReportLogic(startDate, endDate){
 /************************************ RESTOCK REPORT ******************************/
 
 // Restock Report - Display the list of items whose current inventory is less than the item's minimum amount to have around before needing to restock.
-/**
- * An object representing the "Restock Report" button in the Manager GUI
- * @type {HTML}
- */
 const createRestockReport = document.getElementById("restockReportButton");
 
 createRestockReport.addEventListener('click', function(e) {
-    document.getElementById("reportType").innerHTML = "Restock Report";
-    document.getElementById("instructStartDate").innerHTML = "Please Enter the start date:";
-
     console.log('Restock Report Button was clicked');
     document.getElementById("managerView").hidden = true;
     document.getElementById("hideMe").hidden = false;
@@ -1015,12 +951,6 @@ createRestockReport.addEventListener('click', function(e) {
 });
 
 
-/**
- * The function responsible for displaying the Restock Report in the Manager GUI.
- * @author Hannah Craft
- * @param {String} startDate A String variable that stores a date in the form "YYYY-MM-DD"
- * @param {String} endDate A String variable that stores a date in the form "YYYY-MM-DD"
- */
 
 function restockReportLogic(startDate, endDate){
     // SALES QUERY:
@@ -1039,7 +969,7 @@ function restockReportLogic(startDate, endDate){
     }).then(function(data){
         console.log(data.result);
         
-        htmlRestockRep = restockReport(data, startDate, endDate);
+        htmlRestockRep = restockReport(data);
         console.log(htmlRestockRep);
         content = document.getElementById("managerView");
         content.innerHTML = htmlRestockRep;
@@ -1049,54 +979,39 @@ function restockReportLogic(startDate, endDate){
     }
 );}
 
-/**
- * Will return an HTML string representing the Restock Report output 
- * @author Hannah Craft
- * @param {Array} data a two dimmensional array containing inventory items, how much they have sold, how much is left and the amount of inventory is left over the given interval
- * @param {String} startDate a string of the form YYYY-MM-DD 
- * @param {String} endDate a string of the form YYYY-MM-DD
- * @returns {String} a string containing a title and a table with the columns "Item Name", "Servings Sold", "Servings Needed", and "Servins Left" headings 
- */
-function restockReport(data, startDate, endDate){
-    restockTable = '<div class="reportContainer"><p class="reportTitle">Restock Report from ' + startDate + ' to ' + endDate + '</p><table class="reportTable"><tbody><tr>';
-    restockTable = restockTable + "<th>Item Name</th>";
-    restockTable = restockTable + "<th>Servings Sold</th>";
-    restockTable = restockTable + "<th>Servings Needed</th>";
-    restockTable = restockTable + "<th>Servings Left</th>";
-    restockTable = restockTable + "</tr>"
+function restockReport(data){
+    restockTable = '&lt;table>&lt;tbody>&lt;tr>';
+    restockTable = restockTable + "&lt;th>Item Name&lt;/th>";
+    restockTable = restockTable + "&lt;th>Servings Sold&lt;/th>";
+    restockTable = restockTable + "&lt;th>Servings Needed&lt;/th>";
+    restockTable = restockTable + "&lt;th>Servings Left&lt;/th>";
+    restockTable = restockTable + "&lt;/tr>"
     let currColor = "";
-    for (let i = 0; i < data.result.length; i++){
+    for (let i = 0; i &lt; data.result.length; i++){
         if (i%2){
             currColor = "lightgray";
         }else{
             currColor = "white";
         }
-        restockTable = restockTable + '<tr id = "itemSold" style="background-color:' + currColor + '">';
-        restockTable = restockTable + "<td>" + data.result[i].itemid + "</td>";
-        restockTable = restockTable + "<td>" + data.result[i].servings_sold + "</td>";
-        restockTable = restockTable + "<td>" + data.result[i].servings_needed + "</td>";
-        restockTable = restockTable + "<td>" + data.result[i].servings_left + "</td>";
-        restockTable = restockTable + "</tr>"
+        restockTable = restockTable + '&lt;tr id = "itemSold" style="background-color:' + currColor + '">';
+        restockTable = restockTable + "&lt;td>" + data.result[i].itemid + "&lt;/td>";
+        restockTable = restockTable + "&lt;td>" + data.result[i].servings_sold + "&lt;/td>";
+        restockTable = restockTable + "&lt;td>" + data.result[i].servings_needed + "&lt;/td>";
+        restockTable = restockTable + "&lt;td>" + data.result[i].servings_left + "&lt;/td>";
+        restockTable = restockTable + "&lt;/tr>"
 
     }
 
-    restockTable = restockTable + '</tbody></table></div>'
+    restockTable = restockTable + '&lt;/tbody>&lt;/table>'
     return restockTable;
 }
 
 /********************** EXCESS REPORT *******************************/
 
 // Excess Report - Given a timestamp, display the list of items that only sold less than 10% of their inventory between the timestamp and the current time, assuming no restocks have happened during the window.
-/**
- * An object representing the "Excess Report" button in the Manager GUI
- * @type {HTML}
- */
 const createExcessReport = document.getElementById("excessReportButton");
 
 createExcessReport.addEventListener('click', function(e) {
-    document.getElementById("reportType").innerHTML = "Excess Report";
-    document.getElementById("instructStartDate").innerHTML = "Enter a Date:";
-
     console.log('Excess Report Button was clicked');
     document.getElementById("managerView").hidden = true;
     document.getElementById("dateSelectors").hidden = false;
@@ -1107,12 +1022,7 @@ createExcessReport.addEventListener('click', function(e) {
     document.getElementById("dateSelectors").value = EXCESS;
 });
 
-/**
- * The function responsible for displaying the Excess Report in the Manager GUI.
- * @author Hannah Craft
- * @param {String} startDate A String variable that stores a date in the form "YYYY-MM-DD"
- * @param {String} endDate A String variable that stores a date in the form "YYYY-MM-DD"
- */
+
 
 function excessReportLogic(startDate){
     // SALES QUERY:
@@ -1131,7 +1041,7 @@ function excessReportLogic(startDate){
     }).then(function(data){
         console.log(data.result);
         
-        htmlExcessRep = excessReport(data, startDate);
+        htmlExcessRep = excessReport(data);
         console.log(htmlExcessRep);
         content = document.getElementById("managerView");
         content.innerHTML = htmlExcessRep;
@@ -1141,35 +1051,27 @@ function excessReportLogic(startDate){
     }
 );}
 
-/**
- * Will return an HTML string representing the Excess Report output 
- * @author Hannah Craft
- * @param {Array} data a two dimmensional array containing menu items, how much they were sold, and and how much is left over the given day
- * @param {String} startDate a string of the form YYYY-MM-DD 
- * @returns {String} a string containing a title and a table with the columns "Item Name", "Quantity Sold", and "Quantity" headings 
- */
-
- function excessReport(data, startDate){
-    excessTable = '<div class="reportContainer" id="excessReportContainer"><p id="excessReportTitle" class="reportTitle">Excess Report for ' + startDate + '</p><table class="reportTable"><tbody><tr>';
-    excessTable = excessTable + "<th>Item Name</th>";
-    excessTable = excessTable + "<th>Quantity Sold</th>";
-    excessTable = excessTable + "<th>Quantity</th>";
-    excessTable = excessTable + "</tr>"
+function excessReport(data){
+    excessTable = '&lt;p id="excessReportTitle">Excess Report&lt;/p>&lt;table>&lt;tbody>&lt;tr>';
+    excessTable = excessTable + "&lt;th>Item Name&lt;/th>";
+    excessTable = excessTable + "&lt;th>Quantity Sold&lt;/th>";
+    excessTable = excessTable + "&lt;th>Quantity&lt;/th>";
+    excessTable = excessTable + "&lt;/tr>"
     let currColor = "";
-    for (let i = 0; i < data.result.length; i++){
+    for (let i = 0; i &lt; data.result.length; i++){
         if (i%2){
             currColor = "lightgray";
         }else{
             currColor = "white";
         }
-        excessTable = excessTable + '<tr id = "itemSold" style="background-color:' + currColor + '">';
-        excessTable = excessTable + "<td>" + data.result[i].itemid + "</td>";
-        excessTable = excessTable + "<td>" + data.result[i].quantity_sold + "</td>";
-        excessTable = excessTable + "<td>" + data.result[i].quantity + "</td>";
-        excessTable = excessTable + "</tr>"
+        excessTable = excessTable + '&lt;tr id = "itemSold" style="background-color:' + currColor + '">';
+        excessTable = excessTable + "&lt;td>" + data.result[i].itemid + "&lt;/td>";
+        excessTable = excessTable + "&lt;td>" + data.result[i].quantity_sold + "&lt;/td>";
+        excessTable = excessTable + "&lt;td>" + data.result[i].quantity + "&lt;/td>";
+        excessTable = excessTable + "&lt;/tr>"
     }
     
-    excessTable = excessTable + '</tbody></table></div>'
+    excessTable = excessTable + '&lt;/tbody>&lt;/table>'
     return excessTable;
 }
 
@@ -1215,7 +1117,6 @@ function updateInvFunction(){
         oldInvItems[i-1]["itemid"] = itemid;
         changeMenuItemInventoryArr(oldName, itemid);
     }
-    alert("Inventory Table has been Updated");
 }
 
 /**
@@ -1226,12 +1127,12 @@ function updateInvFunction(){
  */
 async function changeMenuItemInventoryArr(oldName, newName){
     let menuItems = await getMenuItemArray();
-    for (let i = 0; i < menuItems.length; i++){
+    for (let i = 0; i &lt; menuItems.length; i++){
         if (menuItems[i]["ingredient_list"].includes(oldName)){
             menu_id = i+1
             
             newIngredients = [];
-            for (let j = 0; j < menuItems[i]["ingredient_list"].length; j++){
+            for (let j = 0; j &lt; menuItems[i]["ingredient_list"].length; j++){
                 if (menuItems[i]["ingredient_list"][j] == oldName){
                     newIngredients.push(newName);
                 }else{
@@ -1244,6 +1145,7 @@ async function changeMenuItemInventoryArr(oldName, newName){
 
             const data = {menu_id, newIngredients};
             let x = fetchPost("/updateMenuItemInventoryArr", data);
+
         }
     }
 }
@@ -1258,37 +1160,37 @@ async function changeMenuItemInventoryArr(oldName, newName){
  * @returns {String} An HTML table in the form of a string.
  */
 function makeIngredientCheckbox (menuItem, data) {
-    let htmlStr = '<div id="ingredientSelector"><table class="ingredientSelectTable" id="ingredientSelectTable' + menuItem.menu_id + '">';
+    let htmlStr = '&lt;div id="ingredientSelector">&lt;table class="ingredientSelectTable" id="ingredientSelectTable' + menuItem.menu_id + '">';
 
-    for (let i = 0; i < data.result.length; i++){
+    for (let i = 0; i &lt; data.result.length; i++){
         let itemid = data.result[i].itemid;
         let count = 0;
         let checked = "";
 
         if (i%2 == 0){
-            htmlStr = htmlStr + "<tr>";
+            htmlStr = htmlStr + "&lt;tr>";
         }
 
         if (menuItem.ingredient_list.includes(itemid)){ 
             console.log(checked);
             checked = "checked";
-            for (let j = 0; j < menuItem.ingredient_list?.length; j++){
+            for (let j = 0; j &lt; menuItem.ingredient_list?.length; j++){
                 if (menuItem.ingredient_list[j] == itemid){
                     count++;
                 }
             }
         }
 
-        htmlStr = htmlStr + '<td><input type="checkbox" id="' + itemid + '" name="' + itemid + '"' + checked + ' value="yes">';
-        htmlStr = htmlStr + '<label for="' + itemid + '">' + itemid + '</label>';
-        htmlStr = htmlStr + '<input type="number" min="1" class="numInput" value="' + count + '"id="' + itemid+ 'Qty"></input></td>';
+        htmlStr = htmlStr + '&lt;td>&lt;input type="checkbox" id="' + itemid + '" name="' + itemid + '"' + checked + ' value="yes">';
+        htmlStr = htmlStr + '&lt;label for="' + itemid + '">' + itemid + '&lt;/label>';
+        htmlStr = htmlStr + '&lt;input type="number" min="1" class="numInput" value="' + count + '"id="' + itemid+ 'Qty">&lt;/input>&lt;/td>';
 
         if (i%2 == 1 || i == data.result.length){
-            htmlStr = htmlStr + "</tr>";
+            htmlStr = htmlStr + "&lt;/tr>";
         }
     }
 
-    htmlStr = htmlStr + '</table><button id="ingSelectButton" onclick="getSelectedIngredients(' + menuItem.menu_id + ')">Select Ingredients</button></div>'
+    htmlStr = htmlStr + '&lt;/table>&lt;button id="ingSelectButton" onclick="getSelectedIngredients(' + menuItem.menu_id + ')">Select Ingredients&lt;/button>&lt;/div>'
     return htmlStr;
 }
 
@@ -1331,7 +1233,7 @@ function getSelectedIngredients(menuID){
             let value = document.getElementById(checkbox.id+"Qty").value;
 
             if (checkbox.checked){
-                for (let k = 0; k < value; k++){
+                for (let k = 0; k &lt; value; k++){
                     ingredientArr.push(checkbox.id);
                 }
             }
@@ -1343,7 +1245,7 @@ function getSelectedIngredients(menuID){
         console.log("Ingredient select is empty");
     };
     content = document.getElementById("ingredientsFor" + menuID);
-    content.innerHTML = '<div id="ingredientsFor' + menuID + '">' + prettyArrayStr(ingredientArr) + '<button class="editIngButtons" id="editMenu'+ menuID +'" onclick="populateIngredientCheckbox('+ menuID + ')">Edit</button></div>'
+    content.innerHTML = '&lt;div id="ingredientsFor' + menuID + '">' + prettyArrayStr(ingredientArr) + '&lt;button class="editIngButtons" id="editMenu'+ menuID +'" onclick="populateIngredientCheckbox('+ menuID + ')">Edit&lt;/button>&lt;/div>'
 }
 
 /********************** GOOGLE **********************/
@@ -1373,15 +1275,10 @@ function initMap() {
     });
 }
   
-window.initMap = initMap;
+  window.initMap = initMap;
 
 
   /******************************* Delete Inventory ************************/
-
-  /**
- * An object representing the "Delete Inventory Item" button in the Manager GUI
- * @type {HTML}
- */
   const  deleteInventoryItemButton = document.getElementById("deleteInventoryItemButton");
 
 deleteInventoryItemButton.addEventListener('click', function(e) {
@@ -1419,52 +1316,40 @@ deleteInventoryItemButton.addEventListener('click', function(e) {
 
 
 /******************* UPDATE PICTURE ***********************/
-/**
- * Will return an HTML string representing the Update Menu Picture output 
- * @author Octavio Almanza
- * @param {Array} data a two dimmensional array containing menu items and there image urls
- * @returns {String} a string containing a title and a table with the columns "Menu ID", "Item Name", "Image URL", and "Image Picture" headings 
- */
-
 function makePictureTable(data){    
-    pictureTable = '<div id="tableAndUpdateButton"> <table id="pictureTable"> <tr id = "titleRow">';
-    pictureTable = pictureTable + "<th>Menu ID</th>";
-    pictureTable = pictureTable + "<th>Item Name</th>";
-    pictureTable = pictureTable + "<th>Image URL</th>";
-    pictureTable = pictureTable + "<th>Item Picture</th>";
-    pictureTable = pictureTable + "</tr>";
+    pictureTable = '&lt;div id="tableAndUpdateButton"> &lt;table id="pictureTable"> &lt;tr id = "titleRow">';
+    pictureTable = pictureTable + "&lt;th>Menu ID&lt;/th>";
+    pictureTable = pictureTable + "&lt;th>Item Name&lt;/th>";
+    pictureTable = pictureTable + "&lt;th>Image URL&lt;/th>";
+    pictureTable = pictureTable + "&lt;th>Item Picture&lt;/th>";
+    pictureTable = pictureTable + "&lt;/tr>";
 
     currColor = "grey";
-    for (let i = 0; i < data.result.length; i++){
+    for (let i = 0; i &lt; data.result.length; i++){
         if (i%2){
             currColor = "lightgray";
         }else{
             currColor = "white";
         }
 
-        pictureTable = pictureTable + '<tr id = "menuItem" style="background-color:' + currColor + '">';
-        pictureTable = pictureTable + '<td>'+ data.result[i].menu_id + "</td>";
-        pictureTable = pictureTable + '<td>'+ data.result[i].item_name + "</td>";
-        pictureTable = pictureTable + '<td contenteditable="true" id="imageLink">' + data.result[i].image_url + "</td>";
-        pictureTable = pictureTable + '<td class="imgContainer">' + '<img src = "'+data.result[i].image_url+'" alt="Image of ' + data.result[i].item_name + '">' + "</td>";
-        pictureTable = pictureTable + "</tr>";
+        pictureTable = pictureTable + '&lt;tr id = "menuItem" style="background-color:' + currColor + '">';
+        pictureTable = pictureTable + '&lt;td>'+ data.result[i].menu_id + "&lt;/td>";
+        pictureTable = pictureTable + '&lt;td>'+ data.result[i].item_name + "&lt;/td>";
+        pictureTable = pictureTable + '&lt;td>&lt;p contenteditable="true">' + data.result[i].image_url + "&lt;/p>&lt;/td>";
+        pictureTable = pictureTable + "&lt;td>" + "&lt;img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "&lt;/td>";
+        pictureTable = pictureTable + "&lt;/tr>";
     }
-    pictureTable = pictureTable + '</table><button id="updatePictureTable" onClick="updatePicture()">Update Table</button></div>';
+    pictureTable = pictureTable + '&lt;/table>&lt;button id="updatePictureTable" onClick="updatePicture()">Update Table&lt;/button>&lt;/div>';
     return pictureTable;
 }
 
-/**
- * An object representing the "Update Menu Picture" button in the Manager GUI
- * @type {HTML}
- */
+
 const  updateMenuItemButton = document.getElementById("updateMenuItemButton");
 
 updateMenuItemButton.addEventListener('click', function(e) {
-    console.log('update menu was clicked');
-    document.getElementById("dateSelectors").hidden = true;
-    document.getElementById("managerView").hidden = false;
-
-    fetch('/getMenu', {method: 'GET'})
+  console.log('update menu was clicked');
+  
+  fetch('/getMenu', {method: 'GET'})
         .then(function(response) {
             if(response.ok) return response.json();
             throw new Error('Request failed.');
@@ -1482,11 +1367,6 @@ updateMenuItemButton.addEventListener('click', function(e) {
     });
   
 });
-
-/**
- * Iterates through the picture table that the manager modified and will update the table appropriately
- * @author Hannah Craft
- */
 
 async function updatePicture(){
     // Revert back to english:
@@ -1508,15 +1388,26 @@ async function updatePicture(){
         x = await fetchPost('/updatePicture', data);
         
     }
-}
+}</code></pre>
+        </article>
+    </section>
 
-function goHome(){
-    document.getElementById("dateSelectors").hidden = true;
-    let view = document.getElementById("managerView");
-    view.hidden = false;
-    
-    let homeHTML = '<div id="homeScreen"><p id="welcomeManager">Welcome, Manager</p><div id="map"></div></div>';
-    view.innerHTML=homeHTML;
 
-    initMap();
-}
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addToOrder">addToOrder</a></li><li><a href="global.html#changeMenuItemInventoryArr">changeMenuItemInventoryArr</a></li><li><a href="global.html#checkIfValidDates">checkIfValidDates</a></li><li><a href="global.html#clearOrder">clearOrder</a></li><li><a href="global.html#closeDrinks">closeDrinks</a></li><li><a href="global.html#compareQtySold">compareQtySold</a></li><li><a href="global.html#createPopMenuItemReport">createPopMenuItemReport</a></li><li><a href="global.html#createSalesReport">createSalesReport</a></li><li><a href="global.html#decQty">decQty</a></li><li><a href="global.html#displayPopItems">displayPopItems</a></li><li><a href="global.html#fetchPost">fetchPost</a></li><li><a href="global.html#getEndDate">getEndDate</a></li><li><a href="global.html#getMenuItemArray">getMenuItemArray</a></li><li><a href="global.html#getOrdersBetweenDates">getOrdersBetweenDates</a></li><li><a href="global.html#getSelectedIngredients">getSelectedIngredients</a></li><li><a href="global.html#getStartDate">getStartDate</a></li><li><a href="global.html#getTax">getTax</a></li><li><a href="global.html#getTotal">getTotal</a></li><li><a href="global.html#googleTranslateElementInit">googleTranslateElementInit</a></li><li><a href="global.html#incQty">incQty</a></li><li><a href="global.html#initMap">initMap</a></li><li><a href="global.html#makeArrayOfMenuItemsAndQty">makeArrayOfMenuItemsAndQty</a></li><li><a href="global.html#makeEmptyArr">makeEmptyArr</a></li><li><a href="global.html#makeIngredientCheckbox">makeIngredientCheckbox</a></li><li><a href="global.html#makeInventoryTable">makeInventoryTable</a></li><li><a href="global.html#makeMenuTable">makeMenuTable</a></li><li><a href="global.html#oldInvItems">oldInvItems</a></li><li><a href="global.html#openDrinks">openDrinks</a></li><li><a href="global.html#originalInvItems">originalInvItems</a></li><li><a href="global.html#popReportLogic">popReportLogic</a></li><li><a href="global.html#populateGUI">populateGUI</a></li><li><a href="global.html#populateIngredientCheckbox">populateIngredientCheckbox</a></li><li><a href="global.html#prettyArrayStr">prettyArrayStr</a></li><li><a href="global.html#removeDuplicateItems">removeDuplicateItems</a></li><li><a href="global.html#revertToEnglish">revertToEnglish</a></li><li><a href="global.html#salesReport">salesReport</a></li><li><a href="global.html#salesReportLogic">salesReportLogic</a></li><li><a href="global.html#submitDateLogic">submitDateLogic</a></li><li><a href="global.html#submitDates">submitDates</a></li><li><a href="global.html#updateHashMap">updateHashMap</a></li><li><a href="global.html#updateInvFunction">updateInvFunction</a></li><li><a href="global.html#updateTableFunction">updateTableFunction</a></li><li><a href="global.html#viewInventoryButton">viewInventoryButton</a></li><li><a href="global.html#viewMenuButton">viewMenuButton</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.0</a> on Mon Dec 05 2022 18:52:25 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

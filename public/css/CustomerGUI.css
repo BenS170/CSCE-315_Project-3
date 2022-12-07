@@ -37,20 +37,25 @@ left: 46%;
 transform: translate(-50%, -50%);
 margin: 3%;
 padding: 5%; 
-margin-bottom: 15%;
+margin-bottom: 10%;
 box-shadow: 2px 2px 4px black;
+transition-duration: 0.3s;
 }
 .menuButtons:hover{
   width: 90%;
   left: 47%;
   font-size: 230%;
+  color: black;
+  background-color: white;
+  font-weight:bolder;
 }
 .menuButtons:focus{
   width: 90%;
   left: 47%;
   font-size: 230%;
-  color:#5B0726;
+  color:black;
   background-color:white;
+  font-weight:bolder;
   
 }
 
@@ -72,9 +77,22 @@ cursor: pointer;
 box-shadow: 2px 2px 4px black;
 }
 .orderButton:hover{
-  background-color: #5B0726;
+  background-color: maroon;
   color: white;
-  width: 23%;
+  font-weight: bolder;
+  transition: 0.3s;
+  width: 17%;
+  height: 8%;
+  font-size: 120%;
+
+}
+
+.orderButton:focus{
+  background-color: maroon;
+  color: white;
+  font-weight: bolder;
+  transition: 0.3s;
+  width: 17%;
   height: 8%;
   font-size: 120%;
 }
@@ -82,7 +100,7 @@ box-shadow: 2px 2px 4px black;
 .addToOrder{
   color:white;
   background-color: #5B0726;
-  border-color:#5B0726;
+  border-color: maroon;
   height: 45px;
   width: 175px;
   cursor: pointer;
@@ -92,10 +110,28 @@ box-shadow: 2px 2px 4px black;
   height: 68px;
   width: 203px;
   font-size: 120%;
+  border-color: goldenrod;
+  border-width: 5px;
+  transition: 0.3s;
+  background-color:lightgray;
+  color: black;
+  font-weight:bolder;
+}
+
+.addToOrder:focus{
+  height: 68px;
+  width: 203px;
+  font-size: 120%;
+  border-color: goldenrod;
+  border-width: 5px;
+  transition: 0.3s;
+  background-color:lightgray;
+  color: black;
+  font-weight:bolder;
 }
 
 
-.deleteFromOrder{
+/* .deleteFromOrder{
   color:white;
   background-color: #5B0726;
   border-color:#5B0726;
@@ -108,16 +144,16 @@ box-shadow: 2px 2px 4px black;
 }
 .deleteFromOrder:focus{
   text-decoration: underline;
- }
+ } */
 
 .logo{
 margin: 0;
 position: relative;
 top: 10%;
-left: 20%;
+left: 35%;
 transform: translate(-50%, -50%);
-margin: 2%;
-padding: 3%;
+margin: 5%;
+padding: 5%;
 width: 90%;
 margin-bottom: -50%;
 border: 1px goldenrod;
@@ -184,12 +220,27 @@ th, td {
   height:50px;
   width:150px;
   cursor:pointer;
+
 }
 .submit:hover {
   height:70px;
   width:170px; 
   font-size:105%;
+  border-color: goldenrod;
+  border-width: 5px;
+  transition: 0.3s;
+  font-weight:bolder;
 } 
+
+.submit:focus{
+  height:70px;
+  width:170px; 
+  font-size:105%;
+  border-color: goldenrod;
+  border-width: 5px;
+  transition: 0.3s;
+  font-weight:bolder;
+}
 
 .cancel{
   color:white; 
@@ -203,16 +254,41 @@ th, td {
   height:70px;
   width:170px; 
   font-size:105%;
+  border-color: goldenrod;
+  border-width: 5px;
+  transition: 0.3s;
+  font-weight:bolder;
+}
+
+.cancel:focus{
+  height:70px;
+  width:170px; 
+  font-size:105%;
+  border-color: goldenrod;
+  border-width: 5px;
+  transition: 0.3s;
+  font-weight:bolder;
 }
 
 .increment-and-decrement-qty{
   color:white; 
   background-color:#5B0726; 
-  border:none;
   height:30px;
   width:30px;
   font-size:20px;
   cursor:pointer;
+}
+
+.increment-and-decrement-qty:hover{
+  height:27px;
+  width:27px;
+  transition:0.3s;
+}
+
+.increment-and-decrement-qty:focus{
+  height:27px;
+  width:27px;
+  transition:0.3s;
 }
 
 /* GOOGLE MAPS */
@@ -223,7 +299,10 @@ th, td {
   /* The width is the width of the web page */
   border: goldenrod ridge 3px;
   box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
-  left: 575px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  float: center;
 
 
 }

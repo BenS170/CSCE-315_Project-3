@@ -1,0 +1,29 @@
+Project 3 - Sprint 3
+
+SCRUM Meeting #3
+
+12/5/22
+
+Start Time - 7:00
+
+Notes:
+
+7:00 - All team member were present for this meeting
+
+7:00 -  Octavio begun asking each team member what he/she had completed since the last meeting.
+
+7:01 - Priyanka began by explaining how she added image urls for all menu items in the database.
+She also made them appear in both the Customer GUI and Manager GUI as well as changed the formatting
+for the menu items in the Customer GUI.
+7:04 - Hannah worked on tabbing, small errors and updating images of menu items in the Manager GUI. 
+She also worked on some basic accessibility features and adding images for drinks and desserts 
+in the customer gui.
+7:06 - Ben fixed a lot of bugs regarding the remove ingredients function. He also included a condition 
+that if the database is out of inventory, the order will not go through. He changed a lot of CSS and accessibility
+features in the Server GUI.
+7:08 - Anoop implemented increment and decrement buttons for items in the Customer GUI. He also added
+user feedback whenever a user adds an item to their order. 
+7:09 - Octavio continued working on the Manager GUI adding accessibility features and different CSS
+elements. He also helped out many other team member with their tasks on multiple GUIs.
+
+End Time - 7:10
