@@ -242,6 +242,7 @@ table td{
 
 .unitCell{
     white-space: nowrap;
+    text-transform: none;
 }
 
 #unitHeader{

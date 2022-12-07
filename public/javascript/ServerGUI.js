@@ -1,3 +1,4 @@
+/** @module ServerFunctions */
 
 var order_rows = 0;
 var order_items = [];

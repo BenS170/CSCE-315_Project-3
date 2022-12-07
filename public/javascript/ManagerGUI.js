@@ -1,3 +1,5 @@
+/** @module ManagerFunctions */
+
 /**
  * Creates an HTML table from the information passed in from data. 
  * @author Octavio Almanza
@@ -394,7 +396,7 @@ function makeInventoryTable(data){
         htmlMenuTable = htmlMenuTable + '<td contenteditable="true" class="unitCell">' + data.result[i].unit + "</td>";
         htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].quantity + "</td>";
         htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].serving_size + "</td>";
-        htmlMenuTable = htmlMenuTable + '<td>' + data.result[i].quantity_needed + "</td>";
+        htmlMenuTable = htmlMenuTable + '<td contenteditable="true">' + data.result[i].quantity_needed + "</td>";
         htmlMenuTable = htmlMenuTable + "</tr>";
         
         // We want a sort-of "backup" in the case the manager makes a mistake
