@@ -249,10 +249,7 @@ const addMenuItemButton = document.getElementById("addMenuItemButton");
 
 addMenuItemButton.addEventListener('click', function(e) {
   console.log('add menu was clicked');
-  const menuID = prompt("What is the menu ID?", "23");
-  if(menuID == null || menuID == ""){
-    alert("add menu item was canceled");
-  } else{
+  
     const menuName = prompt("What is the name of the item?", "bacon");
     if (menuName == null || menuName == ""){
         alert("add menu item was canceled");
@@ -261,24 +258,12 @@ addMenuItemButton.addEventListener('click', function(e) {
         if (menuPrice == null || menuPrice == ""){
             alert("add menu item was canceled");
         } else{
-            const menuIngredients = prompt("What ingredients do you want for the new item?", 'i.e. {lettuce, bacon, "salad dressing", ...}');
+            const menuIngredients = prompt("What ingredients do you want for the new item?", 'i.e. {lettuce, bacon, salad dressing, ...}');
             if (menuIngredients == null || menuIngredients == ""){
                 alert("add menu item was canceled");
             } else {
                 const menuIngNum = prompt("How many ingredients is in the new item");
-                // const commas = 0;
-                // if (menuIngredients.length() > 0){
-                //     commas = 1;
-                //     for(var i = 0; i < menuIngredients.length(); i++){
-                //         if(i == ","){
-                //             commas++;
-                //         }
-    
-                //     }
 
-                // }
-
-                // menuIngNum = toString(commas);
                 
                 if (menuIngNum == null || menuIngNum == "" || menuIngNum == "0"){
                     alert("add menu item was canceled");
@@ -288,8 +273,8 @@ addMenuItemButton.addEventListener('click', function(e) {
                         alert("add menu item was canceled");
                     } else{
 
-                        if (confirm(" are you sure you want to make an item with these values? (id, name, price, ingredients, type" + menuID + ", " + menuName + ", " + menuPrice + ", " + menuIngredients, ", " + menuType)){
-                            const data = {menuID, menuName,menuPrice, menuIngredients, menuIngNum, menuType};
+                        if (confirm(" are you sure you want to make an item with these values? (name, price, ingredients, type): " + menuName + ", " + menuPrice + ", " + menuIngredients, ", " + menuType)){
+                            const data = {menuName,menuPrice, menuIngredients, menuIngNum, menuType};
   
                             fetch('/addMenuItem', {
                               method: 'POST',
@@ -317,71 +302,9 @@ addMenuItemButton.addEventListener('click', function(e) {
             }
 
         }
-    }
-});
-
-/**************** UPDATE MENU ITEM *****************************/
-
-const  updateMenuItemButton = document.getElementById("updateMenuItemButton");
-
-updateMenuItemButton.addEventListener('click', function(e) {
-  console.log('update menu was clicked');
-  const menuID = prompt("What is the menu ID?", "1");
-  if (menuID == null || menuID == ""){
-    alert("menu update canceled");
-  } else {
-    if (confirm("Do you want to update the price?")){
-        const menuPrice = prompt("What is the new price");
-     
-        const data = {menuID,menuPrice};
     
-        fetch('/updateMenuPriceItem', {
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(function(response) {
-          if(response.ok) {
-            console.log('Click was recorded');
-            return;
-          }
-          throw new Error('Request failed.');
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      } else {
-        if (confirm("Do you want to update the name?")){
-            const menuName = prompt("What is the new name?");
-
-            const data2 = {menuID,menuName};
-
-            fetch('/updateMenuNameItem', {
-                method: 'POST',
-                headers:{
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data2)
-            })
-            .then(function(response) {
-              if(response.ok) {
-                console.log('Click was recorded');
-                return;
-              }
-              throw new Error('Request failed.');
-            })
-            .catch(function(error) {
-              console.log(error);
-            });
-
-        }
-      }
-
-  }
-  
 });
+
 
 
 /*************** DELETE MENU ITEM ***********************/
@@ -511,7 +434,6 @@ orderInventoryButton.addEventListener('click', function(e) {
     console.log('order inventory was clicked');
   
     const inventoryIDPrompt = prompt("What is the inventory ID?", "i.e. bacon");
-    prompt()
     if (inventoryIDPrompt == NULL || inventoryIDPrompt == ""){
       alert("Order Inventory was cancelled")
     }else{
@@ -523,23 +445,25 @@ orderInventoryButton.addEventListener('click', function(e) {
           const inventoryID = inventoryIDPrompt.toLowerCase();
   
           const data = {inventoryID, inventoryQuantity};
-          fetch('/orderInventoryItem', {
-              method: 'POST',
-              headers:{
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(data)
-          })
-          .then(function(response) {
-            if(response.ok) {
-              console.log('Click was recorded');
-              return;
-            }
-            throw new Error('Request failed.');
-          })
-          .catch(function(error) {
-            console.log(error);
-          });
+          if(confirm("Are you sure you want to order " + inventoryQuantity + " of " + inventoryIDPrompt + "?")){
+            fetch('/orderInventoryItem', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(function(response) {
+              if(response.ok) {
+                console.log('Click was recorded');
+                return;
+              }
+              throw new Error('Request failed.');
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+          }
       }
      }
   
@@ -555,27 +479,27 @@ orderInventoryButton.addEventListener('click', function(e) {
   addInventoryItemButton.addEventListener('click', function(e) {
     console.log('add inventory was clicked');
     const inventoryID = prompt("What is the inventory ID?", "i.e. bacon");
-    if (inventoryID == ""){
+    if (inventoryID == "" || inventoryID == NULL){
       alert("Add inventory was canceled")
     } else{
       const inventoryStockprice = prompt("What is the stockprice of this item?", "23");
-      if (inventoryID == ""){
+      if (inventoryStockprice == "" || inventoryStockprice == NULL){
           alert("Add inventory was canceled")
       } else{  
           const inventoryUnits = prompt("What is the units of the item?", "Gallons");
-          if (inventoryID == ""){
+          if (inventoryUnits == "" || inventoryUnits == NULL){
               alert("Add inventory was canceled")
           } else{
               const inventoryQuantity = prompt("How much of the item do you have?", "0");
-              if (inventoryID == ""){
+              if (inventoryQuantity == "" || inventoryQuantity == NULL){
                   alert("Add inventory was canceled")
               } else{
                   const inventoryServingSize = prompt("What is the serving size for this item?",".25");
-                  if (inventoryID == ""){
+                  if (inventoryServingSize == "" || inventoryServingSize == NULL){
                       alert("Add inventory was canceled")
                   } else{
                       const inventoryNeeded = prompt("How much of the item is needed?","400");
-                      if (inventoryID == ""){
+                      if (inventoryNeeded == "" || inventoryNeeded == NULL){
                           alert("Add inventory was canceled")
                       } else{
                               
@@ -1388,6 +1312,118 @@ function initMap() {
   
 window.initMap = initMap;
 
+
+  /******************************* Delete Inventory ************************/
+  const  deleteInventoryItemButton = document.getElementById("deleteInventoryItemButton");
+
+deleteInventoryItemButton.addEventListener('click', function(e) {
+  console.log('inventory delete was clicked');
+  const ID = prompt("What is the inventory ID?", "bacon");
+  if(ID == null || ID == ""){
+    alert("delete menu item was canceled");
+  } else{
+    const inventoryID = ID.toLowerCase();
+    const data = {inventoryID};
+
+    if (confirm("Are you suer that you want to delete item: " + ID)){
+        fetch('/deleteInventoryItem', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(function(response) {
+          if(response.ok) {
+            console.log('Click was recorded');
+            return;
+          }
+          throw new Error('Request failed.');
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      }
+
+    }
+  
+});
+
+
+/******************* UPDATE PICTURE ***********************/
+function makePictureTable(data){    
+    pictureTable = '<div id="tableAndUpdateButton"> <table id="pictureTable"> <tr id = "titleRow">';
+    pictureTable = pictureTable + "<th>Menu ID</th>";
+    pictureTable = pictureTable + "<th>Item Name</th>";
+    pictureTable = pictureTable + "<th>Image URL</th>";
+    pictureTable = pictureTable + "<th>Item Picture</th>";
+    pictureTable = pictureTable + "</tr>";
+
+    currColor = "grey";
+    for (let i = 0; i < data.result.length; i++){
+        if (i%2){
+            currColor = "lightgray";
+        }else{
+            currColor = "white";
+        }
+
+        pictureTable = pictureTable + '<tr id = "menuItem" style="background-color:' + currColor + '">';
+        pictureTable = pictureTable + '<td>'+ data.result[i].menu_id + "</td>";
+        pictureTable = pictureTable + '<td>'+ data.result[i].item_name + "</td>";
+        pictureTable = pictureTable + '<td contenteditable="true" id="imageLink">' + data.result[i].image_url + "</td>";
+        pictureTable = pictureTable + '<td class="imgContainer">' + "<img src = '"+data.result[i].image_url+"'>" + "</td>";
+        pictureTable = pictureTable + "</tr>";
+    }
+    pictureTable = pictureTable + '</table><button id="updatePictureTable" onClick="updatePicture()">Update Table</button></div>';
+    return pictureTable;
+}
+
+
+const  updateMenuItemButton = document.getElementById("updateMenuItemButton");
+
+updateMenuItemButton.addEventListener('click', function(e) {
+  console.log('update menu was clicked');
+  
+  fetch('/getMenu', {method: 'GET'})
+        .then(function(response) {
+            if(response.ok) return response.json();
+            throw new Error('Request failed.');
+        })
+            .then(function(data) {
+            // TODO: Modify HTML using the information received from the database
+            content = document.getElementById("managerView");
+            pictureTable = makePictureTable(data);
+            content.innerHTML = pictureTable;
+
+            console.log(data.result);
+        })
+        .catch(function(error) {
+            console.log(error);
+    });
+  
+});
+
+async function updatePicture(){
+    // Revert back to english:
+    var picTable = document.getElementById("pictureTable");
+    for (let i = 1, row; row = picTable.rows[i]; i++){
+        // iterating through rows. Starting at row 1 bc 0 is headers
+        menu_id = -1;
+        item_name = "";
+        image_url = "";
+        for (let j = 0, col; col = row.cells[j]; j++){
+            if (j == 0){ menu_id = col.textContent; }
+            else if (j == 1){ item_name = col.textContent; }
+            else if (j == 2){ image_url = col.textContent; }
+            else { break; }
+        }
+
+        const data = {menu_id, item_name, image_url};
+        console.log(data);
+        x = await fetchPost('/updatePicture', data);
+        
+    }
+}
 function goHome(){
     document.getElementById("dateSelectors").hidden = true;
     let view = document.getElementById("managerView");
