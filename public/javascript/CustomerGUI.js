@@ -69,6 +69,8 @@ function makeEntreeTable(data){
         CustomerView = document.getElementById("CustomerView");
         CustomerView.hidden = false;
 
+        OrderButton.hidden = false;
+
         CustOrdTable = document.getElementById("order-summary")
         CustOrdTable.hidden = true;
 
