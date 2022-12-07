@@ -1,0 +1,26 @@
+Project 3 - Sprint 3
+
+SCRUM Meeting #1
+
+11/28/22
+
+Start Time - 5:45
+
+Notes:
+
+5:45 - All team member were present for this meeting
+
+5:45 -  Octavio begun asking each team member what he/she had completed since the last meeting.
+
+5:46 - Anoop talked about how he was able to fix some minor bugs in the Customer GUI. He plans to
+implement the Google Images API and move the google maps to the Customer GUI. 
+5:48 - Hannah told the group how she completed the delete inventory item button in the Manager GUI. 
+She also completed a small version of changing and updating the ingredients of menu items.
+5:50 - Ben explained how he was able to read in menu items from the database instead of hard coding them. 
+He also added a drinks pop-up that lists all the bottled/fountain drinks in the Server GUI.
+5:53 - Octavio was able to  bug fixes in the manager GUI, implement inventory table modification, 
+and also modified the index file to be more visually appealing.
+5:56 - Priyanka helped Anoop with a few of the Customer GUI functions and continues her work on 
+the documents for the group.
+
+End Time - 5:57

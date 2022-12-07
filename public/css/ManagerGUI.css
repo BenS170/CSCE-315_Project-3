@@ -7,13 +7,6 @@ body{
     flex-direction: row;
 }
 
-#map {
-    height: 400px;
-    /* The height is 400 pixels */
-    width: 800px;
-    /* The width is the width of the web page */
-}
-
 #revImg{
     box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
     display:block;
@@ -24,10 +17,13 @@ body{
 
     border: medium ridge goldenrod;
     border-radius: 5px;
+
+    transition-duration: 0.2s;   
+
 }
 
 #revImg:hover{
-    border:large ridge goldenrod;
+    margin:2%;
 }
 
 #google_translate_element{
@@ -63,10 +59,16 @@ body{
     display: flex;
     flex-direction: column;
 
+    margin-top: 0.75%;
+
     /*justify-content: flex-start;*/
     flex-grow: 4;
 
     gap: 2%;
+}
+
+#managerView{
+    width: 100%;
 }
 
 .menuSection{
@@ -104,11 +106,20 @@ body{
 }
 
 .menuSection button:hover{      
-    background-color: #5B0726; /* Green */
+    background-color: #5B0726; 
     color: white;
+    font-size: larger;
+    font-weight: bolder;
 }
 
-.menuSection h1{
+.menuSection button:focus{      
+    background-color: #5B0726; /* Green */
+    color: white;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.menuSection h2{
     display: block;
 
     text-align: center;
@@ -120,32 +131,57 @@ body{
     width: 90%;
 }
 
+/* Formatting the large header */
+
 .headers{
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
+    flex-direction: row;
+
     margin-left: 2%;
+
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+    background-color: lightgrey;
+    border: ridge goldenrod 3px;
 }
 
 .headers p{
-    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
-    margin-top: 1%;
-    margin-bottom: 1%;
-
-    padding-top: 2%;
-    padding-bottom: 2%;
-
-    color:black;
-    text-align: center;
     font-size: 200%;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
+    color:black;
 
-    background-color: lightgray;
+    margin-left: 3%;
+}
 
-    border: medium ridge goldenrod;
+.headers button{
+    height:60%;
+    margin-top: 25%;
 
-    width: 97.5%;
+    margin-left: 100%;
+
+    width:fit-content;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-left: 30%;
+    padding-right: 30%;
+
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    font-size: large;
+    color:black;
+    border:black ridge 2px;
+    transition-duration: 0.3s;
+
+    border-radius: 5px;
+
+    text-transform: uppercase;
+}
+
+.headers button:hover{
+    background-color: #5B0726;
+    color:white;
+    font-weight: bolder;
+    font-size: larger;
 }
 
 .contentContainer{
@@ -188,18 +224,32 @@ table th{
     text-transform: uppercase;
     font-size: larger;
 
-    padding-left: auto;
-    padding-right: auto;
+    /* padding-left: 1%;
+    padding-right: 1%; */
     padding-top: 1%;
     padding-bottom: 1%;
 
     text-align: center;
 
-    width: min-content;
+    min-width: fit-content;
 }
 
 table td{
     padding:1%;
+    transition-duration: 0.1s;
+}
+
+.unitCell{
+    white-space: nowrap;
+}
+
+#unitHeader{
+    width:80px;
+    text-align: center;
+}
+
+table td:focus{
+    font-weight: bold;
 }
 
 table p{
@@ -220,13 +270,66 @@ table p{
 
 #menuItem{
     color: black;
-
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+td select{
+    color: black;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
+    font-size: 100%;
+    font-weight: bold;
+    text-transform: capitalize;
+
+    border: ridge black 2px;
+    border-radius: 5px;
+
+    transition-duration: 0.2s;
+}
+
+td select:hover{
+    font-weight: bolder;
+    border: 4px ridge black;
+}
+
+td select:focus{
+    font-weight: bolder;
+    border: 4px ridge black;
 }
 
 /*Stuff for the Sales Report*/
 #dateSelectors {
     width: fit-content;
+}
+
+#dateSelectors h3{
+    width: 200%;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: x-large;
+    
+    color: black;
+    border-bottom: ridge 5px goldenrod;
+    text-transform: uppercase;
+    text-align: center;
+
+    margin-left: 2%;
+
+    padding:2%;
+
+}
+
+#dateSelectors p{
+    width: 150%;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+
+    color:black;
+
+    margin-left: 2%;
+    margin-bottom: -0.5%;
+
 }
 
 #dateSelectors #datePanel1{
@@ -242,20 +345,32 @@ table p{
 }
 
 #dateSelectors select{
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: bold;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     
     margin-right: 2%;
     padding: 2%;
 
+    border: black 3px ridge;
+
+    transition-duration: 0.2s;
+}
+
+#dateSelectors select:hover{
+    font-weight: bolder;
+    border: black 5px ridge;
+}
+
+#dateSelectors select:focus{
+    font-weight: bolder;
     border: black 5px ridge;
 }
 
 #submitDates{
     display:flex;
 
-    font-size: x-large;
+    font-size: 145%;
     font-weight: bold;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 
@@ -266,28 +381,51 @@ table p{
     transition-duration: 0.4s;
 }
 
-#dateSelectors button:hover{
+#submitDates:hover{
     background-color: #5B0726;
     color: white;
+    font-size: 150%;
+    font-weight: bolder;                
 }
 
+#submitDates:focus{
+    background-color: #5B0726;
+    color: white;
+    font-size: 150%;
+    font-weight: bolder;
+}
 
 #itemSold{
     color: black;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-/*Stuff for the popular menu items*/
-#popMenuItems {
+/*Stuff for the manager reports*/
+.reportContainer {
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+
     display:flex;
     flex-direction: column;
+    border: ridge goldenrod 4px;
+
+    background-color: white;
+
+    width:50%;
+    margin-left: 25%;
+    margin-right: 25%;
+
+    margin-top: 2%;
+    margin-bottom: 2%;
 }
 
-#popMenuItems p{
+.reportContainer p{
     color:black;
     background-color: white;
 
-    text-transform: capitalize;
+    text-transform: uppercase;
+
+    border-bottom: ridge black 3px;
+
     font-weight: bold;
 
     margin-left: auto;
@@ -295,9 +433,41 @@ table p{
     padding: 2%;
 }
 
-#popMenuItems table{
-    margin-left: auto;
-    margin-right: auto;
+.reportContainer table{
+    display: table;
+    width:90%;
+    min-width: fit-content;
+
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-bottom: 2%;
+
+    table-layout: auto;
+    display: block;
+}
+
+.reportContainer tbody{
+    min-width: 100%;
+    display:table;
+}
+
+.reportContainer table tr{
+    width: 30%;
+}
+
+.reportContainer table td{
+    min-width: fit-content;
+    max-width: 100%;
+}
+
+.reportContainer table td:hover{
+    font-weight: bold;
+}
+
+.reportContainer table th{
+    text-align: center;
+    min-width: fit-content;
+    max-width: 100%;
 }
 
 /* Ingredient Selector Formatting */
@@ -307,7 +477,7 @@ table p{
 
 .ingredientSelectTable{
     border:none;   
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: scroll;
 }
 
@@ -330,12 +500,21 @@ table p{
     font-weight: bold;
     font-size: 100%;
 
-    transition-duration: 0.3s;   
+    transition-duration: 0.2s;   
 }
 
 #ingSelectButton:hover{
     background-color: #5B0726;
     color:white;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+#ingSelectButton:focus{
+    background-color: #5B0726;
+    color:white;
+    font-size: larger;
+    font-size: bolder;
 }
 
 .ingredientSelectTable td{
@@ -350,12 +529,22 @@ table p{
 
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 
-    transition-duration: 0.3s;
+    transition-duration: 0.2s;
 }
 
 .ingredientSelectTable td:hover{
     background-color: #5B0726;
     color:white;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.ingredientSelectTable td:focus{
+    background-color: #5B0726;
+    color:white;
+
+    font-size: larger;
+    font-weight: bolder;
 }
 
 .ingredientSelectTable td label{
@@ -381,20 +570,182 @@ table p{
     border-style: ridge;
     border-radius: 5px;
 
-    text-transform: uppercase;
     font-weight: bold;
     font-size: 100%;
 
-    transition-duration: 0.3s;   
+    transition-duration: 0.2s;   
 }
 
 .editIngButtons:hover{
     background-color: #5B0726;
     color:white;
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.editIngButtons:focus{
+    background-color: #5B0726;
+    color:white;
+
+    font-size: larger;
+    font-weight: bolder;
+}
+
+/*Home stuff*/
+#welcomeManager{
+    display:block;
+    text-align: center;
+    min-width: 100%;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* GOOGLE MAPS */
 #map{
-    margin-left: auto;
-    margin-right: auto;
+    height: 400px;
+    /* The height is 400 pixels */
+    width: 800px;
+    /* The width is the width of the web page */
+
+    max-width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
+
+    border: goldenrod ridge 3px;
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+
+}
+
+/* BUTTON FOR UPDATING MENU ITEM TABLE*/
+#updateTable{
+    min-width: auto;
+    background-color: white;
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+    
+    color:black;
+    font-weight: bold;
+
+    font-size: 125%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    border-radius: 5px;
+
+    transition-duration: 0.2s;
+}
+
+#updateTable:hover{
+    background-color: #5B0726;
+    color:white;
+
+    font-size: larger;
+    font-weight: bolder;
+}
+
+#updateTable:focus{
+    background-color: #5B0726;
+    color:white;
+
+    font-size: larger;
+    font-weight: bolder;
+}
+
+/* BUTTON FOR UPDATING INVENTORY TABLE*/
+#updateInvTable{
+    min-width: auto;
+    background-color: white;
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+    
+    color:black;
+    font-weight: bold;
+
+    font-size: 125%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    border-radius: 5px;
+
+    transition-duration: 0.2s;
+}
+
+#updateInvTable:hover{
+    background-color: #5B0726;
+    color:white;
+
+    font-size: larger;
+    font-weight: bolder;
+}
+
+#updateInvTable:focus{
+    background-color: #5B0726;
+    color:white;
+
+    font-size: larger;
+    font-weight: bolder;
+}
+
+#inventoryTable{
+    display:table;
+    table-layout: auto;
+}
+
+#inventoryTable th{
+    width:auto;
+}
+
+#pictureTable{
+    display:table;
+    table-layout: auto;
+    width: 90%;
+}
+
+#pictureTable img{
+    max-width: 40%;
+    max-height: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    
+}
+
+#imageLink{
+    max-width: 200px;
+    min-width: 100px;
+    white-space: nowrap;
+    text-transform: none;
+    overflow-x: scroll;
+}
+
+#updatePictureTable{
+    min-width: auto;
+    background-color: white;
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+    
+    color:black;
+    font-weight: bold;
+
+    font-size: 125%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    border-radius: 5px;
+
+    transition-duration: 0.2s;
+}
+
+#updatePictureTable:hover{
+    background-color: #5B0726;
+    color:white;
+
+    font-size: larger;
+    font-weight: bolder;
+}
+
+#updatePictureTable:focus{
+    background-color: #5B0726;
+    color:white;
+
+    font-size: larger;
+    font-weight: bolder;
+}
+
+.imgContainer{
+    max-width: fit-content;
+    max-height: fit-content;
 }

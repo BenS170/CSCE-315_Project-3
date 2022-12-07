@@ -50,9 +50,25 @@ body{
     padding-top: 5%;
     padding-bottom: 5%;
 
-    font-size: 125%;
+    font-size: large;
     font-weight: bold;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.linkButton button:hover{
+    background-color: #5B0726;
+    color:white;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.linkButton button:focus{
+    background-color: #5B0726;
+    color:white;
+    font-weight: bolder;
+    font-size: larger;
 }
 
 .title{

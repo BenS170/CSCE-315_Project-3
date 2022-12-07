@@ -37,7 +37,7 @@ left: 46%;
 transform: translate(-50%, -50%);
 margin: 3%;
 padding: 5%; 
-margin-bottom: 15%;
+margin-bottom: 10%;
 box-shadow: 2px 2px 4px black;
 transition-duration: 0.3s;
 }
@@ -150,10 +150,10 @@ box-shadow: 2px 2px 4px black;
 margin: 0;
 position: relative;
 top: 10%;
-left: 20%;
+left: 35%;
 transform: translate(-50%, -50%);
-margin: 2%;
-padding: 3%;
+margin: 5%;
+padding: 5%;
 width: 90%;
 margin-bottom: -50%;
 border: 1px goldenrod;
@@ -299,7 +299,10 @@ th, td {
   /* The width is the width of the web page */
   border: goldenrod ridge 3px;
   box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
-  left: 575px;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  float: center;
 
 
 }

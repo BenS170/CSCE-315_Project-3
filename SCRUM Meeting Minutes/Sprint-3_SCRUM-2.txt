@@ -1,0 +1,30 @@
+Project 3 - Sprint 3
+
+SCRUM Meeting #2
+
+12/2/22
+
+Start Time - 9:10
+
+Notes:
+
+9:10 - All team member were present for this meeting
+
+9:10 -  Octavio begun asking each team member what he/she had completed since the last meeting.
+
+9:11 - Hannah started by showing the group how she Hannah worked on changing the update ingredients for the 
+menu items. She made some progress but has a major error that prevents from further action. She plans to
+completed this function before the next meeting.
+9:13 - Ben talked about how he Ben has begun working on removing ingredients from the inventory so that 
+the orders submitted actually remove the ingredients used. He also wants to continue changing the 
+server GUI design as well as implement more accessibility features.
+9:15 - Anoop explained how he got the view order button working outside of creating a new page. He also
+formatted the tax and total, and got all the back end functions correctly implemented for Customer GUI. 
+He plans to fix small bugs and add the google pictures API to the GUI before the next meeting.
+9:18 - Octavio was able to add more input-feedback to the Manager GUI and also created an interface for 
+managers to easily modify the ingredients inside a menu item that reduces the chances for user error.
+9:20 - Priyanka shared how she helped Anoop with some of the frontend services on the Customer GUI. She also
+plans to help Anoop with the pictures for menu items.
+
+
+End Time - 9:20
