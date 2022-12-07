@@ -192,6 +192,7 @@ body{
     align-items: flex-start;
 
     margin-left: 2%;
+    margin-top: 0%;
 
     background-color: lightgray;
     border-style: ridge;
@@ -602,14 +603,12 @@ td select:focus{
 
 /* GOOGLE MAPS */
 #map{
-    height: 400px;
+    height: 500px;
     /* The height is 400 pixels */
-    width: 800px;
+    width: 1000px;
     /* The width is the width of the web page */
 
     max-width: 100%;
-    margin-left: 5%;
-    margin-right: 5%;
 
     border: goldenrod ridge 3px;
     box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
@@ -702,7 +701,6 @@ td select:focus{
     max-height: 40%;
     margin-left: 30%;
     margin-right: 30%;
-    
 }
 
 #imageLink{
@@ -746,6 +744,47 @@ td select:focus{
 }
 
 .imgContainer{
-    max-width: fit-content;
-    max-height: fit-content;
+    max-width: 80%;
+    height: 150px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.imgContainer img{
+    width:auto;
+    height:100%;
+}
+
+/* Home Screen Stuff */
+
+#homeScreen{
+    max-width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 2%;
+
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 2%;
+
+    border: 3px goldenrod ridge;
+    background-color:white;
+    box-shadow: 5px 5px 10px 2px rgba(0,0,0,.8);
+}
+
+#homeScreen p{
+    color:black;
+
+    font-size: 125%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+
+    text-transform: uppercase;
+
+    border-bottom: ridge black 3px;
+
+    font-weight: bold;
+    
+    padding-top: 2%;
+    padding-bottom: 2%;
 }

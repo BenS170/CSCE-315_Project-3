@@ -1371,7 +1371,7 @@ function makePictureTable(data){
         pictureTable = pictureTable + '<td>'+ data.result[i].menu_id + "</td>";
         pictureTable = pictureTable + '<td>'+ data.result[i].item_name + "</td>";
         pictureTable = pictureTable + '<td contenteditable="true" id="imageLink">' + data.result[i].image_url + "</td>";
-        pictureTable = pictureTable + '<td class="imgContainer">' + "<img src = '"+data.result[i].image_url+"'>" + "</td>";
+        pictureTable = pictureTable + '<td class="imgContainer">' + '<img src = "'+data.result[i].image_url+'" alt="Image of ' + data.result[i].item_name + '">' + "</td>";
         pictureTable = pictureTable + "</tr>";
     }
     pictureTable = pictureTable + '</table><button id="updatePictureTable" onClick="updatePicture()">Update Table</button></div>';
@@ -1382,9 +1382,11 @@ function makePictureTable(data){
 const  updateMenuItemButton = document.getElementById("updateMenuItemButton");
 
 updateMenuItemButton.addEventListener('click', function(e) {
-  console.log('update menu was clicked');
-  
-  fetch('/getMenu', {method: 'GET'})
+    console.log('update menu was clicked');
+    document.getElementById("dateSelectors").hidden = true;
+    document.getElementById("managerView").hidden = false;
+
+    fetch('/getMenu', {method: 'GET'})
         .then(function(response) {
             if(response.ok) return response.json();
             throw new Error('Request failed.');
@@ -1424,12 +1426,13 @@ async function updatePicture(){
         
     }
 }
+
 function goHome(){
     document.getElementById("dateSelectors").hidden = true;
     let view = document.getElementById("managerView");
     view.hidden = false;
     
-    let homeHTML = '<p>Welcome, Manager</p><!--The div element for the map --><div id="map"></div>';
+    let homeHTML = '<div id="homeScreen"><p id="welcomeManager">Welcome, Manager</p><div id="map"></div></div>';
     view.innerHTML=homeHTML;
 
     initMap();
