@@ -451,7 +451,7 @@ orderInventoryButton.addEventListener('click', function(e) {
     if (inventoryIDPrompt == null || inventoryIDPrompt == ""){
       alert("Order Inventory was cancelled");
     }else{
-      const inventoryQuantity = prompt("what is the quantity to update to?", "100");
+      const inventoryQuantity = prompt("How much do you want to order?", "100");
       if (inventoryQuantity == null || inventoryQuantity == ""){
           alert("order inventory was cancelled");
       } else{
