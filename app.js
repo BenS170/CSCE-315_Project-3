@@ -566,13 +566,23 @@ app.post('/addInventoryItem', (req, res) => {
     res.status(200).json({ inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded });
 });
 
-app.post('/orderInventoryItem', (req, res) => {
+app.post('/orderInventoryItem', async (req, res) => {
     console.log("inside update inventory item");
     const { inventoryID, inventoryQuantity } = req.body;
     console.log(req.body);
+
+    // get the remaining inventory
+    var remaining = 0;
+     await pool.query("select quantity from inventory where itemid= '"+ inventoryID +"';")
+     .then(query_res => {
+         remaining = query_res.rows[0].quantity;
+     });
+
+     // get new quantity
+     const newQuantity = Number(inventoryQuantity) + Number(remaining);
   
     // Database Code here
-    const queryString = "UPDATE inventory SET quantity= '" + inventoryQuantity +"' WHERE itemid= '" + inventoryID +"';";
+    const queryString = "UPDATE inventory SET quantity= '" + newQuantity +"' WHERE itemid= '" + inventoryID +"';";
     console.log(queryString);
     console.log(queryString);
      pool

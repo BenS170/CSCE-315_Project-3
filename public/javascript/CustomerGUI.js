@@ -35,7 +35,7 @@ function makeEntreeTable(data){
         var itemName = data.result[i].item_name;
         htmlStr += '<h2>' + itemName + '</h2>';
 
-        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:220px;height:185px;'>";
+        var itemImg = "<img src = '"+data.result[i].image_url+"' alt=\" Image of " + itemName + "\" style='width:220px;height:185px;'>";
         htmlStr += itemImg;
 
         var itemPrice = data.result[i].item_price;
@@ -114,7 +114,7 @@ function makeSideTable(data){
         var itemName = data.result[i].item_name;
         htmlStr += '<h2>' + itemName + '</h2>';
 
-        var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+        var itemImg = "<img src = '"+data.result[i].image_url+"' alt=\" Image of " + itemName + "\" style='width:180px;height:140px;'>";
         htmlStr += itemImg;
 
         var itemPrice = data.result[i].item_price;
@@ -193,12 +193,12 @@ function makeDrinkTable(data){
             htmlStr += '<h2>' + itemName + '</h2>';
             
             var itemImg = "";
-            if(itemName == 'Bottled Diet Coke' || itemName == 'Bottled Coke'){
-                itemImg = "<img src = '"+data.result[i].image_url+"' style='width:75px;height:140px;'>";
-            }
-            else{
-                itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
-            }
+            // if(itemName == 'Bottled Diet Coke' || itemName == 'Bottled Coke'){
+            //     itemImg = "<img src = '"+data.result[i].image_url+"' alt=\" Image of " + itemName + "\" style='width:75px;height:140px;'>";
+            // }
+            
+            itemImg = "<img src = '"+data.result[i].image_url+"' alt=\" Image of " + itemName + "\" style='max-width:180px;height:140px;'>";
+            
             htmlStr += itemImg;
     
             var itemPrice = data.result[i].item_price;
@@ -277,7 +277,7 @@ function makeDessertTable(data){
             var itemName = data.result[i].item_name;
             htmlStr += '<h2>' + itemName + '</h2>';
     
-            var itemImg = "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>";
+            var itemImg = "<img src = '"+data.result[i].image_url+"' alt=\" Image of " +itemName + "\" style='width:180px;height:140px;'>";
             htmlStr += itemImg;
     
             var itemPrice = data.result[i].item_price;
