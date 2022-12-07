@@ -280,11 +280,15 @@ th, td {
 }
 
 .increment-and-decrement-qty:hover{
-  height:40px;
-  width:40px;
+  height:27px;
+  width:27px;
   transition:0.3s;
-  border-color:goldenrod;
-  border-width: 4px;
+}
+
+.increment-and-decrement-qty:focus{
+  height:27px;
+  width:27px;
+  transition:0.3s;
 }
 
 /* GOOGLE MAPS */
