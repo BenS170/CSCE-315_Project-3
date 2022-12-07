@@ -5,7 +5,7 @@
  * @returns {String} a string containing the HTML for a table with rows of menu items and their respective information
  */
 
-function makeMenuTable(data){    
+ function makeMenuTable(data){    
     htmlMenuTable = '<div id="tableAndUpdateButton"> <table id="menuTable"> <tr id = "titleRow">';
     htmlMenuTable = htmlMenuTable + "<th>Menu ID</th>";
     htmlMenuTable = htmlMenuTable + "<th>Item Name</th>";
@@ -193,6 +193,11 @@ viewMenuButton.addEventListener('click', function(e) {
 
 /*************** ADD MENU ITEM **********************/
 
+/**
+ * An object representing the "Add Menu Item" button in the Manager GUI. The event listener will ask the user for all the necessary information for a new menu item and updates the database.
+ * @type {HTML}
+ */
+
 const addMenuItemButton = document.getElementById("addMenuItemButton");
 
 addMenuItemButton.addEventListener('click', function(e) {
@@ -256,6 +261,10 @@ addMenuItemButton.addEventListener('click', function(e) {
 
 
 /*************** DELETE MENU ITEM ***********************/
+/**
+ * An object representing the "Delete Menu Item" button in the Manager GUI. The event linstener will ask for what item the user wishes to delete and then remove it from the database.
+ * @type {HTML}
+ */
 const  deleteMenuItemButton = document.getElementById("deleteMenuItemButton");
 
 deleteMenuItemButton.addEventListener('click', function(e) {
@@ -378,16 +387,21 @@ viewInventoryButton.addEventListener('click', function(e) {
 
 /********************** ORDER INVENTORY *********************/
 
+/**
+ * An object representing the "Order Inventory" button in the Manager GUI.
+ * @type {HTML}
+ */
+const orderInventoryButton = document.getElementById("orderInventoryButton");
 orderInventoryButton.addEventListener('click', function(e) {
     console.log('order inventory was clicked');
   
     const inventoryIDPrompt = prompt("What is the inventory ID?", "i.e. bacon");
     if (inventoryIDPrompt == NULL || inventoryIDPrompt == ""){
-      alert("Order Inventory was cancelled")
+      alert("Order Inventory was cancelled");
     }else{
       const inventoryQuantity = prompt("what is the quantity to update to?", "100");
       if (inventoryQuantity == NULL || inventoryQuantity == ""){
-          alert("order inventory was cancelled")
+          alert("order inventory was cancelled");
       } else{
   
           const inventoryID = inventoryIDPrompt.toLowerCase();
@@ -421,6 +435,10 @@ orderInventoryButton.addEventListener('click', function(e) {
 
 
   /************************* ADD INVENTORY ITEM ************************/
+  /**
+ * An object representing the "Add Inventory Item" button in the Manager GUI
+ * @type {HTML}
+ */
 
   const addInventoryItemButton = document.getElementById("addInventoryItemButton");
 
@@ -428,27 +446,27 @@ orderInventoryButton.addEventListener('click', function(e) {
     console.log('add inventory was clicked');
     const inventoryID = prompt("What is the inventory ID?", "i.e. bacon");
     if (inventoryID == "" || inventoryID == NULL){
-      alert("Add inventory was canceled")
+      alert("Add inventory was canceled");
     } else{
       const inventoryStockprice = prompt("What is the stockprice of this item?", "23");
       if (inventoryStockprice == "" || inventoryStockprice == NULL){
-          alert("Add inventory was canceled")
+          alert("Add inventory was canceled");
       } else{  
           const inventoryUnits = prompt("What is the units of the item?", "Gallons");
           if (inventoryUnits == "" || inventoryUnits == NULL){
-              alert("Add inventory was canceled")
+              alert("Add inventory was canceled");
           } else{
               const inventoryQuantity = prompt("How much of the item do you have?", "0");
               if (inventoryQuantity == "" || inventoryQuantity == NULL){
-                  alert("Add inventory was canceled")
+                  alert("Add inventory was canceled");
               } else{
                   const inventoryServingSize = prompt("What is the serving size for this item?",".25");
                   if (inventoryServingSize == "" || inventoryServingSize == NULL){
-                      alert("Add inventory was canceled")
+                      alert("Add inventory was canceled");
                   } else{
                       const inventoryNeeded = prompt("How much of the item is needed?","400");
                       if (inventoryNeeded == "" || inventoryNeeded == NULL){
-                          alert("Add inventory was canceled")
+                          alert("Add inventory was canceled");
                       } else{
                               
                           const data = {inventoryID, inventoryStockprice, inventoryUnits, inventoryQuantity, inventoryServingSize, inventoryNeeded};
@@ -910,6 +928,10 @@ async function popReportLogic(startDate, endDate){
 /************************************ RESTOCK REPORT ******************************/
 
 // Restock Report - Display the list of items whose current inventory is less than the item's minimum amount to have around before needing to restock.
+/**
+ * An object representing the "Restock Report" button in the Manager GUI
+ * @type {HTML}
+ */
 const createRestockReport = document.getElementById("restockReportButton");
 
 createRestockReport.addEventListener('click', function(e) {
@@ -921,6 +943,12 @@ createRestockReport.addEventListener('click', function(e) {
 });
 
 
+/**
+ * The function responsible for displaying the Restock Report in the Manager GUI.
+ * @author Hannah Craft
+ * @param {String} startDate A String variable that stores a date in the form "YYYY-MM-DD"
+ * @param {String} endDate A String variable that stores a date in the form "YYYY-MM-DD"
+ */
 
 function restockReportLogic(startDate, endDate){
     // SALES QUERY:
@@ -948,6 +976,13 @@ function restockReportLogic(startDate, endDate){
         console.log(error);
     }
 );}
+
+/**
+ * Will return an HTML string representing the Restock Report output 
+ * @author Hannah Craft
+ * @param {Array} data a two dimmensional array containing inventory items, how much they have sold, how much is left and the amount of inventory is left over the given interval
+ * @returns {String} a string containing a title and a table with the columns "Item Name", "Servings Sold", "Servings Needed", and "Servins Left" headings 
+ */
 
 function restockReport(data){
     restockTable = '<table><tbody><tr>';
@@ -979,6 +1014,10 @@ function restockReport(data){
 /********************** EXCESS REPORT *******************************/
 
 // Excess Report - Given a timestamp, display the list of items that only sold less than 10% of their inventory between the timestamp and the current time, assuming no restocks have happened during the window.
+/**
+ * An object representing the "Excess Report" button in the Manager GUI
+ * @type {HTML}
+ */
 const createExcessReport = document.getElementById("excessReportButton");
 
 createExcessReport.addEventListener('click', function(e) {
@@ -992,7 +1031,12 @@ createExcessReport.addEventListener('click', function(e) {
     document.getElementById("dateSelectors").value = EXCESS;
 });
 
-
+/**
+ * The function responsible for displaying the Excess Report in the Manager GUI.
+ * @author Hannah Craft
+ * @param {String} startDate A String variable that stores a date in the form "YYYY-MM-DD"
+ * @param {String} endDate A String variable that stores a date in the form "YYYY-MM-DD"
+ */
 
 function excessReportLogic(startDate){
     // SALES QUERY:
@@ -1020,6 +1064,13 @@ function excessReportLogic(startDate){
         console.log(error);
     }
 );}
+
+/**
+ * Will return an HTML string representing the Excess Report output 
+ * @author Hannah Craft
+ * @param {Array} data a two dimmensional array containing menu items, how much they were sold, and and how much is left over the given day
+ * @returns {String} a string containing a title and a table with the columns "Item Name", "Quantity Sold", and "Quantity" headings 
+ */
 
 function excessReport(data){
     excessTable = '<p id="excessReportTitle">Excess Report</p><table><tbody><tr>';
@@ -1249,6 +1300,11 @@ function initMap() {
 
 
   /******************************* Delete Inventory ************************/
+
+  /**
+ * An object representing the "Delete Inventory Item" button in the Manager GUI
+ * @type {HTML}
+ */
   const  deleteInventoryItemButton = document.getElementById("deleteInventoryItemButton");
 
 deleteInventoryItemButton.addEventListener('click', function(e) {
@@ -1286,6 +1342,13 @@ deleteInventoryItemButton.addEventListener('click', function(e) {
 
 
 /******************* UPDATE PICTURE ***********************/
+/**
+ * Will return an HTML string representing the Update Menu Picture output 
+ * @author Octavio Almanza
+ * @param {Array} data a two dimmensional array containing menu items and there image urls
+ * @returns {String} a string containing a title and a table with the columns "Menu ID", "Item Name", "Image URL", and "Image Picture" headings 
+ */
+
 function makePictureTable(data){    
     pictureTable = '<div id="tableAndUpdateButton"> <table id="pictureTable"> <tr id = "titleRow">';
     pictureTable = pictureTable + "<th>Menu ID</th>";
@@ -1305,7 +1368,7 @@ function makePictureTable(data){
         pictureTable = pictureTable + '<tr id = "menuItem" style="background-color:' + currColor + '">';
         pictureTable = pictureTable + '<td>'+ data.result[i].menu_id + "</td>";
         pictureTable = pictureTable + '<td>'+ data.result[i].item_name + "</td>";
-        pictureTable = pictureTable + '<td><p contenteditable="true">' + data.result[i].image_url + "</p></td>";
+        pictureTable = pictureTable + '<td><p contenteditable="true" id="imageLink">' + data.result[i].image_url + "</p></td>";
         pictureTable = pictureTable + "<td>" + "<img src = '"+data.result[i].image_url+"' style='width:180px;height:140px;'>" + "</td>";
         pictureTable = pictureTable + "</tr>";
     }
@@ -1313,7 +1376,10 @@ function makePictureTable(data){
     return pictureTable;
 }
 
-
+/**
+ * An object representing the "Update Menu Picture" button in the Manager GUI
+ * @type {HTML}
+ */
 const  updateMenuItemButton = document.getElementById("updateMenuItemButton");
 
 updateMenuItemButton.addEventListener('click', function(e) {
@@ -1337,6 +1403,11 @@ updateMenuItemButton.addEventListener('click', function(e) {
     });
   
 });
+
+/**
+ * Iterates through the picture table that the manager modified and will update the table appropriately
+ * @author Hannah Craft
+ */
 
 async function updatePicture(){
     // Revert back to english:
