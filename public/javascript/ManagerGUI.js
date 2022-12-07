@@ -1158,7 +1158,8 @@ function excessReportLogic(startDate){
     excessTable = excessTable + "<th>Item Name</th>";
     excessTable = excessTable + "<th>Quantity Sold</th>";
     excessTable = excessTable + "<th>Quantity</th>";
-    excessTable = excessTable + "</tr>"
+    excessTable = excessTable + "<th>Percent Sold</th>";
+    excessTable = excessTable + "</tr>";
     let currColor = "";
     for (let i = 0; i < data.result.length; i++){
         if (i%2){
@@ -1166,11 +1167,13 @@ function excessReportLogic(startDate){
         }else{
             currColor = "white";
         }
+        var percent = Number((parseFloat(data.result[i].quantity_sold)/(parseFloat(data.result[i].quantity_sold)+parseFloat(data.result[i].quantity)))*100).toFixed(2);
         excessTable = excessTable + '<tr id = "itemSold" style="background-color:' + currColor + '">';
         excessTable = excessTable + "<td>" + data.result[i].itemid + "</td>";
         excessTable = excessTable + "<td>" + data.result[i].quantity_sold + "</td>";
         excessTable = excessTable + "<td>" + data.result[i].quantity + "</td>";
-        excessTable = excessTable + "</tr>"
+        excessTable = excessTable + "<td>" + percent + "%</td>";
+        excessTable = excessTable + "</tr>";
     }
     
     excessTable = excessTable + '</tbody></table></div>'
