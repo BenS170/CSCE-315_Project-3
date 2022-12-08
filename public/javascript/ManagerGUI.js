@@ -148,7 +148,7 @@ async function updateTableFunction(){
     // Revert back to english:
     //let x = await revertToEnglish();
 
-    console.log(x);
+    //console.log(x);
 
     for (let i = 1, row; row = menuTable.rows[i]; i++){
         // iterating through rows. Starting at row 1 bc 0 is headers
