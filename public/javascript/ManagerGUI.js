@@ -146,7 +146,7 @@ async function updateTableFunction(){
     }
 
     // Revert back to english:
-    let x = await revertToEnglish();
+    //let x = await revertToEnglish();
 
     console.log(x);
 
