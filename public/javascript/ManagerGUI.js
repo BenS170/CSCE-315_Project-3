@@ -201,7 +201,6 @@ async function updateTableFunction(){
             body: JSON.stringify(data)
         }).then(function(response) {
             if(response.ok) {
-                alert("The Menu Table has been Updated");
                 return;
             }else{ throw new Error('Request failed.'); }
         }).then(function(data){
