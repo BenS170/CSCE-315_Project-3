@@ -192,9 +192,24 @@ async function updateTableFunction(){
 
         const data = {menu_id, item_name, item_price, num_ingredients, ingredient_list, type};
         console.log(data);
-        x = await fetchPost('/updateMenuItem', data);
+        //x = await fetchPost('/updateMenuItem', data);
+        fetch('/updateMenuItem', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(function(response) {
+            if(response.ok) {
+                alert("The Menu Table has been Updated");
+                return;
+            }else{ throw new Error('Request failed.'); }
+        }).then(function(data){
+            return data.result;
+        }).catch(function(error) {
+            console.log(error);
+        })
     }
-    //alert("The Menu Table has been Updated");
 }
 
 /**
