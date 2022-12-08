@@ -194,7 +194,7 @@ async function updateTableFunction(){
         console.log(data);
         x = await fetchPost('/updateMenuItem', data);
     }
-    alert("The Menu Table has been Updated");
+    //alert("The Menu Table has been Updated");
 }
 
 /**
@@ -1222,7 +1222,7 @@ function updateInvFunction(){
         oldInvItems[i-1]["itemid"] = itemid;
         changeMenuItemInventoryArr(oldName, itemid);
     }
-    alert("Inventory Table has been Updated");
+    //alert("Inventory Table has been Updated");
 }
 
 /**
