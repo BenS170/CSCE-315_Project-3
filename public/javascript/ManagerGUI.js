@@ -1232,7 +1232,23 @@ function updateInvFunction(){
 
         const data = {itemid, stockprice, unit, quantity, serving_size, oldName};
         console.log(data);
-        x = fetchPost('/updateInvItem', data);
+        //x = fetchPost('/updateInvItem', data);
+        fetch('/updateInvItem', {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(function(response) {
+            if(response.ok) {
+                return;
+            }else{ throw new Error('Request failed.'); }
+        }).then(function(data){
+            return data.result;
+        }).catch(function(error) {
+            console.log(error);
+        })
+
         oldInvItems[i-1]["itemid"] = itemid;
         changeMenuItemInventoryArr(oldName, itemid);
     }
@@ -1260,11 +1276,26 @@ async function changeMenuItemInventoryArr(oldName, newName){
                 }
             }
 
-            console.log("Old: " + menuItems[i]["ingredient_list"]);
-            console.log("New: " + newIngredients);
+            //console.log("Old: " + menuItems[i]["ingredient_list"]);
+            //console.log("New: " + newIngredients);
 
             const data = {menu_id, newIngredients};
-            let x = fetchPost("/updateMenuItemInventoryArr", data);
+            //let x = fetchPost("/updateMenuItemInventoryArr", data);
+            fetch('/updateMenuItemInventoryArr', {
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(function(response) {
+                if(response.ok) {
+                    return;
+                }else{ throw new Error('Request failed.'); }
+            }).then(function(data){
+                return data.result;
+            }).catch(function(error) {
+                console.log(error);
+            })
         }
     }
 }
