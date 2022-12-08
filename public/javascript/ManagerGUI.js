@@ -1251,6 +1251,7 @@ function updateInvFunction(){
 
         oldInvItems[i-1]["itemid"] = itemid;
         changeMenuItemInventoryArr(oldName, itemid);
+        
     }
     //alert("Inventory Table has been Updated");
 }
@@ -1262,6 +1263,7 @@ function updateInvFunction(){
  * @param {String} newName The new modified name of the inventory item. Can be obtained by checking the text value in HTML
  */
 async function changeMenuItemInventoryArr(oldName, newName){
+    if (oldName == newName){ return; }
     let menuItems = await getMenuItemArray();
     for (let i = 0; i < menuItems.length; i++){
         if (menuItems[i]["ingredient_list"].includes(oldName)){
