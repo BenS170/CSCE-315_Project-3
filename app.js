@@ -95,7 +95,6 @@ app.post('/serverSubmit', async (req, res) => {
     let dateobj = new Date();
     dateobj.toLocaleString('en-US', { timeZone: 'America/New_York' });
     var myDate = dateobj.toISOString().split('T')[0];
-    console.log(dateobj.toISOString());
 
     // Getting Week Day
     var day = 'X';
@@ -146,7 +145,6 @@ app.post('/serverSubmit', async (req, res) => {
             .then(query_res => {
                 for (let i = 0; i < query_res.rows[0]["ingredient_list"].length; i++){
                     var res = query_res.rows[0]["ingredient_list"][i];
-                    console.log("|" + res + "|");
                     ingredients.push(res);
                 }
             }
@@ -159,11 +157,8 @@ app.post('/serverSubmit', async (req, res) => {
             await pool
                 .query("SELECT quantity, serving_size FROM inventory WHERE itemid='"+ingredients[i]+"';")
                 .then(query_res => {
-                    console.log(query_res);
                     var quantity = query_res.rows[0]["quantity"];
                     var serving_size = query_res.rows[0]["serving_size"];
-                    console.log(quantity);
-                    console.log(serving_size);
                     if(quantity-serving_size < 0){
                         out_of_inventory = true;
                     }
@@ -173,7 +168,6 @@ app.post('/serverSubmit', async (req, res) => {
 
         if(!out_of_inventory){
             for(let i = 0; i<ingredients.length; i++){
-                console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
                 await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
             }
             await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
@@ -195,7 +189,6 @@ app.post('/customerSubmit', async (req, res) => {
     let dateobj = new Date();
     dateobj.toLocaleString('en-US', { timeZone: 'America/New_York' });
     var myDate = dateobj.toISOString().split('T')[0];
-    console.log(dateobj.toISOString());
 
     // Getting Week Day
     var day = 'X';
@@ -249,9 +242,6 @@ app.post('/customerSubmit', async (req, res) => {
                 .then(query_res => {
                     for (let i = 0; i < query_res.rows[0]["ingredient_list"].length; i++){
                         var res = query_res.rows[0]["ingredient_list"][i];
-                        /*if(i!=0){
-                            res = query_res.rows[0]["ingredient_list"][i].slice(1);
-                        }*/
                         ingredients.push(res);
                     }
                 }
@@ -266,8 +256,6 @@ app.post('/customerSubmit', async (req, res) => {
                     .then(query_res => {
                         var quantity = query_res.rows[0]["quantity"];
                         var serving_size = query_res.rows[0]["serving_size"];
-                        console.log(quantity);
-                        console.log(serving_size);
                         if(quantity-serving_size < 0){
                             out_of_inventory = true;
                         }
@@ -277,7 +265,6 @@ app.post('/customerSubmit', async (req, res) => {
 
             if(!out_of_inventory){
                 for(let i = 0; i<ingredients.length; i++){
-                    console.log("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';");
                     await pool.query("UPDATE inventory SET quantity=quantity-serving_size WHERE itemid='"+ingredients[i]+"';").then(query_res => {});
                 }
                 await pool.query("INSERT INTO orders(order_id, order_total, item, date_made, day_made) VALUES ("+order_ID+", "+order_prices[i]+", "+order_items[i]+", '"+myDate+"', '"+day+"');").then(query_res => {});
